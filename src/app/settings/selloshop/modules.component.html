@@ -1,0 +1,100 @@
+<div class="settings-box" *ngIf="enabledModules">
+    <h2>{{ 'SETTINGS_SELLOSHOP_MODULES'|translate }}</h2>
+
+    <div *ngFor="let block of blocks" class="expandable-panels">
+        <div class="x-panel">
+            <h3> 
+                <i (click)="expanded[block.id] = !expanded[block.id]" class="panel-state-icon fa {{ expanded[block.id] ? 'fa-minus' : 'fa-plus' }}"></i>
+                {{ block.name }} 
+                <span class="count">{{ enabledModules[block.id]?.length || 0 }}</span>
+                <span (click)="onAddModule(block.id)" class="add-subcategory pull-right"><i class="fa fa-plus"></i> {{ 'ADD_MODULE'|translate }}</span>
+            </h3>
+            <div *ngIf="expanded[block.id]" [ngSwitch]="!!enabledModules[block.id] && !!enabledModules[block.id].length" class="x-body">
+                <div *ngSwitchCase="false" class="empty-view">
+                    <p>{{ 'NO_MODULES_IN_BLOCK'|translate }}</p>
+                    <button class="action-button" (click)="onAddModule(block.id)">{{ 'ADD_MODULE'|translate }}</button>
+                </div>
+                <table *ngSwitchCase="true" class="detailed-table">
+                    <tr class="table-header">
+                        <th></th>
+                        <th>{{ 'NAME'|translate }}</th>
+                        <th>{{ 'PHONE'|translate }}</th>
+                        <th>{{ 'TABLET'|translate }}</th>
+                        <th>{{ 'LAPTOP'|translate }}</th>
+                        <th>{{ 'DESKTOP'|translate }}</th>
+                        <th></th>
+                    </tr>
+                    <template ngFor let-module [ngForOf]="enabledModules[block.id]">
+                        <tr *ngIf="editingBlock !== block.id || editing?.id !== module.id">
+                            <td><img *ngIf="module.icon" src="{{ module.icon }}" class="img-responsive" /></td>
+                            <td>{{ module.name }}</td>
+                            <td>{{ getWidthByValue(module.width.xs)?.name }}</td>
+                            <td>{{ getWidthByValue(module.width.sm)?.name }}</td>
+                            <td>{{ getWidthByValue(module.width.md)?.name }}</td>
+                            <td>{{ getWidthByValue(module.width.lg)?.name }}</td>
+                            <td class="buttons">
+                                <a class="cursor-link" (click)="onOpenEdit(block.id, module)"><i class="fa fa-pencil"></i></a>
+                                <i class="cursor-link fa fa-trash" (click)="onDelete(block.id, module)"></i>
+                            </td>
+                        </tr>
+                        <tr *ngIf="editingBlock === block.id && editing?.id === module.id" class="edit">
+                            <td colspan="7">
+                                <form #editingForm="ngForm" (submit)="onEdit(editingForm.valid, block.id, editingForm.value)" class="setting-form">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <p>
+                                                <span class="text">{{ 'PHONE'|translate }}</span><br>
+                                                <select [(ngModel)]="editing.width.xs" name="width_xs">
+                                                    <option *ngFor="let width of widths" [value]="width.value">{{ width.name }}</option>
+                                                </select>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <p>
+                                                <span class="text">{{ 'TABLET'|translate }}</span><br>
+                                                <select [(ngModel)]="editing.width.sm" name="width_sm">
+                                                    <option *ngFor="let width of widths" [value]="width.value">{{ width.name }}</option>
+                                                </select>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <p>
+                                                <span class="text">{{ 'LAPTOP'|translate }}</span><br>
+                                                <select [(ngModel)]="editing.width.md" name="width_md">
+                                                    <option *ngFor="let width of widths" [value]="width.value">{{ width.name }}</option>
+                                                </select>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <p>
+                                                <span class="text">{{ 'DESKTOP'|translate }}</span><br>
+                                                <select [(ngModel)]="editing.width.lg" name="width_lg">
+                                                    <option *ngFor="let width of widths" [value]="width.value">{{ width.name }}</option>
+                                                </select>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div *ngIf="showAdditionalSettings" [ngSwitch]="editing.template" class="row">
+                                        <selloshop-text-module *ngSwitchCase="'text'" [editing]="editing"></selloshop-text-module>
+                                        <selloshop-facebook-module *ngSwitchCase="'fb'" [editing]="editing"></selloshop-facebook-module>
+                                        <selloshop-slider-module *ngSwitchCase="'slider'" [editing]="editing"></selloshop-slider-module>
+                                        <selloshop-image-module *ngSwitchCase="'image'" [editing]="editing"></selloshop-image-module>
+                                        <selloshop-grid-module *ngSwitchCase="'grid'" [editing]="editing"></selloshop-grid-module>
+                                    </div>
+
+                                    <p class="button-panel">
+                                        <button type="button" (click)="editing = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                                        <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                                    </p>
+                                </form>
+
+
+                            </td>
+                        </tr>
+                    </template>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

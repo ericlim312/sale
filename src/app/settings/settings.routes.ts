@@ -1,0 +1,101 @@
+import { RouterConfig }          from '@angular/router';
+import { SettingsComponent } from './settings.component';
+import { PersonalComponent } from './personal.component';
+import { AgentSettingsComponent } from './agent/settings.component';
+import { AgentSubmittersComponent } from './agent/submitters.component';
+import { FeedSettingsComponent } from './feed/settings.component';
+import { FeedLogComponent } from './feed/log.component';
+import { OrderSettingsComponent } from './order/settings.component';
+import { OrderRemindersComponent } from './order/reminders.component';
+import { MailOverviewComponent } from './mail/overview.component';
+import { FeedbackOverviewComponent } from './feedback/overview.component';
+import { StatusOverviewComponent } from './status/overview.component';
+import { FeedCategoriesComponent } from './feed/categories.component';
+import { SettingsAdvancedComponent } from './advanced.component';
+import { SettingsLogisticsComponent } from './logistics.component';
+import { TemplatesOverviewComponent } from './templates/overview.component';
+import { EconomySettingsComponent } from './economy/settings.component';
+import { ReceiptSettingsComponent } from './economy/receipt.component';
+import { TemplateEditComponent } from './templates/edit.component';
+import { ManufacturersComponent } from './manufacturers.component';
+import { WebhooksComponent } from './webhooks.component';
+import { UsersOverviewComponent } from './users/overview.component';
+import { SettingsBrandsComponent } from './brands.component';
+import { ProductSettingsComponent } from './products.component';
+import { TraderaCheckoutComponent } from './tradera/checkout.component';
+import { TraderaTermsComponent } from './tradera/terms.component';
+import { TraderaStoreComponent } from './tradera/store.component';
+import { TraderaShippingComponent } from './tradera/shipping.component';
+import { ApiComponent } from './api.component';
+import { WoocommerceSettingsComponent } from './woocommerce.component';
+import { AmazonSettingsComponent } from './amazon.component';
+import { CdonSettingsComponent } from './cdon.component';
+import { PrestashopSyncComponent } from './prestashop/sync.component';
+import { PrestashopCategoriesComponent } from './prestashop/categories.component';
+import { PrestashopOrderComponent } from './prestashop/order.component';
+import { FyndiqSettingsComponent } from './fyndiq.component';
+import { SelloshopGeneralComponent } from './selloshop/general.component';
+import { SelloshopOrderComponent } from './selloshop/order.component';
+import { SelloshopPaymentComponent } from './selloshop/payment.component';
+import { SelloshopCuponsComponent } from './selloshop/cupon.component';
+import { SelloshopThemeComponent } from './selloshop/theme.component';
+import { SelloshopFilesComponent } from './selloshop/files.component';
+import { SelloshopModulesComponent } from './selloshop/modules.component';
+import { SelloshopContentComponent } from './selloshop/content.component';
+import { SelloshopContentEditComponent } from './selloshop/content-edit.component';
+import { SelloshopCategoriesComponent } from './selloshop/categories.component';
+
+export const SettingsRoutes: RouterConfig = [
+  {
+    path: 'settings',
+    component: SettingsComponent,
+    children: [
+        { path: '', redirectTo: 'personal' },
+        { path: 'personal', component: PersonalComponent },
+        { path: 'agent/settings', component: AgentSettingsComponent },
+        { path: 'agent/submitters', component: AgentSubmittersComponent },
+        { path: 'feed/settings', component: FeedSettingsComponent },
+        { path: 'feed/log', component: FeedLogComponent },
+        { path: 'feed/categories', component: FeedCategoriesComponent },
+        { path: 'order', component: OrderSettingsComponent },
+        { path: 'reminders', component: OrderRemindersComponent },
+        { path: 'mail', component: MailOverviewComponent },
+        { path: 'economy/settings', component: EconomySettingsComponent },
+        { path: 'economy/receipt', component: ReceiptSettingsComponent },
+        { path: 'feedback', component: FeedbackOverviewComponent },
+        { path: 'status', component: StatusOverviewComponent },
+        { path: 'advanced', component: SettingsAdvancedComponent },
+        { path: 'logistics', component: SettingsLogisticsComponent },
+        { path: 'templates', component: TemplatesOverviewComponent },
+        { path: 'templates/:id', component: TemplateEditComponent },
+        { path: 'manufacturers', component: ManufacturersComponent },
+        { path: 'webhooks', component: WebhooksComponent },
+        { path: 'users', component: UsersOverviewComponent },
+        { path: 'brands', component: SettingsBrandsComponent },
+        { path: 'products', component: ProductSettingsComponent },
+        { path: 'tradera/:id/checkout', component: TraderaCheckoutComponent },
+        { path: 'tradera/:id/terms', component: TraderaTermsComponent },
+        { path: 'tradera/:id/store', component: TraderaStoreComponent },
+        { path: 'tradera/:id/shipping', component: TraderaShippingComponent },
+        { path: 'developers/api', component: ApiComponent },
+        { path: 'developers/webhooks', component: WebhooksComponent },
+        { path: 'woocommerce/:id', component: WoocommerceSettingsComponent },
+        { path: 'amazon/:id', component: AmazonSettingsComponent },
+        { path: 'cdon/:id', component: CdonSettingsComponent },
+        { path: 'prestashop/:id/sync', component: PrestashopSyncComponent },
+        { path: 'prestashop/:id/categories', component: PrestashopCategoriesComponent },
+        { path: 'prestashop/:id/order', component: PrestashopOrderComponent },
+        { path: 'fyndiq/:id', component: FyndiqSettingsComponent },
+        { path: 'selloshop/:id/general', component: SelloshopGeneralComponent },
+        { path: 'selloshop/:id/order', component: SelloshopOrderComponent },
+        { path: 'selloshop/:id/payment', component: SelloshopPaymentComponent },
+        { path: 'selloshop/:id/categories', component: SelloshopCategoriesComponent },
+        { path: 'selloshop/:id/cupons', component: SelloshopCuponsComponent },
+        { path: 'selloshop/:id/theme', component: SelloshopThemeComponent },
+        { path: 'selloshop/:id/files', component: SelloshopFilesComponent },
+        { path: 'selloshop/:id/modules', component: SelloshopModulesComponent },
+        { path: 'selloshop/:id/content', component: SelloshopContentComponent },
+        { path: 'selloshop/:id/content/:cid', component: SelloshopContentEditComponent },
+    ]
+  }
+];

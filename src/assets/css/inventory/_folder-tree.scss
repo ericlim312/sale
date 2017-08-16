@@ -1,0 +1,82 @@
+.folder-tree {
+    .folder-children {
+        list-style: none;
+        padding-left: 10px;
+
+        li {
+            list-style: none;
+            padding: 3px;
+            margin: 0;
+
+            a {
+                color: #4d4d4d;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+
+        i {
+            padding-right: 5px;
+        }
+
+        .current {
+            font-weight: bold;
+        }
+    }
+
+    .folder-crumb {
+        background: #313338;
+        padding: 15px;
+        margin-bottom: 5px;
+        margin-top: -10px;
+
+        .home {
+            color: #ddd;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        a, a:visited {
+            color: white;
+            text-decoration: none;
+        }
+    }
+
+    .current-folder {
+        padding-bottom: 8px;
+        margin-bottom: 5px;
+        padding-top: 5px;
+        border-bottom: 1px solid #d2d3d6;
+        overflow: hidden;
+
+        h3 {
+            font-weight: bold;
+            padding-top: 12px;
+            padding-left: 8px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        a {
+            color: #4d4d4d;
+
+            &:hover {
+                text-decoration: none;
+                color: #4d4d4d;
+            }
+        }
+
+        .button-column {
+            font-size: 0.8em;
+            white-space: nowrap;
+            float: right;
+            text-align: center;
+            padding: 8px 10px 0 10px;
+            cursor: pointer;
+        }
+    }
+}

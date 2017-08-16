@@ -1,0 +1,26 @@
+.orderContainer {
+	cursor: pointer;
+}
+
+.order-deliver {
+	.zebra {
+		background: #eee;
+	}
+
+	.box {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+}
+
+.orderDetails {
+	.bg-order-paid {
+		background: #ebf6e1;
+	}
+}
+
+@media (max-width: 768px) {
+    .order-list-total {
+    	clear: both;
+    }
+}

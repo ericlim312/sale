@@ -1,0 +1,83 @@
+<div class="status-box">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'SETTINGS_TEMPLATES'|translate }}</h2>
+        </div>
+        <div class="col-md-6">
+            <button (click)="createNew.visible = true" *ngIf="!createNew.visible" class="action-button pull-right"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+        </div>
+    </div>
+
+    <hint [message]="'TEMPLATES_HINT'|translate"></hint>
+
+    <div class="setting-panel" *ngIf="createNew.visible">
+        <h3>{{ 'NEW_TEMPLATE'|translate }}</h3>
+
+        <form #createNewForm="ngForm" class="setting-form" (submit)="onCreateNew(createNewForm.value, createNewForm.valid)">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>
+                        <span class="text">{{ 'NAME'|translate }}</span><br>
+                        <input type="text" class="form-control"
+                            [ngModel]="createNew.title"
+                            #name="ngModel"
+                            name="title"
+                            required>
+                        <small [hidden]="name.valid || (name.pristine && !createNewForm.submitted)" class="text-danger">{{ 'Title is required' |translate }}</small>
+                    </p>
+                </div>
+            </div>
+
+            <wysiwyg [ngModel]="createNew.template" name="template"></wysiwyg>
+
+            <p class="button-panel">
+                <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+            </p>
+        </form>
+    </div>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'NAME'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+        <template ngFor let-template [ngForOf]="templates">
+            <tr *ngIf="editing !== template">
+                <td>{{ template.title }}</td>
+                <td class="buttons">
+                    <a class="btn-link" role="button" (click)="editing = template"><i class="fa fa-pencil"></i></a>
+                    <a class="btn-link" role="button" (click)="onDelete(template)"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+            <tr *ngIf="editing === template" class="edit">
+                <td colspan="2">
+                    <div class="setting-panel">
+                        <form #editingForm="ngForm" class="setting-form" (submit)="onEdit(editingForm.value, editingForm.valid)">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p>
+                                        <span class="text">{{ 'NAME'|translate }}</span><br>
+                                        <input type="text" class="form-control"
+                                            [ngModel]="editing.title"
+                                            #name="ngModel"
+                                            name="title"
+                                            required>
+                                        <small [hidden]="name.valid || (name.pristine && !editingForm.submitted)" class="text-danger">{{ 'Title is required' |translate }}</small>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <wysiwyg [ngModel]="editing.template" name="template"></wysiwyg>
+
+                            <p class="button-panel">
+                                <button type="button" (click)="editing = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                                <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                            </p>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </template>
+    </table>
+</div>

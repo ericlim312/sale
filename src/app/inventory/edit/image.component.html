@@ -1,0 +1,36 @@
+<div class="edit-image-widget section {{hasBaseDropZoneOver ? 'drop-active' : ''}}" *ngIf="mainImage || extraImages.length > 0" ng2-file-drop [uploader]="uploader" (fileOver)="fileOverBase($event)">
+    <div *ngIf="mainImage" class="main-image">
+        <div class="buttons">
+            <button type="button" (click)="deleteImage('main', mainImage)" angulartics2On="click" angularticsCategory="inventoryEditImage" angularticsEvent="deleteMain"><i class="fa fa-trash-o"></i></button>
+            <button type="button" (click)="rotateImage(mainImage)" angulartics2On="click" angularticsCategory="inventoryEditImage" angularticsEvent="rotateMain"><i class="fa fa-rotate-right"></i></button>
+        </div>
+        <img [ngStyle]="rotationStyle(mainImage)" [src]="mainImage.url_large">
+    </div>
+    <div *ngIf="!mainImage" class="main-image-upload">
+        <input type="file" ng2-file-select [uploader]="uploader" identifier="main" payload="setCover=true">
+        <i class="fa fa-upload" angulartics2On="click" angularticsCategory="inventoryEditImage" angularticsEvent="uploadMain"></i>
+        <p>{{ 'UPLOAD_IMAGE'|translate }}</p>
+    </div>
+
+    <div *ngFor="let image of extraImages" class="extra-image">
+        <div class="buttons">
+            <button type="button" (click)="setMain(image)" angulartics2On="click" angularticsCategory="inventoryEditImage" angularticsEvent="setMain"><i class="fa fa-heart"></i></button>
+            <button type="button" (click)="deleteImage('extra', image)" angulartics2On="click" angularticsCategory="inventoryEditImage" angularticsEvent="delete"><i class="fa fa-trash-o"></i></button>
+            <button type="button" (click)="rotateImage(image)" angulartics2On="click" angularticsCategory="inventoryEditImage" angularticsEvent="rotate"><i class="fa fa-rotate-right"></i></button>
+        </div>
+        <img [ngStyle]="rotationStyle(image)" [src]="image.url_small">
+    </div>
+
+    <div *ngFor="let placeholder of placeholders" class="extra-image-upload">
+        <input type="file" ng2-file-select [uploader]="uploader" identifier="extra">
+        <i class="fa fa-upload" angulartics2On="click" angularticsCategory="inventoryEditImage" angularticsEvent="upload"></i>
+        <p>{{ 'UPLOAD_IMAGE'|translate }}</p>
+    </div>
+</div>
+
+<div class="edit-image-widget empty {{hasBaseDropZoneOver ? 'drop-active' : ''}}" *ngIf="!mainImage && extraImages.length == 0" ng2-file-drop [uploader]="uploader" (fileOver)="fileOverBase($event)">
+    <input type="file" ng2-file-select [uploader]="uploader">
+    <h3><i class="fa fa-image"></i><br>{{ 'DRAG_AND_DROP'|translate }}</h3>
+    <p>{{ 'OR'|translate }}</p>
+    <button class="btn btn-primary">{{ 'BROWSE_IMAGES'|translate }}</button>
+</div>

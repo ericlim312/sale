@@ -1,0 +1,39 @@
+<div class="section inventory-section">
+    <h3 id="inventoryHeading">{{ 'HEADING_INVENTORY'|translate }} <i class="pull-right fa {{ inventoryClass }}" style="margin-top: 4px;" (click)="hideInventory()"></i></h3>
+    <div [ngStyle]="{'display': showInventory}">
+        <div class="form-group">
+            <label for="quantity" class="col-sm-3 control-label">{{ 'QUANTITY_IN_STOCK'|translate }}:</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" [(ngModel)]="product.quantity" pattern="[0-9]+">
+            </div>
+            <div class="col-sm-4 help">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="stock_location" class="col-sm-3 control-label is-optional"><span>{{ 'OPTIONAL'|translate }}</span>{{ 'STOCK_LOCATION'|translate }}:</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" [(ngModel)]="product.stock_location" maxlength="20">
+        </div>
+        <div class="col-sm-4 help">
+        </div>
+    </div>
+    <div [ngStyle]="{'display': showInventory}">
+        <div class="form-group">
+            <label for="folder" class="col-sm-3 control-label">{{ 'FOLDER'|translate }}:</label>
+            <div class="col-sm-5">
+                <select class="form-control" id="folder" [(ngModel)]="product.folder_id" folder-select></select>
+            </div>
+            <div class="col-sm-4 help">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="purchase_price" class="col-sm-3 control-label is-optional"><span>{{ 'OPTIONAL'|translate }}</span>{{ 'PURCHASE_PRICE'|translate }}:</label>
+            <div class="col-sm-5">
+                <input type="number" class="form-control" [(ngModel)]="product.purchase_price">
+            </div>
+            <div class="col-sm-4 help">
+            </div>
+        </div>
+    </div>
+</div>

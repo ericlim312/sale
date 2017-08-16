@@ -1,0 +1,134 @@
+calendar {
+  float: left;
+  display: block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: white;
+  width: 100%;
+  border: solid 1px #cccccc;
+  margin-bottom: 10px;
+}
+calendar .header {
+  float: left;
+  width: 100%;
+  background: #556b8d;
+  height: 80px;
+  padding-top: 20px;
+  color: white;
+  text-shadow: 4px 4px 0 #333;
+}
+
+@media (max-width: 563px) {
+    calendar .header {
+        height: 120px;
+    }
+    calendar .header .fa-angle-left {
+        padding-top: 20px;
+    }
+    calendar .header .fa-angle-right {
+        padding-top: 20px;
+    }
+}
+
+calendar .header .fa-angle-left {
+  text-align: left;
+  margin-left: 20px;
+  float: left;
+  font-size: 40px;
+  width: 15%;
+  font-weight: bold;
+  cursor: pointer;
+  text-shadow: 4px 4px 0 #333;
+}
+calendar .header span {
+  float: left;
+  width: 70%;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding-left: 50px;
+  margin-left: -40px;
+  text-align: center;
+  padding-right: 40px;
+  color: inherit;
+  font-size: 32px;
+}
+calendar .header .fa-angle-right {
+  text-align: right;
+  float: right;
+  margin-right: 20px;
+  font-size: 40px;
+  width: 15%;
+  font-weight: bold;
+  cursor: pointer;
+  text-shadow: 4px 4px 0 #333;
+}
+calendar .week {
+  float: left;
+  width: 100%;
+  border-top: solid 1px #cccccc;
+}
+calendar .week .day:first-child {
+  border-left: none;
+}
+calendar .week .day {
+  float: left;
+  width: 14.28571429%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  border-left: solid 1px #cccccc;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  background: white;
+  cursor: pointer;
+  color: black;
+  text-shadow: 2px 2px 0 #ccc;
+  padding: 15px 0;
+
+  &:hover {
+    text-decoration: none !important;
+    background: #eee !important;
+  }
+
+  &.hasItems {
+    color: #2875c7 !important;
+  }
+
+  .note {
+    color: #2875c7 !important;
+    font-size:10pt;
+    text-shadow: none;
+  }
+}
+calendar .names .day {
+  color: #2875c7!important;
+  font-weight: bold;
+  background-color: #e6e7e8!important;
+  text-shadow: 2px 2px 0 #ccc;
+}
+@media (min-width: 1000px) {
+
+}
+calendar .today {
+    color: #000!important;
+    background-color: #ddf4fa!important;
+    text-shadow: 2px 2px 0 #ccc!important;
+}
+calendar .selected {
+    color: #fff!important;
+    background-color: #556b8d!important;
+    text-shadow: 2px 2px 0 #333!important;
+}
+calendar .week .different-month {
+  color: #C0C0C0!important;
+  text-shadow: none!important;
+}
+calendar .week .day:first-child {
+  border-left: none;
+}
+.table-calendar td {
+  vertical-align: middle!important;
+}

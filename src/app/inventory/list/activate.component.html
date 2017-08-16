@@ -1,0 +1,11 @@
+<span class="activate-toggle inactive" [hidden]="product.quantity == 0 || isActive" (mouseover)="hoverInactive = true" (mouseout)="hoverInactive = false">
+    <span class="toggle" [hidden]="!hoverInactive" (click)="onSetState(true); hoverInactive = false"angulartics2On="click" angularticsCategory="inventoryListItemStatus" angularticsEvent="activate">{{ 'ACTIVATE'|translate }}</span>
+    <span class="default" [hidden]="hoverInactive"><i class="fa fa-remove"></i> {{ 'INACTIVE' | translate }}</span>
+</span>
+
+<span class="activate-toggle active" [hidden]="product.quantity == 0 || !isActive" (mouseover)="hoverActive = true" (mouseout)="hoverActive = false">
+    <span class="toggle" [hidden]="!hoverActive" (click)="onSetState(false); hoverActive = false"angulartics2On="click" angularticsCategory="inventoryListItemStatus" angularticsEvent="deactivate">{{ 'DEACTIVATE'|translate }}</span>
+    <span class="default" [hidden]="hoverActive"><i class="fa fa-check"></i> {{ 'ACTIVE' | translate }}</span>
+</span>
+
+<span [hidden]="product.quantity > 0">{{ 'SOLD_OUT'|translate }}</span>

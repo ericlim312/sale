@@ -1,0 +1,60 @@
+<div *ngIf="loaded">
+    <h1>{{ 'SETTINGS_TRADERA_CHECKOUT' | translate }}</h1>
+    <setting-row-select
+        mode="multitoggle"
+        (onSave)="setPaymentOptions(paymentOptions); save('payment.options');"
+        [choices]="paymentOptions"
+        [error]="errors['payment.options']"
+        [name]="'SETTINGS_TRADERA_PAYMENT_HOW'|translate"
+        [value]="settings.payment.options"
+    ></setting-row-select>
+    <setting-row-select
+        mode="radio"
+        (onSave)="settings.payment.sell_to = $event; save('payment.sell_to');"
+        [choices]="sellToChoices"
+        [error]="errors['payment.sell_to']"
+        [name]="'SETTINGS_TRADERA_WHERE_TO_SELL'|translate"
+        [value]="settings.payment.sell_to"
+    ></setting-row-select>
+    <setting-row-select
+        mode="multitoggle"
+        [required]="true"
+        (onSave)="setOrderPreferencesMergeStatus(statuses); save('tradera_order_preferences.merge.status_id');"
+        [choices]="statuses"
+        [error]="errors['tradera_order_preferences.merge.status_id']"
+        [name]="'SETTINGS_TRADERA_ORDER_PREF_MERGE_STATUS'|translate"
+        [value]="settings.tradera_order_preferences.merge.status_id"
+    ></setting-row-select>
+    <setting-row-select
+        mode="radio"
+        (onSave)="settings.tradera_order_preferences.new_order.action = $event; save('tradera_order_preferences.new_order.action');"
+        [choices]="newOrderActions"
+        [error]="errors['tradera_order_preferences.new_order.action']"
+        [name]="'SETTINGS_TRADERA_ORDER_PREF_NEW_ORDER_ACTION'|translate"
+        [value]="settings.tradera_order_preferences.new_order.action"
+    ></setting-row-select>
+    <setting-row-select *ngIf="settings.tradera_order_preferences.new_order.action === 'set_status'"
+        mode="dropdown"
+        (onSave)="setNewOrderStatus($event); save('tradera_order_preferences.new_order.status_id');"
+        [choices]="statuses"
+        [error]="errors['tradera_order_preferences.new_order.status_id']"
+        [name]="'SETTINGS_TRADERA_ORDER_PREF_NEW_ORDER_STATUS'|translate"
+        [value]="settings.tradera_order_preferences.new_order.status_id"
+    ></setting-row-select>
+    <setting-row-select *ngIf="settings.tradera_order_preferences.new_order.action === 'send_mail'"
+        mode="dropdown"
+        (onSave)="setNewOrderMailTemplate($event); save('tradera_order_preferences.new_order.mail_id');"
+        [choices]="mailtemplates"
+        [error]="errors['tradera_order_preferences.new_order.mail_id']"
+        [name]="'SETTINGS_TRADERA_ORDER_PREF_NEW_ORDER_MAILTEMPLATE'|translate"
+        [value]="settings.tradera_order_preferences.new_order.mail_id"
+    ></setting-row-select>
+    <setting-row-select
+        mode="dropdown"
+        (onSave)="settings.tradera_order_preferences.paid_status = $event; save('tradera_order_preferences.paid_status');"
+        [choices]="statusesPaid"
+        [error]="errors['tradera_order_preferences.paid_status']"
+        [name]="'SETTINGS_TRADERA_ORDER_PREF_PAID_STATUS'|translate"
+        [value]="settings.tradera_order_preferences.paid_status"
+    ></setting-row-select>
+</div>

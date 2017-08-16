@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="single-column-container">
+        <div class="setting-box">
+            <h2>{{ 'UPDATE_ORDER_FROM_EXCEL'|translate }}</h2>
+
+            <hint id="products-xlsx" [message]="'HINT_XLSX_ORDER_IMPORT'|translate"></hint>
+
+            <div class="setting-panel">
+                <div class="setting-form">
+                    <div class="row" *ngIf="!uploading">
+                        <div class="col-md-6">
+                            <span class="text">{{ 'SELECT_FILE'|translate }}:</span>
+                            <p><input type="file" ng2-file-select [uploader]="uploader" identifier="main"></p>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="uploading">
+                        <div class="col-md-12 text-center">
+                            <i class="fa fa-spinner fa-spin fa-3x fa-fw" style="margin: 100px 0"></i>
+                        </div>
+                    </div>
+
+                    <p class="button-panel">
+                        <button type="button" class="action-button" (click)="upload()" *ngIf="!uploading">{{ 'BTN_START'|translate }}</button>
+                    </p>
+                </div>
+            </div>
+
+            <div *ngIf="errors.length > 0" class="alert alert-danger">
+                <h4>{{ 'OOPS'|translate }}</h4>
+                <p>{{ errors[0] }}</p>
+            </div>
+            <div *ngIf="success" class="alert alert-success">
+                {{ 'XLSX_ORDER_UPDATE_SUCCESS'|translate }}
+            </div>
+
+            <div class="setting-panel margin-top">
+                <div class="setting-form">
+                    <h3>{{ 'GENERAL_FIELDS'|translate }}</h3>
+
+                    <table class="table margin-bottom">
+                        <tr>
+                            <th width="30%">{{ 'NAME'|translate }}</th>
+                            <th width="70%">{{ 'DESCRIPTION'|translate }}</th>
+                        </tr>
+                        <tr>
+                            <td>Order</td>
+                            <td>{{ 'XLSX_ORDER_ORDER'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>{{ 'XLSX_ORDER_STATUS'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery id</td>
+                            <td>{{ 'XLSX_ORDER_DELIVERY_ID'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Delivery company</td>
+                            <td>{{ 'XLSX_ORDER_DELIVERY_COMPANY'|translate }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

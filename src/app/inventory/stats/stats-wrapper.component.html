@@ -1,0 +1,172 @@
+<div class="container product-stats" *ngIf="stats">
+    <div class="row">
+        <div class="col-md-10">
+            <h1 class="inventory-heading">{{ 'STATS'|translate }}</h1>
+        </div>
+        <div class="col-md-2">
+            <div class="btn-container">
+                <button class="btn btn-primary btn-xl" (click)="close()">{{ 'BTN_CLOSE'|translate }}</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-9 col-lg-push-3 main">
+            <div class="so-panel-header">
+                <div class="heading">
+                    {{ pageHeading() }}
+                </div>
+            </div>
+            <div class="so-panel-body" *ngIf="active == 'overview'">
+                <table class="table">
+                    <tr>
+                        <td>{{ 'SOLD'|translate }}:</td>
+                        <td>{{ stats.sales.numSold }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'TOTAL_SALES'|translate }}:</td>
+                        <td>{{ stats.sales.total }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'TOTAL_EARNED'|translate }}:</td>
+                        <td>{{ stats.sales.earnTotal }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'AVERAGE_EARNED'|translate }}:</td>
+                        <td>{{ stats.sales.earnAverage }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'AVERAGE_SELLING_PRICE'|translate }}:</td>
+                        <td>{{ stats.sales.average }}</td>
+                    </tr>
+                </table>
+
+                <table class="table table-bordered table-condensed">
+                    <tr>
+                        <th>{{ 'FOR_SALE'|translate }}</th>
+                        <th>{{ 'MARKETPLACE'|translate }}</th>
+                        <th>{{ 'STATS_ITEM_ID'|translate }}</th>
+                        <th>{{ 'STATS_CREATED'|translate }}</th>
+                        <th>{{ 'STATS_START_PRICE'|translate }}</th>
+                        <th>{{ 'STATS_BUYNOW'|translate }}</th>
+                        <th>{{ 'STATS_DURATION'|translate }}</th>
+                        <th>{{ 'STATS_ENDING'|translate }}</th>
+                        <th></th>
+                    </tr>
+                    <tbody *ngFor="let integration of integrations">
+                        <!-- the integration has data -->
+                        <tr *ngFor="let row of stats.active[integration.id]">
+                            <td><i class="fa fa-check" *ngIf="row.active"></i><i class="fa fa-remove" *ngIf="!row.active"></i></td>
+                            <td>{{ getName(integration) }}</td>
+                            <td><a [href]="row.product_url">{{ row.item_id }}</a></td>
+                            <td *ngIf="row.item_type != 'auction'" colspan="7">-</td>
+
+                            <!-- Created auctions -->
+                            <td *ngIf="row.item_type == 'auction' && row.request_id >= 0">{{ row.start_time }}</td>
+                            <td *ngIf="row.item_type == 'auction' && row.request_id >= 0">{{ row.start_price }}</td>
+                            <td *ngIf="row.item_type == 'auction' && row.request_id >= 0">{{ row.buynow }}</td>
+                            <td *ngIf="row.item_type == 'auction' && row.request_id >= 0">{{ row.duration }} {{ 'DAYS'|translate }}</td>
+                            <td *ngIf="row.item_type == 'auction' && row.request_id >= 0">{{ row.end_time }}</td>
+                            <td *ngIf="row.item_type == 'auction' && row.request_id >= 0"><button class="btn btn-default" (click)="cancelAuction(integration, row)">{{ 'CANCEL_AUCTION'|translate }}</button></td>
+
+                            <!-- Queued auctions -->
+                            <td *ngIf="row.item_type == 'auction' && row.created == '0'">{{ 'WILL_BE_CREATED'|translate }} {{ row.start_time }}</td>
+                            <td *ngIf="row.item_type == 'auction' && row.created == '0'">{{ row.start_price }}</td>
+                            <td *ngIf="row.item_type == 'auction' && row.created == '0'">{{ row.buynow }}</td>
+                            <td *ngIf="row.item_type == 'auction' && row.created == '0'">{{ row.duration }} {{ 'DAYS'|translate }}</td>
+                            <td *ngIf="row.item_type == 'auction' && row.created == '0'">{{ row.end_time }}</td>
+                            <td *ngIf="row.item_type == 'auction' && row.created == '0'"></td>
+                        </tr>
+
+                        <!-- If no data -->
+                        <tr *ngIf="!stats.active.hasOwnProperty(integration.id)">
+                            <td><i class="fa fa-remove"></i></td>
+                            <td>{{ getName(integration) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="so-panel-body" *ngIf="active == 'history'">
+                <span *ngIf="stats.history.length == 0">{{ 'NO_PRODUCT_HISTORY'|translate }}</span>
+                <table class="table table-bordered table-condensed">
+                    <tr *ngFor="let row of stats.history">
+                        <td>{{ (row.created_at|amFromUnix)|amDateFormat:'YYYY-MM-DD hh:mm' }}</td>
+                        <td>{{ row.message }}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="so-panel-body" *ngIf="active == 'integration' && activeIntegration.market_id == 1"> <!-- Tradera -->
+                <h3>{{ 'SOLD_TRADERA_ITEMS'|translate }} <small>{{ 'THE_PAST_6_MONTHS'|translate }}</small></h3>
+                <span *ngIf="!stats.sales.transactionsByIntegration.hasOwnProperty(activeIntegration.id) || stats.sales.transactionsByIntegration[activeIntegration.id].length == 0">{{ 'NO_SALES_YET'|translate }}</span>
+                <table class="table table-bordered table-condensed table-striped" *ngIf="stats.sales.transactionsByIntegration.hasOwnProperty(activeIntegration.id) && stats.sales.transactionsByIntegration[activeIntegration.id].length > 0">
+                    <tr>
+                        <th>{{ 'STATS_ITEM_ID'|translate }}</th>
+                        <th>{{ 'QUANTITY_NUM'|translate }}</th>
+                        <th>{{ 'SOLD'|translate }}</th>
+                        <th>{{ 'PURCHASE_PRICE'|translate }}</th>
+                        <th>{{ 'PRICE'|translate }}</th>
+                        <th>{{ 'PROFIT'|translate }}</th>
+                    </tr>
+                    <tr *ngFor="let sale of sales.transactionsByIntegration[activeIntegration.id]">
+                        <td><a [href]="sale.product_url" target="_blank">{{ sale.item_no }}</a></td>
+                        <td>{{ sale.quantity }}</td>
+                        <td>{{ sale.created_at }}</td>
+                        <td>{{ sale.purchase_price }}</td>
+                        <td>{{ sale.price }}</td>
+                        <td>{{ sale.earn_total }}</td>
+                    </tr>
+                </table>
+
+                <h3>{{ 'UNSOLD_TRADERA_ITEMS'|translate }} <small>{{ 'THE_PAST_6_MONTHS'|translate }}</small></h3>
+                <span *ngIf="!stats.sales.unsoldAuctions.hasOwnProperty(activeIntegration.id) || stats.sales.unsoldAuctions[activeIntegration.id].length == 0">{{ 'NO_UNSOLD_ITEMS'|translate }}</span>
+                <table class="table table-bordered table-condensed table-striped" *ngIf="stats.sales.unsoldAuctions.hasOwnProperty(activeIntegration.id) && stats.sales.unsoldAuctions[activeIntegration.id].length > 0">
+                    <thead>
+                        <tr>
+                            <th>{{ 'STATS_ITEM_ID'|translate }}</th>
+                            <th>{{ 'STATS_CREATED'|translate }}</th>
+                            <th>{{ 'STATS_ENDING'|translate }}</th>
+                            <th>{{ 'STATS_START_PRICE'|translate }}</th>
+                            <th>{{ 'STATS_BUYNOW'|translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let unsold of stats.sales.unsoldAuctions[activeIntegration.id]">
+                            <td><a [href]="unsold.product_url" target="_blank">{{ unsold.auction_id }}</a></td>
+                            <td>{{ unsold.created_at }}</td>
+                            <td>{{ unsold.ending_at }}</td>
+                            <td>{{ unsold.opening_price }}</td>
+                            <td>{{ unsold.buynow }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="so-panel-body" *ngIf="active == 'integration' && activeIntegration.market_id != 1"> <!-- Any market but Tradera -->
+                <h3>{{ 'SALES'|translate }}</h3>
+                <span *ngIf="!stats.sales.transactionsByIntegration.hasOwnProperty(activeIntegration.id) || stats.sales.transactionsByIntegration[activeIntegration.id].length == 0">{{ 'NO_SALES_YET'|translate }}</span>
+                <table class="table table-bordered table-condensed table-striped" *ngIf="stats.sales.transactionsByIntegration.hasOwnProperty(activeIntegration.id) && sales.transactionsByIntegration[integration.id].length > 0">
+                    <tr>
+                        <th>{{ 'STATS_ITEM_ID'|translate }}</th>
+                        <th>{{ 'QUANTITY_NUM'|translate }}</th>
+                        <th>{{ 'SOLD'|translate }}</th>
+                        <th>{{ 'PURCHASE_PRICE'|translate }}</th>
+                        <th>{{ 'PRICE'|translate }}</th>
+                        <th>{{ 'PROFIT'|translate }}</th>
+                    </tr>
+                    <tr *ngFor="let sale of stats.sales.transactionsByIntegration[activeIntegration.id]">
+                        <td><a [href]="sale.product_url" target="_blank">{{ sale.item_no }}</a></td>
+                        <td>{{ sale.quantity }}</td>
+                        <td>{{ sale.created_at }}</td>
+                        <td>{{ sale.purchase_price }}</td>
+                        <td>{{ sale.price }}</td>
+                        <td>{{ sale.earn_total }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-3 col-lg-pull-9 sidebar">
+            <button class="btn btn-default" (click)="active='overview'">{{ 'PRODUCT_STATS_OVERVIEW'|translate }}</button>
+            <button class="btn btn-default" (click)="active='history'">{{ 'PRODUCT_HISTORY'|translate }}</button>
+            <button class="btn btn-default" *ngFor="let integration of integrations" (click)="active='integration'; activeIntegration = integration"><img src="/assets/img/marketplace/{{ integration.market_id }}_bw.svg"> {{ getDisplayNameIfMoreThan1(integration) }}</button>
+        </div>
+    </div>
+</div>

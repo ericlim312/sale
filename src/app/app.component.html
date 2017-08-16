@@ -1,0 +1,82 @@
+<div id="page-container">
+    <header class="navbar navbar-inverse navbar-fixed-top head" role="banner">
+        <div class="navbar-header pull-left">
+            <a class="navbar-brand" href="https://bo.sello.io/#/dashboard">Sello</a>
+        </div>
+        <ul class="nav navbar-nav pull-right toolbar">
+            <li class="dropdown" user-menu></li>
+            <li class="dropdown" account-switcher></li>
+            <li class="dropdown" notifications></li>
+        </ul>
+    </header>
+
+    <nav class="navbar navbar-default head" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" (click)="collapseMobile = !collapseMobile">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse" id="horizontal-navbar" [collapse]="collapseMobile">
+            <ul class="nav navbar-nav">
+                <li><a href="https://bo.sello.io/#/dashboard"><i class="fa fa-dashboard"></i> <span>{{ 'START' | translate }}</span></a></li>
+                <li><a href="https://bo.sello.io/#/order"><i class="fa fa-shopping-cart"></i> {{ 'ORDER' | translate }}<span class="badge" *ngIf="notifications && notifications.orders" style="color:white;background:red">{{ notifications?.orders }}</span></a></li>
+                <li><a [routerLink]="['inventory']"><i class="fa fa-cubes"></i> <span>{{ 'INVENTORY' | translate }}</span></a></li>
+
+                <!-- outbox -->
+                <li class="dropdown" dropdown>
+                    <a href="https://bo.sello.io/#/outbox" dropdownToggle><i class="fa fa-inbox"></i> <span>{{ 'THE_OUTBOX' | translate }}<span class="badge" *ngIf="notifications && notifications.outbox" style="color:white;background:red">{{ notifications?.outbox }}</span></span></a>
+
+                    <ul class="dropdown-menu">
+                        <li><a href="https://bo.sello.io/#/outbox"><i class="fa fa-inbox"></i> {{ 'THE_OUTBOX' | translate }}</a></li>
+                        <li><a href="https://bo.sello.io/#/outbox/calendar"><i class="fa fa-calendar"></i> {{ 'CALENDAR' | translate }}</a></li>
+                    </ul>
+                </li>
+
+                <!-- admin -->
+                <li class="dropdown" dropdown>
+                    <a href dropdownToggle><i class="fa fa-rocket"></i> <span>{{ 'ADMIN_TOOLS' | translate }}</span></a>
+
+                    <ul class="dropdown-menu">
+                        <li *ngIf="allowed('import')"><a href="https://bo.sello.io/#/import"><i class="fa fa-arrow-circle-down"></i> {{ 'IMPORT' | translate }}</a></li>
+                        <li *ngIf="allowed('inventory.worth')"><a href="https://bo.sello.io/#/inventory/worth"><i class="fa fa-bar-chart"></i> {{ 'STOCK_VALUE' | translate }}</a></li>
+                        <li><a href="https://bo.sello.io/#/export/accounting"><i class="fa fa-list-alt"></i> {{ 'BOOKKEEPING' | translate }}</a></li>
+                    </ul>
+                </li>
+
+                <li invoice-notifier></li>
+            </ul>
+            <ul class="nav navbar-nav right-settings">
+                <!-- Settings -->
+                <li *ngIf="allowed('settings')">
+                    <a href="https://bo.sello.io/#/settings"><i class="fa fa-gear"></i> <span>{{ 'SETTINGS' | translate }}</span></a>
+                </li>
+
+                <!-- help -->
+                <li class="dropdown" dropdown>
+                    <a href="http://help.sello.nu" class="dropdown-toggle" dropdownToggle><i class="fa fa-question"></i> <span>{{ 'HELP' | translate }}</span></a>
+                    <ul class="dropdown-menu">
+                        <li><a target="_blank" href="http://help.sello.nu"><i class="fa fa-question"></i> <span style="padding-left: 4px;">{{ 'SUPPORT_PORTAL' | translate }}</span></a></li>
+                        <li *ngIf="account?.account_type != 'whitelabel'"><a target="_blank" href="https://sello.io/contact"><i class="fa fa-envelope"></i> {{ 'CONTACT_US' | translate }}</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Container to push down footer -->
+    <div id="page-content">
+        <router-outlet></router-outlet>
+    </div>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="clearfix">
+            <ul class="list-unstyled list-inline pull-left">
+                <li>&copy; Sell-o AB 2016</li>
+                <li ng-if="userReferrer == 0"><a href="/contact">Kontakta oss</a></li>
+                <li ng-if="userReferrer == 0"><a target="_blank" href="http://developers.sello.io">Developers / API</a></li>
+            </ul>
+            <button class="pull-right btn btn-inverse-alt btn-xs hidden-print" id="back-to-top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+    </footer>
+</div>

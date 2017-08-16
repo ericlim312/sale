@@ -1,0 +1,25 @@
+<div class="selloshop-themes">
+    <h2>{{ 'SETTINGS_SELLOSHOP_THEME'|translate }}</h2>
+
+    <div class="row" *ngIf="settings && themes">
+        <div *ngFor="let theme of themes" class="col-md-4">
+            <div class="themes-box">
+                <a href="#" class="theme-img">
+                    <img src="{{ theme.img }}" alt="{{ theme.name }}" class="img-responsive" />
+                    <span class="theme-overlay">
+                        <i class="icon-zoom-in"></i>
+                    </span>
+                </a>
+                <h3>{{ theme.name }}</h3>
+                <p>{{ theme.desc }}</p>
+                <ul class="list-unstyled">
+                    <li [ngSwitch]="isActive(theme)">
+                        <a *ngSwitchCase="true" class="btn-theme selected"><i class="fa fa-check"></i>{{ 'CURRENT_THEME'|translate }}</a>
+                        <a *ngSwitchCase="false" (click)="setActive(theme)" class="btn-theme"><i class="fa fa-check"></i>{{ 'CHOOSE_THEME'|translate }}</a>
+                    </li>
+                    <li><a href="#" class="btn-eye"><i class="fa fa-eye"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

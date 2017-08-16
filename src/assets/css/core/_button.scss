@@ -1,0 +1,118 @@
+.transparent-btn {
+    i {
+        margin-right: 5px;
+    }
+
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    &:hover {
+        color: $hardGray;
+    }
+}
+
+.action-button {
+    border: none;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: #FFF;
+    text-decoration: none;
+    border-radius: 5px;
+    background: $selloPink;
+    padding: 11px 25px 11px 25px;
+    text-align: center;
+    font-size: 14px;
+    @media screen and (max-width: 350px) {
+        clear: both;
+        margin: 20px auto 0 auto;
+        float: none;
+        display: block;
+    }
+    &:hover {
+        background: $selloPinkHover;
+        color: white;
+        text-decoration: none;
+    }
+    &:active {
+        color: $disabledColor;
+        text-decoration: none;
+    }
+
+    i {
+        font-weight: 300;
+        font-size: 14px;
+        margin-right: 6px;
+    }
+}
+.cancel-button {
+    border: 1px solid $selloPink;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: $selloPink;
+    text-decoration: none;
+    border-radius: 5px;
+    background: white;
+    padding: 11px 25px 11px 25px;
+    text-align: center;
+    font-size: 14px;
+    @media screen and (max-width: 350px) {
+        clear: both;
+        margin: 20px auto 0 auto;
+        float: none;
+        display: block;
+    }
+    &:hover {
+        border-color: $selloPinkHover;
+        color: $selloPink;
+        text-decoration: none;
+    }
+    &:active {
+        color: $selloPink;
+        text-decoration: none;
+    }
+
+    i {
+        font-weight: 300;
+        font-size: 14px;
+        margin-right: 6px;
+    }
+}
+
+.help-button {
+    border: 1px solid $darkGray;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: 300;
+    color: $darkGray;
+    text-decoration: none;
+    border-radius: 5px;
+    background: white;
+    padding: 5px 15px;
+    text-align: center;
+    font-size: 12px;
+
+    @media screen and (max-width: 350px) {
+        clear: both;
+        margin: 20px auto 0 auto;
+        float: none;
+        display: block;
+    }
+    &:hover {
+        border-color: $selloPinkHover;
+        color: $selloPink;
+        text-decoration: none;
+    }
+    &:active {
+        color: $selloPink;
+        text-decoration: none;
+    }
+
+    i {
+        font-weight: 300;
+        font-size: 14px;
+        margin-right: 6px;
+    }
+}

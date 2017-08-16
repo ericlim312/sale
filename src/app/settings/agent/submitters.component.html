@@ -1,0 +1,61 @@
+<div class="status-box">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'SETTINGS_SALESAGENT_SUBMITTERS'|translate }}</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <button (click)="createNew.visible = true" *ngIf="!createNew.visible" class="action-button"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+        </div>
+    </div>
+
+    <div class="setting-panel" *ngIf="createNew.visible">
+        <h3>{{ 'NEW_SUBMITTER'|translate }}</h3>
+
+        <form #createNewForm="ngForm" class="setting-form" (submit)="onCreateNew(createNewForm.value, createNewForm.valid)">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'NAME'|translate }}</span><br>
+                        <input type="text"
+                            [ngModel]="createNew.title"
+                            #name="ngModel"
+                            name="title"
+                            required>
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'EMAIL'|translate }}</span><br>
+                        <input type="email"
+                            [ngModel]="createNew.email"
+                            #name="ngModel"
+                            name="email"
+                            required>
+                    </p>
+                </div>
+            </div>
+
+            <p class="button-panel">
+                <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+            </p>
+        </form>
+    </div>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'NAME'|translate }}</th>
+            <th>{{ 'EMAIL'|translate }}</th>
+            <th>{{ 'SUBMITTED_PRODUCTS'|translate }}</th>
+            <th>{{ 'TOTAL_PAYOUT'|translate }}</th>
+            <th>{{ 'PRODUCT_PAGE'|translate }}</th>
+        </tr>
+        <tr>
+            <td>John Doe</td>
+            <td>john@example.com</td>
+            <td>123</td>
+            <td>491,00</td>
+            <td><a href="#">Show page</a></td>
+        </tr>
+    </table>
+</div>

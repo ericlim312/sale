@@ -1,0 +1,29 @@
+div.tree-cont {
+    width: 600px;
+    min-height: 200px;
+    padding-top: 20px;
+    padding-left: 10px;
+    .tree-list {
+        padding-left: 10px;
+        .tree-node {
+            .tree-item {
+                max-width: 600px;
+                .tree-name {
+                    .tree-item-name {
+                        cursor: pointer;
+                    }
+                    padding-top: 2px;
+                }
+                border: 1px solid #d2d3d6;
+                padding: 2px 2px 2px 4px;
+            }
+            margin-top: 4px;
+            margin-bottom: 4px;
+            padding-left: 10px;
+        }
+
+        .hover {
+            background: #eee;
+        }
+    }
+}

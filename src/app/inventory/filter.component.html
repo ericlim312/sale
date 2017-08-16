@@ -1,0 +1,62 @@
+<div class="inventory-filter">
+    <div class="filter-by">
+        <span class="heading">{{ 'FILTER_BY'|translate }}:</span>
+        <div class="buttons">
+            <span *ngFor="let filter of filters"><button (click)="toggle(filter)" [ngClass]="{ 'active': filter.active }" *ngIf="filter.show">{{ filter.name | translate }}</button></span>
+            <button *ngIf="filters.length > 5 && !showAllFilters" (click)="showAll()">{{ 'SEE_ALL_FILTER_OPTIONS'|translate }}</button>
+        </div>
+    </div>
+    <div class="filter-settings" *ngIf="activeFilters.length > 0">
+        <div class="row">
+            <div class="col-md-3" *ngFor="let filter of activeFilters">
+                <p class="heading">{{ 'FILTER_BY'|translate }} {{ filter.name | translate }} <span class="delete" (click)="toggle(filter)">x</span></p>
+
+                <!-- integration + select -->
+                <div class="multi" *ngIf="filter.type == 'integration' && filter.input == 'select'">
+                    <select class="form-control x2" [(ngModel)]="filter.integration">
+                        <option *ngFor="let integration of integrations" [value]="integration.id">{{ marketName(integration.market_id) }} <span *ngIf="numIntegrations(integration.market_id) > 1">({{ marketName(integration.market_id) }})</span></option>
+                    </select>
+                    <select class="form-control x2" [(ngModel)]="filter.value">
+                        <option *ngFor="let option of filter.options" [value]="option.value">{{ option.name | translate }}</option>
+                    </select>
+                </div>
+
+                <!-- simple + text -->
+                <div *ngIf="filter.type == 'simple' && filter.input == 'text'">
+                    <input type="text" class="form-control" [(ngModel)]="filter.value">
+                </div>
+
+                <!-- simple + select -->
+                <div *ngIf="filter.type == 'simple' && filter.input == 'select'">
+                    <select class="form-control" [(ngModel)]="filter.value">
+                        <option *ngFor="let option of filter.options" [value]="option.value">{{ option.name | translate }}</option>
+                    </select>
+                </div>
+
+                <!-- simple + range -->
+                <div class="multi" *ngIf="filter.type == 'simple' && filter.input == 'range'">
+                    <select class="form-control x2" [(ngModel)]="filter.mode">
+                        <option value="lt">{{ 'LESS_THAN' | translate }}</option>
+                        <option value="eq">{{ 'EQUALS' | translate }}</option>
+                        <option value="gt">{{ 'MORE_THAN' | translate }}</option>
+                    </select>
+                    <input type="text" class="form-control x2" [(ngModel)]="filter.value">
+                </div>
+
+                <!-- simple + daterange -->
+                <div class="multi" *ngIf="filter.type == 'simple' && filter.input == 'daterange'">
+                    <select class="form-control x2" [(ngModel)]="filter.mode">
+                        <option value="lt">{{ 'BEFORE' | translate }}</option>
+                        <option value="eq">{{ 'EQUALS' | translate }}</option>
+                        <option value="gt">{{ 'AFTER' | translate }}</option>
+                    </select>
+                    <input type="date" class="form-control x2" [(ngModel)]="filter.value">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="filter-buttons" *ngIf="activeFilters.length > 0">
+        <button class="clear" (click)="clear()">{{ 'CLEAR_FILTER' | translate }}</button>
+        <button class="submit" (click)="submit()">{{ 'FILTER_SUBMIT' | translate }}</button>
+    </div>
+</div>

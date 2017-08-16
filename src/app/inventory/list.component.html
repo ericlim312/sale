@@ -1,0 +1,23 @@
+<div class="inventory-list-scroll-container">
+    <div *ngIf="loading | async" class="text-center inventory-spinner">
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div></div>
+    <table class="inventory-list" *ngIf="!(loading | async)">
+        <thead>
+            <tr>
+                <td><input type="checkbox" #checkAllBox (change)="onCheckAll(checkAllBox.checked)" angulartics2On="click" angularticsCategory="inventoryListCheckbox" angularticsEvent="checkAll"></td>
+                <th *ngFor="let column of columns" [hidden]="!column.show">
+                    <span *ngIf="column.type === 'image'">{{ column.label[language] }}</span>
+                    <a *ngIf="column.type !== 'image'" (click)="goToRoute({ sort: column.id })" href="javascript:void(0)">{{ column.label[language] }}</a>
+                    <span *ngIf="column.id === sort">
+                        <i class="fa" [ngClass]="{'fa-sort-asc': sortDir === 'asc', 'fa-sort-desc': sortDir === 'desc'}"></i>
+                    </span>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let group of inventory?.data" inventory-list-group [group]="group" [columns]="columns" [ngClass]="{ group: group.products.length > 1}"></tbody>
+    </table>
+</div>

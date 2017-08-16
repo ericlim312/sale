@@ -1,0 +1,269 @@
+.setting-box {
+    font-size: 14px;
+}
+
+.settings-page {
+    .setting-box {
+        &.sub-panel {
+            margin-top: 75px;
+        }
+    }
+
+    .settings-menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border: 1px solid $darkGray;
+        font-size: 14px;
+
+        .menu-item {
+            .external-link {
+                cursor: pointer;
+                float: right;
+                padding: 0;
+                display: none;
+                color: $selloPink;
+            }
+
+            &:hover {
+                .external-link {
+                    display: block;
+                }
+            }
+        }
+
+        li {
+            cursor: pointer;
+            list-style: none;
+            margin: 0;
+            background: $lightGray;
+            border-bottom: 1px solid $darkGray;
+
+            &:last-child {
+                border-bottom: 1px solid $darkGray;
+            }
+
+            a {
+                color: $hardGray;
+                padding: 8px;
+                display: inline-block;
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+
+            &:hover {
+                background: $darkGray;
+            }
+
+            &.active {
+                background: white;
+                position: relative;
+
+                a {
+                    color: #d24f96;
+                    border-left: 3px solid #cf4688;
+                }
+
+                &:after, &:before {
+                    left: 100%;
+                    top: 50%;
+                    border: solid transparent;
+                    content: '';
+                    height: 0;
+                    width: 0;
+                    position: absolute;
+                    pointer-event: none;
+                }
+                &:after {
+                    border-left-color: white;
+                    border-width: 11px;
+                    margin-top: -11px;
+                }
+                &:before {
+                    border-left-color: lightgrey;
+                    border-width: 12px;
+                    margin-top:-12px;
+                }
+            }
+
+            &.marketplace-item, &.has-children {
+                background: #575f68;
+                border-bottom: 1px solid #676b71;
+
+                .main-item{
+                    width: 100%;
+                }
+
+                .sub-menu{
+                    padding: 0;
+                    .child-item {
+                        background: #95a2af;
+                        width: 100%;
+                        position: relative;
+                        border-bottom: 1px solid #676b71;
+
+                        a {
+                            color: white;
+                            padding-left: 15px;
+                            border-left: 3px solid #77797b;
+                        }
+
+                        &.active {
+                            background: white;
+                            position: relative;
+
+                            a {
+                                color: #d24f96;
+                                border-left: 3px solid #cf4688;
+                            }
+
+                            &:after, &:before {
+                                left: 100%;
+                                top: 50%;
+                                border: solid transparent;
+                                content: '';
+                                height: 0;
+                                width: 0;
+                                position: absolute;
+                                pointer-event: none;
+                            }
+                            &:after {
+                                border-left-color: white;
+                                border-width: 11px;
+                                margin-top: -11px;
+                            }
+                            &:before {
+                                border-left-color: lightgrey;
+                                border-width: 12px;
+                                margin-top:-12px;
+                            }
+                        }
+                    }
+                }
+                a {
+                    color: white;
+                    img {
+                        margin-right : 10px;
+                    }
+                }
+            }
+
+
+        }
+    }
+
+    .settings-wrapper {
+        padding: $spacing;
+        background: white;
+        border: 1px solid $darkGray;
+
+        .pagination {
+            margin: 10px 0 30px;
+            span {
+                a {
+                    margin-right : 5px;
+                }
+
+                .current {
+                    color: $darkGray;
+                }
+            }
+
+            .title {
+                font-size: 25pt;
+                font-weight: bold;
+                border: none;
+            }
+        }
+
+        h1 {
+            font-size: 20pt;
+            margin: 0;
+        }
+
+        .tb-actions {
+            text-align: right;
+            a {
+                margin-left: 5px;
+                padding: 5px;
+                border: 1px solid lightgrey;
+                i{
+                    margin: 0px 3px;
+                }
+            }
+            .edit-btn{
+                background: #f5f5f5;
+                color: black;
+            }
+            .del-btn{
+                background: #d85549;
+                color: white;
+            }
+        }
+    }
+
+
+}
+
+.setting-row {
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .name {
+        text-align: right;
+    }
+
+    .value {
+        color: $textGray;
+    }
+
+    .button {
+        text-align: right;
+    }
+
+    .btn-default {
+        background: white;
+    }
+
+    .pad {
+        line-height: 30px;
+    }
+
+    .cancel-button.toggle {
+        padding: 0 10px;
+        color: $darkGray;
+        border-left-color: $darkGray;
+        border-top-color: $darkGray;
+        border-right-color: $darkGray;
+        border-bottom-color: $darkGray;
+    }
+
+    &:hover {
+        background: $lightGray;
+
+        .button {
+            .cancel-button {
+                background: $selloPink;
+                color: white;
+            }
+        }
+    }
+}
+
+.tradera-shipping-settings {
+    input[type=radio] {
+        margin-right: 5px;
+        width: auto;
+        height: auto;
+    }
+
+    .option-row {
+        margin-bottom: 10px;
+    }
+
+    .no-input-row {
+        margin-bottom: 20px;
+    }
+}

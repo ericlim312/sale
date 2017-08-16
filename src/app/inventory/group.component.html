@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h3 *ngIf="dialogType === 'edit'" class="modal-title">{{ 'EDIT_GROUP'|translate }}</h3>
+    <h3 *ngIf="dialogType === 'create'" class="modal-title">{{ 'CREATE_GROUP'|translate }}</h3>
+</div>
+<div class="modal-body">
+    <table class="table">
+        <tr>
+            <th width="10%">{{ 'PRODUCT_ID_SHORT'|translate }}</th>
+            <th width="50%">{{ 'PRODUCT_TITLE'|translate }}</th>
+            <th width="30%">{{ 'VARIATION_NAME'|translate }}</th>
+            <th width="10%" *ngIf="dialogType === 'create'">{{ 'IS_MAIN_PRODUCT'|translate }}</th>
+        </tr>
+        <tr *ngFor="let product of products">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>
+                <div *ngFor="let name of product.variation_names" class="input-group">
+                    <div class="input-group-addon"><img [src]="'/assets/img/flags/' + name.lang + '.png'"></div>
+                    <input type="text" class="form-control" [(ngModel)]="name.name" placeholder="{{ 'VARIATION_NAME_HELP'|translate }}" maxlength="30">
+                </div>
+            </td>
+            <td *ngIf="dialogType === 'create'"><input type="radio" name="main" (click)="mainProduct = product.id" [checked]="mainProduct === product.id" angulartics2On="click" angularticsCategory="inventoryEditGroup" angularticsEvent="change-main"></td>
+        </tr>
+    </table>
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="groupType" class="col-sm-offset-7 col-sm-2 control-label">{{ 'GROUP_TYPE'|translate }}:</label>
+            <div class="col-sm-3">
+                <select id="groupType" class="form-control" [(ngModel)]="groupType" angulartics2On="click" angularticsCategory="inventoryEditGroup" angularticsEvent="change-type">
+                    <option value="color">{{ 'GROUP_TYPE_COLOR'|translate }}</option>
+                    <option value="size">{{ 'GROUP_TYPE_SIZE'|translate }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button *ngIf="dialogType === 'edit'" class="btn btn-primary" (click)="onSave()" [disabled]="isSaving"><i class="fa fa-spinner fa-pulse" *ngIf="isSaving"></i> {{ 'BTN_SAVE'|translate }}</button>
+    <button *ngIf="dialogType === 'create'" class="btn btn-primary" (click)="onSave()" [disabled]="isSaving"><i class="fa fa-spinner fa-pulse" *ngIf="isSaving"></i> {{ 'BTN_CREATE'|translate }}</button>
+    <button class="btn btn-default" (click)="onCancel()">{{ 'BTN_CANCEL'|translate }}</button>
+</div>

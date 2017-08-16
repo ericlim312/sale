@@ -1,0 +1,127 @@
+<div *ngIf="settings">
+    <h1>{{ 'SETTINGS_SELLOSHOP_GENERAL' | translate }}</h1>
+    <setting-row
+        (onSave)="settings.logo = $event; save('logo');"
+        type="image"
+        [uploadUrl]="uploadUrl"
+        [error]="errors['logo']"
+        [name]="'SETTINGS_SELLOSHOP_LOGO'|translate"
+        [value]="settings.logo"
+    ></setting-row>
+    <setting-row-select
+        mode="dropdown"
+        (onSave)="settings.shop_state = $event; save('shop_state');"
+        [choices]="shopStates"
+        [error]="errors['shop_state']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_SHOP_STATE'|translate"
+        [value]="settings.shop_state"
+    ></setting-row-select>
+    <setting-row
+        (onSave)="settings.contact_email = $event; save('contact_email');"
+        type="text"
+        [error]="errors['contact_email']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_CONTACT_EMAIL'|translate"
+        [value]="settings.contact_email"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.title_standard = $event; save('title_standard');"
+        type="text"
+        [error]="errors['title_standard']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_TITLE_STANDARD'|translate"
+        [value]="settings.title_standard"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.title_index = $event; save('title_index');"
+        type="text"
+        [error]="errors['title_index']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_TITLE_INDEX'|translate"
+        [value]="settings.title_index"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.firstpage_products_headline = $event; save('firstpage_products_headline');"
+        type="text"
+        [error]="errors['firstpage_products_headline']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_FIRSTPAGE_PRODUCT_HEADLINE'|translate"
+        [value]="settings.firstpage_products_headline"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.google_analytics_id = $event; save('google_analytics_id');"
+        type="text"
+        [error]="errors['google_analytics_id']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_GOOGLE_ANALYTICS_ID'|translate"
+        [value]="settings.google_analytics_id"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.google_site_verification = $event; save('google_site_verification');"
+        type="text"
+        [error]="errors['google_site_verification']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_GOOGLE_SITE_VERIFICATION'|translate"
+        [value]="settings.google_site_verification"
+    ></setting-row>
+    <setting-row-select
+        mode="dropdown"
+        (onSave)="settings.item_id_product_page = $event; save('item_id_product_page');"
+        [choices]="itemIdChoices"
+        [error]="errors['item_id_product_page']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_ITEM_ID'|translate"
+        [value]="settings.item_id_product_page"
+    ></setting-row-select>
+    <setting-row-select
+        mode="dropdown"
+        (onSave)="settings.index_products = $event; save('index_products');"
+        [choices]="indexProductsChoices"
+        [error]="errors['index_products']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_INDEX_PRODUCTS'|translate"
+        [value]="settings.index_products"
+    ></setting-row-select>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.show_price_with_tax = $event; save('show_price_with_tax');"
+        [error]="errors['show_price_with_tax']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_SHOW_TAX'|translate"
+        [value]="settings.show_price_with_tax"
+    ></setting-row>
+
+    <setting-row
+        type="toggle"
+        (onSave)="settings.allow_leave_message = $event; save('allow_leave_message');"
+        [error]="errors['allow_leave_message']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_ALLOW_LEAVE_MESSAGE'|translate"
+        [value]="settings.allow_leave_message"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.show_soldout_products = $event; save('show_soldout_products');"
+        [error]="errors['show_soldout_products']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_SHOW_SOLDOUT'|translate"
+        [value]="settings.show_soldout_products"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.show_news_page = $event; save('show_news_page');"
+        [error]="errors['show_news_page']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_SHOW_NEWS'|translate"
+        [value]="settings.show_news_page"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.show_all_page = $event; save('show_all_page');"
+        [error]="errors['show_all_page']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_SHOW_ALL'|translate"
+        [value]="settings.show_all_page"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.show_campaigns_page = $event; save('show_campaigns_page');"
+        [error]="errors['show_campaigns_page']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_SHOW_CAMPAIGNS'|translate"
+        [value]="settings.show_campaigns_page"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.show_popular_page = $event; save('show_popular_page');"
+        [error]="errors['show_popular_page']"
+        [name]="'SETTINGS_SHELLOSHOP_GENERAL_SHOW_POPULAR'|translate"
+        [value]="settings.show_popular_page"
+    ></setting-row>
+</div>

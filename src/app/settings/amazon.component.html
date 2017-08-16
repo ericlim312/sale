@@ -1,0 +1,11 @@
+<div *ngIf="settings && statuses">
+    <h1>{{ 'SETTINGS_AMAZON' | translate }}</h1>
+    <setting-row-select
+        mode="dropdown"
+        (onSave)="settings.status_id_paid = $event; save('status_id_paid');"
+        [choices]="statuses"
+        [error]="errors['status_id_paid']"
+        [name]="'SETTINGS_AMAZON_STATUS_NEW_ORDER'|translate"
+        [value]="settings.status_id_paid"
+    ></setting-row-select>
+</div>

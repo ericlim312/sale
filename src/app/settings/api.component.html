@@ -1,0 +1,29 @@
+<div class="status-box">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'API_KEYS'|translate }}</h2>
+        </div>
+        <div class="col-md-6">
+            <button (click)="onCreate()" class="action-button pull-right"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+        </div>
+    </div>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'API_KEY'|translate }}</th>
+            <th>{{ 'API_TOKEN'|translate }}</th>
+            <th>{{ 'DESCRIPTION'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+        <tr *ngFor="let key of keys">
+            <td>{{ key.key }}</td>
+            <td>{{ key.token }}</td>
+            <td>{{ key.desc }}</td>
+            <td class="buttons">
+                <a class="btn-link" role="button" (click)="onDelete(key)">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+    </table>
+</div>

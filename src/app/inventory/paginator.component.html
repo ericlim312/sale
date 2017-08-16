@@ -1,0 +1,7 @@
+<div class="sello-paginator">
+    <a *ngIf="page != 1" (click)="onPageChange(1);goToRoute(1)" href="javascript:void(0)">{{ 'PAGE_FIRST'|translate }}</a>
+    <a *ngIf="page > 1" (click)="onPageChange(page-1);goToRoute(page)" href="javascript:void(0)"><i class="fa fa-arrow-left"></i></a>
+    <a *ngFor="let thepage of pages" (click)="onPageChange(1);goToRoute(thepage.num)" href="javascript:void(0)" [ngClass]="{ current: thepage.num == page }">{{ thepage.num }}</a>
+    <a *ngIf="page < numPages" (click)="onPageChange(page+1);goToRoute(page)" href="javascript:void(0)"><i class="fa fa-arrow-right"></i></a>
+    <a *ngIf="page != numPages" (click)="onPageChange(numPages);goToRoute(numPages)" href="javascript:void(0)">{{ 'PAGE_LAST'|translate }}</a>
+</div>

@@ -1,0 +1,45 @@
+<template ngFor let-property [ngForOf]="selectedProperties">
+    <div class="form-group" *ngIf="account && account.account_type !== 'whitelabel'">
+        <label class="col-sm-3 control-label is-optional"><span *ngIf="property.required !== '1'">{{ 'OPTIONAL'|translate }}</span>{{ property.name }}:</label>
+        <!-- Text input (or unknown type) -->
+        <div class="col-sm-5" *ngIf="property.input == 'text' && property.valid.length === 0">
+            <input class="form-control" type="text" [value]="property.current" (change)="updateProperty(property, $event.target.value)">
+        </div>
+        <!-- Select box -->
+        <div class="col-sm-5" *ngIf="(property.input == 'text' || property.input == 'single') && property.valid.length > 0">
+            <select class="form-control" (change)="updateProperty(property, $event.target.value)">
+                <option value="">{{ 'SELECT'|translate }}</option>
+                <option *ngFor="let v of property.valid" [value]="v" [selected]="v == property.current">{{ v }}</option>
+            </select>
+        </div>
+        <!-- Country select box -->
+        <div class="col-sm-5" *ngIf="property.input == 'country'">
+            <select class="form-control" (change)="updateProperty(property, $event.target.value)">
+                <option value="">{{ 'SELECT'|translate }}</option>
+                <option *ngFor="let country of countries" [value]="country.code" [selected]="property.current == country.code">{{ country.name }}</option>
+            </select>
+        </div>
+        <!-- Addon input -->
+        <div class="col-sm-5 sello-addon-select" *ngIf="property.input == 'addon'">
+            <input class="form-control" [value]="property.current" type="text" (change)="updateProperty(property, $event.target.value)">
+            <select class="form-control" (change)="updateAddon(property, $event.target.value)">
+                <option value="">{{ 'SELECT'|translate }}</option>
+                <option *ngFor="let option of property.addon.values" [value]="option" [selected]="option == property.addon.current">{{ option }}</option>
+            </select>
+        </div>
+        <div class="col-sm-4 help">
+            <button *ngIf="property.required !== '1'" class="btn btn-default" (click)="remove(property)"><i class="fa fa-remove"></i> {{ 'REMOVE'|translate }}</button>
+        </div>
+    </div>
+</template>
+
+<div class="form-group" *ngIf="account && account.account_type !== 'whitelabel'">
+    <div class="col-sm-5 col-sm-offset-3">
+        <select class="form-control" (change)="selectProperty($event.target.value)">
+            <option value="">{{ 'SELECT_PROPERTY_TO_ADD'|translate }}</option>
+            <option *ngFor="let prop of properties;" [value]="prop.name">{{ prop.name }}</option>
+        </select>
+    </div>
+    <div class="col-sm-4 help">
+    </div>
+</div>

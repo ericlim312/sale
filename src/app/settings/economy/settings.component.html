@@ -1,0 +1,116 @@
+<div *ngIf="settings">
+    <h1>{{ 'SETTINGS_ECONOMY_SECTION' | translate }}</h1>
+    <setting-row
+        (onSave)="settings.general.stats_include_shipping = $event; save('general.stats_include_shipping');"
+        type="toggle"
+        [error]="errors['general.stats_include_shipping']"
+        [name]="'SETTINGS_ECONOMY_STATS_INCLUDE_SHIPPING' |translate"
+        [value]="settings.general.stats_include_shipping"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.general.stats_with_tax = $event; save('general.stats_with_tax');"
+        type="toggle"
+        [error]="errors['general.stats_with_tax']"
+        [name]="'SETTINGS_ECONOMY_STATS_WITH_TAX' |translate"
+        [value]="settings.general.stats_with_tax"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.general.bookkeeping_autosend = $event; save('general.bookkeeping_autosend');"
+        type="toggle"
+        [error]="errors['general.bookkeeping_autosend']"
+        [name]="'SETTINGS_ECONOMY_BOOKKEEPING_AUTOSEND' |translate"
+        [value]="settings.general.bookkeeping_autosend"
+    ></setting-row>
+    <setting-row-select
+        mode="dropdown"
+        (onSave)="settings.general.bookkeeping_period = $event; save('general.bookkeeping_period');"
+        [choices]="periods"
+        [error]="errors['general.bookkeeping_period']"
+        [name]="'SETTINGS_ECONOMY_BOOKKEEPING_PERIOD'|translate"
+        [value]="settings.general.bookkeeping_period"
+    ></setting-row-select>
+    <setting-row-select
+        mode="dropdown"
+        (onSave)="settings.general.bookkeeping_type = $event; save('general.bookkeeping_type');"
+        [choices]="types"
+        [error]="errors['general.bookkeeping_type']"
+        [name]="'SETTINGS_ECONOMY_BOOKKEEPING_TYPE'|translate"
+        [value]="settings.general.bookkeeping_type"
+    ></setting-row-select>
+    <setting-row
+        (onSave)="settings.general.reciept_show_tax = $event; save('general.reciept_show_tax');"
+        type="toggle"
+        [error]="errors['general.reciept_show_tax']"
+        [name]="'SETTINGS_ECONOMY_RECEIPT_SHOW_TAX' |translate"
+        [value]="settings.general.reciept_show_tax"
+    ></setting-row>
+    <setting-row-select
+        mode="dropdown"
+        (onSave)="settings.general.shipping_tax = $event; save('general.shipping_tax');"
+        [choices]="taxes"
+        [error]="errors['general.shipping_tax']"
+        [name]="'SETTINGS_ECONOMY_SHIPPING_TAX'|translate"
+        [value]="settings.general.shipping_tax"
+    ></setting-row-select>
+    <setting-row
+        (onSave)="settings.general.reciept_show_alias = $event; save('general.reciept_show_alias');"
+        type="toggle"
+        [error]="errors['general.reciept_show_alias']"
+        [name]="'SETTINGS_ECONOMY_RECEIPT_SHOW_ALIAS' |translate"
+        [value]="settings.general.reciept_show_alias"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.general.reciept_show_sello_artnr = $event; save('general.reciept_show_sello_artnr');"
+        type="toggle"
+        [error]="errors['general.reciept_show_sello_artnr']"
+        [name]="'SETTINGS_ECONOMY_SHOW_SELLO_ARTNR' |translate"
+        [trueText]="'SETTINGS_ECONOMY_SHOW_SELLO_ARTNR_TRUE' |translate"
+        [falseText]="'SETTINGS_ECONOMY_SHOW_SELLO_ARTNR_FALSE' |translate"
+        [value]="settings.general.reciept_show_sello_artnr"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.general.bookkeeping_volume = $event; save('general.bookkeeping_volume');"
+        type="toggle"
+        [error]="errors['general.bookkeeping_volume']"
+        [name]="'SETTINGS_ECONOMY_BOOKKEEPING_VOLUME' |translate"
+        [trueText]="'SETTINGS_ECONOMY_BOOKKEEPING_VOLUME_TRUE' |translate"
+        [falseText]="'SETTINGS_ECONOMY_BOOKKEEPING_VOLUME_FALSE' |translate"
+        [value]="settings.general.bookkeeping_volume"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.general.bookkeeping_tariff = $event; save('general.bookkeeping_tariff');"
+        type="toggle"
+        [error]="errors['general.bookkeeping_tariff']"
+        [name]="'SETTINGS_ECONOMY_BOOKKEEPING_TARIFF' |translate"
+        [trueText]="'SETTINGS_ECONOMY_BOOKKEEPING_TARIFF_TRUE' |translate"
+        [falseText]="'SETTINGS_ECONOMY_BOOKKEEPING_TARIFF_FALSE' |translate"
+        [value]="settings.general.bookkeeping_tariff"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.general.bookkeeping_coo = $event; save('general.bookkeeping_coo');"
+        type="toggle"
+        [error]="errors['general.bookkeeping_coo']"
+        [name]="'SETTINGS_ECONOMY_BOOKKEEPING_COO' |translate"
+        [trueText]="'SETTINGS_ECONOMY_BOOKKEEPING_COO_TRUE' |translate"
+        [falseText]="'SETTINGS_ECONOMY_BOOKKEEPING_COO_FALSE' |translate"
+        [value]="settings.general.bookkeeping_coo"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.general.payson_email = $event; save('general.payson_email');"
+        type="text"
+        [error]="errors['general.payson_email']"
+        [name]="'SETTINGS_ECONOMY_PAYSON_EMAIL' |translate"
+        [value]="settings.general.payson_email"
+        [description]="'SETTINGS_ECONOMY_PAYSON_EMAIL_HELP' |translate"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.general.document_logo = $event; save('general.document_logo');"
+        type="image"
+        deletable="true"
+        [uploadUrl]="uploadUrl"
+        [error]="errors['general.document_logo']"
+        [name]="'SETTINGS_ECONOMY_DOCUMENT_LOGO'|translate"
+        [value]="settings.general.document_logo"
+        [description]="'SETTINGS_ECONOMY_DOCUMENT_LOGO_HELP'|translate"
+    ></setting-row>
+</div>

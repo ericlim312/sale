@@ -1,0 +1,25 @@
+<div *ngIf="settings">
+    <h1>{{ 'SETTINGS_FEED_SETTINGS'|translate }}</h1>
+    <setting-row
+        (onSave)="save('feed.url', $event)"
+        type="text"
+        [error]="errors['feed.url']"
+        [default]="'FEED_NO_URL'|translate"
+        [name]="'FEED_URL'|translate"
+        [value]="settings['feed.url']"
+    ></setting-row>
+    <setting-row
+        type="timestamp"
+        [editable]="false"
+        default="-"
+        [name]="'LAST_READ'|translate"
+        [value]="settings['feed.last_working']"
+    ></setting-row>
+    <setting-row
+        type="text"
+        [editable]="false"
+        default="-"
+        [name]="'FEED_STATUS'|translate"
+        [value]="settings['feed.status']"
+    ></setting-row>
+</div>

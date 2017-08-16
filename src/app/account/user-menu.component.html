@@ -1,0 +1,10 @@
+<div class="dropdown user-menu" dropdown *ngIf="account">
+  <a href dropdownToggle [addToggleClass]="true">{{ account?.email }}</a>
+  <ul class="dropdown-menu userinfo arrow">
+    <li><a href="https://bo.sello.io/#/settings" angulartics2On="click" angularticsCategory="userMenuSettings" angularticsEvent="click">{{ 'SETTINGS' | translate }} <i class="pull-right fa fa-sliders"></i></a></li>
+    <li *ngIf="account?.account_type != 'whitelabel'" class="divider"></li>
+    <li *ngIf="account?.account_type != 'whitelabel' && allowed('account.invoices')" angulartics2On="click" angularticsCategory="userMenuInvoices" angularticsEvent="click"><a href="https://bo.sello.io/#/account/invoice">Fakturor <i class="pull-right fa fa-money"></i></a></li>
+    <li class="divider"></li>
+    <li><a (click)="logout()" class="text-right link" angulartics2On="click" angularticsCategory="userMenuLogout" angularticsEvent="click">{{ 'LOGOUT' | translate }}</a></li>
+  </ul>
+</div>

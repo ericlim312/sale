@@ -1,0 +1,19 @@
+<div *ngIf="settings">
+    <h1>{{ 'SETTINGS_TRADERA_TERMS' | translate }}</h1>
+    <setting-row-wysiwyg
+        (onSave)="settings.terms.delivery = $event; save('terms.delivery');"
+        [error]="errors['terms.delivery']"
+        default="-"
+        [name]="'Terms of delivery (shown on all items)'|translate"
+        [value]="settings.terms.delivery"
+        [maxLength]="500"
+    ></setting-row-wysiwyg>
+    <setting-row-wysiwyg
+        (onSave)="settings.terms.purchase = $event; save('terms.purchase');"
+        [error]="errors['terms.purchase']"
+        default="-"
+        [name]="'Conditions (shown on all items)'|translate"
+        [value]="settings.terms.purchase"
+        [maxLength]="500"
+    ></setting-row-wysiwyg>
+</div>

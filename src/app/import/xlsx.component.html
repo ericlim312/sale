@@ -1,0 +1,496 @@
+<div class="container">
+    <div class="single-column-container">
+        <div class="setting-box">
+            <h2>{{ 'IMPORT_UPDATE_FROM_EXCEL'|translate }}</h2>
+
+            <hint id="products-xlsx" [message]="'HINT_XLSX_IMPORT'|translate"></hint>
+
+            <div class="setting-panel">
+                <div class="setting-form">
+                    <div class="row" *ngIf="!uploading">
+                        <div class="col-sm-6">
+                            <div>
+                                <span class="text">{{ 'XLSX_IMPORT_MODE'|translate }}</span><br/>
+                                <div class="radio">
+                                    <label><input type="radio" name="mode" [(ngModel)]="options.mode" value="create"> {{ 'XLSX_MODE_CREATE'|translate }}</label>
+                                </div>
+                                <div class="radio">
+                                    <label><input type="radio" name="mode" [(ngModel)]="options.mode" value="update"> {{ 'XLSX_MODE_UPDATE'|translate }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="!uploading">
+                        <div class="col-md-6">
+                            <span class="text">{{ 'SELECT_FILE'|translate }}:</span>
+                            <p><input type="file" ng2-file-select [uploader]="uploader" identifier="main"></p>
+                        </div>
+                    </div>
+                    <p class="text-center" *ngIf="uploading">
+                        <i class="fa fa-spinner fa-spin fa-3x fa-fw" style="margin: 100px 0"></i>
+                    </p>
+                    <div *ngIf="success" class="alert alert-success">
+                        {{ 'XLSX_PRODUCT_IMPORT_SUCCESS'|translate }}
+                    </div>
+
+                    <div class="alert alert-danger" *ngIf="errors.length > 0">
+                        {{ errors }}
+                    </div>
+
+                    <a *ngIf="!showAdvanced && !uploading" class="cursor-link" (click)="showAdvanced = true">{{ 'SHOW_ADVANCED_SETTINGS'|translate }}</a>
+                    <div *ngIf="showAdvanced && !uploading">
+                        <h4>{{ 'CONNECT_MARKETPLACES'|translate }}</h4>
+                        <div class="row">
+                            <div class="col-md-2" *ngFor="let market of markets">
+                                <span class="text">{{ marketName(market) }}</span>
+                                <select class="form-control" [(ngModel)]="options.integrations[marketName(market).toLowerCase()]">
+                                    <option *ngFor="let integration of integrationsOfType(market)" [value]="integration.id">{{ integration.display_name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="button-panel" *ngIf="!uploading">
+                        <button type="button" class="action-button" (click)="upload()">{{ 'BTN_START'|translate }}</button>
+                    </p>
+                </div>
+            </div>
+
+            <div class="setting-panel margin-top">
+                <div class="setting-form">
+                    <h3>{{ 'GENERAL_FIELDS'|translate }}</h3>
+
+                    <table class="table margin-bottom">
+                        <tr>
+                            <th width="30%">{{ 'NAME'|translate }}</th>
+                            <th width="70%">{{ 'DESCRIPTION'|translate }}</th>
+                        </tr>
+                        <tr>
+                            <td>Id</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_ID'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Sku</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_SKU'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Private name</td>
+                            <td>{{ 'XLSX_PRODUCT_PRIVATE_NAME'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Quantity</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_QUANTITY'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Category</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_CATEGORY'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Condition</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_CONDITION'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Tax</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_TAX'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Location</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_LOCATION'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Volume</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_VOLUME'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Weight</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_WEIGHT'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Purchase price</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_PURCHASE_PRICE'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Images</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_IMAGES'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Ean</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_EAN'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Gender</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_GENDER'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Color</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_COLOR'|translate }} <a class="cursor-link" (click)="showColors = !showColors">{{ 'XLSX_PRODUCT_IMPORT_COLOR_SHOW'|translate }}</a> <span *ngIf="showColors">Acrylic, Aluminum, Aluzink, Anthracite, AnthraciteGrey, AntiqueBrass, Apricot, Azure, BabyPink, Beech, Beige, Birch, Black, BlackAsh, Blue, BlueprintChampagne, BoneWhite, Bronze, Brown, Cerise, Chalk, Champagne, Chrome, CleanSteel, Copper, Cranberry, Cream, Creme, Crystal, DarkBlue, DarkBrown, DarkGreen, DarkGrey, DarkOak, DarkOakStructure, DarkOrange, DarkPink, DarkPurple, DarkRed, DarkYellow, DenimBlue, Espresso, Gold, GraphiteBlue, GraphiteGrey, Green, GreenYellow, Grey, Hematite, IceBlue, Inox, Lavender, LemonYellow, LightBlue, LightBrown, LightGreen, LightGrey, LightOrange, LightPink, LightPurple, LightRed, LightYellow, LimeGreen, LotusWhite, MarineBlue, MelangeGrey, MetalLook, Mint, MultiColor, Nature, NougatBrown, Oak, OceanBlue, OceanRed, OldPink, Olive, OliveAsh, Onyx, Orange, PastelBlue, PastelGreen, PearGreen, PearlBlue, PearlGreen, PearlPink, PearlWhite, Pine, Pink, PinkGold, PlatinumSilver, PlatinumSteel, Plum, Purple, Raspberry, Red, RedGold, Sand, Satin, Silver, SilverChrome, SilverGlass, SilverGrey, SunnyYellow, Teak, Titanium, TitaniumGrey, Transparent, Tree, Turquoise, Walnut, Vanilla, WarmWhite, White, WhiteGold, WineRed, VulcanoRed, Yellow</span></td>
+                        </tr>
+                        <tr>
+                            <td>Standard name sv</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_NAME_SV'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard name en</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_NAME_EN'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard name no</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_NAME_NO'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard name da</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_NAME_DK'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard name fi</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_NAME_FI'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard name fr</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_NAME_FR'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard name es</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_NAME_ES'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard name it</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_NAME_IT'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard description sv</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_DESCRIPTION_SV'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard description en</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_DESCRIPTION_EN'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard description no</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_DESCRIPTION_NO'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard description da</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_DESCRIPTION_DA'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard description fi</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_DESCRIPTION_FI'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard description fr</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_DESCRIPTION_FR'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard description es</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_DESCRIPTION_ES'|translate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Standard description it</td>
+                            <td>{{ 'XLSX_PRODUCT_IMPORT_DESCRIPTION_IT'|translate }}</td>
+                        </tr>
+                    </table>
+
+                    <div *ngFor="let market of markets">
+                        <h3>{{ marketName(market) }}</h3>
+
+                        <table class="table margin-bottom" *ngIf="market == 1">
+                            <tr>
+                                <th width="30%">{{ 'NAME'|translate }}</th>
+                                <th width="70%">{{ 'DESCRIPTION'|translate }}</th>
+                            </tr>
+                            <tr>
+                                <td>Tradera name sv</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_NAME_SV'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera description sv</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_DESCRIPTION_SV'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera shipping primary method</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_SHIPPING_PRIMARY_METHOD'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera shipping primary cost</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_SHIPPING_PRIMARY_COST'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera shipping secondary method</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_SHIPPING_SECONDARY_METHOD'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera shipping secondary cost</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_SHIPPING_SECONDARY_COST'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera price store</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_PRICE_STORE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera price auction</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_PRICE_AUCTION'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera price reserve</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_PRICE_RESERVE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera price buynow</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_PRICE_BUYNOW'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera category</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_CATEGORY'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Tradera active</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_TRADERA_ACTIVE'|translate }}</td>
+                            </tr>
+                        </table>
+
+                        <table class="table margin-bottom" *ngIf="market == 6">
+                            <tr>
+                                <th width="30%">{{ 'NAME'|translate }}</th>
+                                <th width="70%">{{ 'DESCRIPTION'|translate }}</th>
+                            </tr>
+                            <tr>
+                                <td>Fyndiq name sv</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_FYNDIQ_NAME_SV'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fyndiq description sv</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_FYNDIQ_DESCRIPTION_SV'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fyndiq price</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_FYNDIQ_PRICE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fyndiq regular price</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_FYNDIQ_REGULAR_PRICE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fyndiq category</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_FYNDIQ_CATEGORY'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Fyndiq active</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_FYNDIQ_ACTIVE'|translate }}</td>
+                            </tr>
+                        </table>
+
+                        <!-- CDON -->
+                        <table class="table margin-bottom" *ngIf="market == 10">
+                            <tr>
+                                <th width="30%">{{ 'NAME'|translate }}</th>
+                                <th width="70%">{{ 'DESCRIPTION'|translate }}</th>
+                            </tr>
+                            <tr>
+                                <td>Cdon name sv</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_NAME_SV'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon description sv</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_DESCRIPTION_SV'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon name da</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_NAME_DA'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon description da</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_DESCRIPTION_DA'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon name fi</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_NAME_FI'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon description fi</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_DESCRIPTION_FI'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon name no</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_NAME_NO'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon description no</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_DESCRIPTION_NO'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon shipping se</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_SHIPPING_SE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon shipping no</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_SHIPPING_NO'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon shipping dk</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_SHIPPING_DK'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon shipping fi</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_SHIPPING_FI'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon price se</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_PRICE_SE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon regular price se</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_REGULAR_PRICE_SE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon price no</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_PRICE_NO'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon regular price no</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_REGULAR_PRICE_NO'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon price dk</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_PRICE_DK'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon regular price dk</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_REGULAR_PRICE_DK'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon price fi</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_PRICE_FI'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon regular price fi</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_REGULAR_PRICE_FI'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cdon active</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_CDON_ACTIVE'|translate }}</td>
+                            </tr>
+                        </table>
+
+                        <!-- Prestashop -->
+                        <table class="table margin-bottom" *ngIf="market == 11">
+                            <tr>
+                                <th width="30%">{{ 'NAME'|translate }}</th>
+                                <th width="70%">{{ 'DESCRIPTION'|translate }}</th>
+                            </tr>
+                            <tr>
+                                <td>Prestashop name sv</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_PRESTASHOP_NAME_SV'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Prestashop description sv</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_PRESTASHOP_DESCRIPTION_SV'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Prestashop price</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_PRESTASHOP_PRICE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Prestashop campaign price</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_PRESTASHOP_CAMPAIGN_PRICE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Prestashop category</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_PRESTASHOP_CATEGORY'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Prestashop active</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_PRESTASHOP_ACTIVE'|translate }}</td>
+                            </tr>
+                        </table>
+
+                        <!-- Amazon -->
+                        <table class="table margin-bottom" *ngIf="market == 13">
+                            <tr>
+                                <th width="30%">{{ 'NAME'|translate }}</th>
+                                <th width="70%">{{ 'DESCRIPTION'|translate }}</th>
+                            </tr>
+                            <tr>
+                                <td>Amazon name en</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_NAME_EN'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon description en</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_DESCRIPTION_EN'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon name de</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_NAME_DE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon description de</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_DESCRIPTION_DE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon name it</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_NAME_IT'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon description it</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_DESCRIPTION_IT'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon name fr</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_NAME_FR'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon description fr</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_DESCRIPTION_FR'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon name es</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_NAME_ES'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon description es</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_DESCRIPTION_ES'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon shipping eur</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_SHIPPING_EUR'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon shipping gbp</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_SHIPPING_GBP'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon price uk</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_PRICE_UK'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon price de</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_PRICE_DE'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon price fr</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_PRICE_FR'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon price it</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_PRICE_IT'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon price es</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_PRICE_ES'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon category</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_CATEGORY'|translate }}</td>
+                            </tr>
+                            <tr>
+                                <td>Amazon active</td>
+                                <td>{{ 'XLSX_PRODUCT_IMPORT_AMAZON_ACTIVE'|translate }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

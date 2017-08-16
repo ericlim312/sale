@@ -1,0 +1,15 @@
+<!-- Split button -->
+<div class="btn-group" dropdown>
+  <button id="split-button" type="button" class="btn btn-transparent" (click)="openDialog()"><i class="fa fa-edit"></i> {{ 'BTN_EDIT'|translate }}</button>
+  <button type="button" class="btn btn-transparent dropdown-toggle" dropdownToggle>
+    <span class="caret"></span>
+    <span class="sr-only">Show submenu</span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="split-button">
+    <li role="menuitem" (click)="openDialog()"><a class="dropdown-item"><i class="fa fa-edit"></i> {{ 'BTN_EDIT'|translate }}</a></li>
+    <li role="menuitem" (click)="copy()"><a class="dropdown-item"><i class="fa fa-copy"></i> {{ 'COPY'|translate }}</a></li>
+    <li role="menuitem" (click)="statistics()"><a class="dropdown-item"><i class="fa fa-pie-chart"></i> Statistik</a></li>
+    <li class="divider dropdown-divider"></li>
+    <li role="menuitem" (click)="delete()"><a class="dropdown-item"><i class="fa fa-pie-chart"></i> Ta bort</a></li>
+  </ul>
+</div>

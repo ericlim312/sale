@@ -1,0 +1,5 @@
+<div class="row category-selector">
+    <div *ngFor="let column of columns; let colindex = index" class="col-md-3 category-column">
+        <a *ngFor="let category of categories[integration][column.parent]" (click)="browseCategory(colindex+1, category.id, column, category)" [ngClass]="{ selected: column.selected == category.id }" angulartics2On="click" angularticsCategory="inventoryEditCategory" angularticsEvent="click">{{ category.lang.sv.name }}<br></a>
+    </div>
+</div>

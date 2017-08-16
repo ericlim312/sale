@@ -1,0 +1,34 @@
+<div class="category-section section" *ngIf="account">
+    <h3 id="categoryHeading">{{ 'HEADING_CATEGORY'|translate }}</h3>
+    <h5 *ngIf="account.account_type !== 'whitelabel'">{{ 'SELLO_CATEGORY_SUBHEADER'|translate }}</h5>
+    <p *ngIf="account.account_type !== 'whitelabel'" class="sub">{{ 'SELLO_CATEGORY_SUBTEXT'|translate }}</p>
+    <div class="form-group">
+        <div class="col-sm-3 control-label">
+            {{ 'SELECT_A_CATEGORY'|translate }}
+        </div>
+        <div class="col-sm-9">
+            <div class="category-selector">
+                <category-selector integration="0" [preselected]="product.category" (select)="onChangeCategory($event)"></category-selector>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="account.account_type !== 'whitelabel'">
+        <div class="col-md-12">
+            <div *ngFor="let integration of integrations">
+                <div class="integration" *ngIf="marketWithCategories(integration)" (click)="integration.open = !integration.open">
+                    <div class="market-name"><img [src]="'/assets/img/marketplace/16x16-' + integration.market_id + '.png'"> {{ marketName(integration.market_id) }}</div>
+                    <div class="crumb" *ngIf="product.categories[integration.id][0].category_id !== '' && product.categories[integration.id][0].category_id !== null"><p *ngFor="let cat of product.categories[integration.id]" [innerHTML]="cat.crumb"></p></div>
+                    <div class="crumb error" *ngIf="product.categories[integration.id][0].category_id == '' || product.categories[integration.id][0].category_id === null"><i class="fa fa-info-circle"></i> {{ 'CATEGORY_MISSING'|translate }}</div>
+                    <div class="toggle">
+                        <i *ngIf="integration.open" class="fa fa-minus-circle"></i>
+                        <i *ngIf="!integration.open" class="fa fa-plus-circle"></i>
+                    </div>
+                </div>
+                <div class="integration-category-select" *ngIf="integration.open">
+                    <integration-category-select *ngIf="integration.market_id != 11" [integration]="integration.id" [preselected]="product.categories[integration.id][0].category_id" (select)="onIntegrationSelect(integration, $event)"></integration-category-select>
+                    <integration-category-select-multi *ngIf="integration.market_id == 11" [integration]="integration.id" [categories]="product.categories[integration.id]" (select)="onIntegrationSelectMultiple(integration, $event)"></integration-category-select-multi>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

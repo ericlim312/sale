@@ -1,0 +1,130 @@
+<div class="status-box">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'SETTINGS_SELLOSHOP_CONTENT'|translate }}</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <button (click)="createPage.visible = true" *ngIf="!createPage.visible" class="action-button"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+        </div>
+    </div>
+
+    <!-- Pages -->
+    <div class="setting-panel" *ngIf="createPage.visible">
+        <h3>{{ 'NEW_PAGE'|translate }}</h3>
+
+        <form #createNewForm="ngForm" class="setting-form" (submit)="onCreatePage(createNewForm.value, createNewForm.valid)">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>
+                        <span class="text">{{ 'NAME'|translate }}</span><br>
+                        <input type="text"
+                            [ngModel]="createPage.content.name"
+                            #name="ngModel"
+                            name="name"
+                            required>
+                        <small [hidden]="name.valid || (name.pristine && !createNewForm.submitted)" class="text-danger">{{ 'Name is required' |translate }}</small>
+                    </p>
+                </div>
+            </div>
+
+            <wysiwyg [ngModel]="createPage.content.content" name="content"></wysiwyg>
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"
+                        [ngModel]="createPage.content.showContact"
+                        #showContact="ngModel"
+                        name="showContact"> {{ 'SHOW_CONTACT_FORM'|translate }}
+                </label>
+            </div>
+
+            <p class="button-panel">
+                <button type="button" (click)="createPage.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+            </p>
+        </form>
+    </div>
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'PAGES'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+
+        <template ngFor let-item [ngForOf]="pages">
+            <tr *ngIf="editingPage !== item">
+                <td>{{ item.content.name }}</td>
+                <td class="buttons">
+                    <a class="btn-link" role="button" (click)="editingPage = item"><i class="fa fa-pencil"></i></a>
+                    <a class="btn-link" role="button" (click)="onDeletePage(item.id)"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+            <tr *ngIf="editingPage === item" class="edit">
+                <td colspan="7">
+                    <form #editingPageForm="ngForm" class="setting-form" (submit)="onEditPage(editingPageForm.value, editingPageForm.valid)">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p>
+                                    <span class="text">{{ 'NAME'|translate }}</span><br>
+                                    <input type="text"
+                                        [ngModel]="editingPage.content.name"
+                                        #name="ngModel"
+                                        name="name"
+                                        required>
+                                    <small [hidden]="name.valid || (name.pristine && !editingPageForm.submitted)" class="text-danger">{{ 'Name is required' |translate }}</small>
+                                </p>
+                            </div>
+                        </div>
+
+                        <wysiwyg [ngModel]="editingPage.content.content" name="content"></wysiwyg>
+
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                        [ngModel]="editingPage.content.showContact"
+                                        #showContact="ngModel"
+                                        name="showContact"> {{ 'SHOW_CONTACT_FORM'|translate }}
+                            </label>
+                        </div>
+
+                        <p class="button-panel">
+                            <button type="button" (click)="editingPage = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                            <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                        </p>
+                    </form>
+                </td>
+            </tr>
+        </template>
+    </table>
+
+    <hr>
+
+    <!-- Content boxes -->
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'CONTENT_BOXES'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+
+        <template ngFor let-item [ngForOf]="boxes">
+            <tr *ngIf="editingBox !== item">
+                <td>{{ item.content.name }}</td>
+                <td class="buttons">
+                    <a class="btn-link" role="button" (click)="editingBox = item"><i class="fa fa-pencil"></i></a>
+                </td>
+            </tr>
+            <tr *ngIf="editingBox === item" class="edit">
+                <td colspan="7">
+                    <form #editingBoxForm="ngForm" class="setting-form" (submit)="onEditBox(editingBoxForm.value, editingBoxForm.valid)">
+                        <wysiwyg [ngModel]="editingBox.content.content" name="content"></wysiwyg>
+     
+                        <p class="button-panel">
+                            <button type="button" (click)="editingBox = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                            <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                        </p>
+                    </form>
+                </td>
+            </tr>
+        </template>
+    </table>
+
+</div>

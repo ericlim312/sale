@@ -1,0 +1,108 @@
+<ul class="settings-menu">
+    <li routerLinkActive="active"><a [routerLink]="['mail']">{{ 'SETTINGS_MAIL'|translate }}</a></li>
+    <li routerLinkActive="active"><a href="https://bo.sello.io/#/settings/label">{{ 'SETTINGS_LABELS'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['personal']">{{ 'SETTINGS_PERSONAL'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['status']">{{ 'SETTINGS_STATUS'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['order']">{{ 'SETTINGS_ORDERS'|translate }}</a></li>
+    <li [ngClass]="{ 'has-children': toggled.economy }"><a (click)="toggle('economy')" class="main-item">{{ 'SETTINGS_ECONOMY'|translate }}</a>
+        <ul *ngIf="toggled.economy" class="sub-menu">
+            <li routerLinkActive="active" class="child-item"><a [routerLink]="['economy/settings']">{{ 'SETTINGS_ECONOMY_SECTION'|translate }}</a></li>
+            <li routerLinkActive="active" class="child-item"><a [routerLink]="['economy/receipt']">{{ 'SETTINGS_RECEIPT_SECTION'|translate }}</a></li>
+        </ul>
+    </li>
+    <li [ngClass]="{ 'has-children': toggled.agent }"><a (click)="toggle('agent')" class="main-item">{{ 'SETTINGS_SALESAGENT'|translate }}</a>
+        <ul *ngIf="toggled.agent" class="sub-menu">
+            <li routerLinkActive="active" class="child-item"><a [routerLink]="['agent/settings']">{{ 'SETTINGS_SALESAGENT_SECTION'|translate }}</a></li>
+            <li routerLinkActive="active" class="child-item"><a [routerLink]="['agent/submitters']">{{ 'SETTINGS_SALESAGENT_SUBMITTERS'|translate }}</a></li>
+        </ul>
+    </li>
+    <li routerLinkActive="active"><a [routerLink]="['advanced']">{{ 'SETTINGS_ADVANCED'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['feedback']">{{ 'SETTINGS_FEEDBACK'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['logistics']">{{ 'SETTINGS_LOGISTICS'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['templates']">{{ 'SETTINGS_TEMPLATES'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['products']">{{ 'SETTINGS_PRODUCTS'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['brands']">{{ 'SETTINGS_BRANDS'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['reminders']">{{ 'SETTINGS_REMINDERS'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['users']">{{ 'SETTINGS_USERS'|translate }}</a></li>
+    <li routerLinkActive="active"><a [routerLink]="['manufacturers']">{{ 'SETTINGS_MANUFACTURERS'|translate }}</a></li>
+    <li [ngClass]="{ 'has-children': toggled.feed }"><a (click)="toggle('feed')" class="main-item">{{ 'SETTINGS_FEED'|translate }}</a>
+        <ul *ngIf="toggled.feed" class="sub-menu">
+            <li routerLinkActive="active" class="child-item"><a [routerLink]="['feed/settings']">{{ 'SETTINGS_FEED_SETTINGS'|translate }}</a></li>
+            <li routerLinkActive="active" class="child-item"><a [routerLink]="['feed/log']">{{ 'FEED_LOG'|translate }}</a></li>
+            <li routerLinkActive="active" class="child-item"><a [routerLink]="['feed/categories']">{{ 'FEED_CATEGORIES'|translate }}</a></li>
+        </ul>
+    </li>
+
+    <li [ngClass]="{ 'has-children': toggled.developers }"><a (click)="toggle('developers')" class="main-item">{{ 'SETTINGS_DEVELOPERS'|translate }}</a>
+        <ul *ngIf="toggled.developers" class="sub-menu">
+            <li routerLinkActive="active" class="child-item"><a [routerLink]="['developers/webhooks']">{{ 'SETTINGS_WEBHOOKS'|translate }}</a></li>
+            <li routerLinkActive="active" class="child-item"><a [routerLink]="['developers/api']">{{ 'SETTINGS_API'|translate }}</a></li>
+            <li routerLinkActive="active" class="child-item"><a href="https://bo.sello.io/#/settings/imageBulk">{{ 'SETTINGS_IMAGEBULK'|translate }}</a></li>
+        </ul>
+    </li>
+    <li *ngFor="let integration of integrations" class="marketplace-item">
+        <div class="menu-item" *ngIf="integration.market_id == 1">
+            <a href="javascript:void(0)" class="main-item" (click)="toggle('tradera')">
+                <img src="/assets/img/marketplace/{{ integration.market_id }}_w.svg" style="height: 20px; width: 50px;"> {{ integration.display_name }}
+                <a [href]="getLink(integration)" class="external-link" target="_blank"><i class="fa fa-external-link"></i></a>
+            </a>
+            <ul class="sub-menu" *ngIf="toggled['tradera']">
+                <li routerLinkActive="active" class="child-item"><a [routerLink]="['tradera', integration.id, 'checkout']">{{ 'SETTINGS_TRADERA_CHECKOUT'|translate }}</a></li>
+                <li routerLinkActive="active" class="child-item"><a [routerLink]="['tradera', integration.id, 'terms']">{{ 'SETTINGS_TRADERA_TERMS'|translate }}</a></li>
+                <li routerLinkActive="active" class="child-item"><a [routerLink]="['tradera', integration.id, 'store']">{{ 'SETTINGS_TRADERA_STORE'|translate }}</a></li>
+                <li routerLinkActive="active" class="child-item"><a [routerLink]="['tradera', integration.id, 'shipping']">{{ 'SETTINGS_TRADERA_SHIPPING'|translate }}</a></li>
+            </ul>
+        </div>
+        <div class="menu-item" *ngIf="integration.market_id == 5">
+            <a href="javascript:void(0)" class="main-item" (click)="toggle('selloshop' + integration.id)">
+                <img src="/assets/img/marketplace/{{ integration.market_id }}_w.svg" style="height: 20px; width: 50px;"> {{ integration.display_name }}
+                <a [href]="getLink(integration)" class="external-link" target="_blank"><i class="fa fa-external-link"></i></a>
+            </a>
+            <ul class="sub-menu" *ngIf="toggled['selloshop' + integration.id]">
+                <li class="child-item"><a [routerLink]="['selloshop', integration.id, 'general']">{{ 'SETTINGS_SELLOSHOP_GENERAL'|translate }}</a></li>
+                <li class="child-item"><a [routerLink]="['selloshop', integration.id, 'categories']">{{ 'SETTINGS_SELLOSHOP_CATEGORIES'|translate }}</a></li>
+                <li class="child-item"><a [routerLink]="['selloshop', integration.id, 'order']">{{ 'SETTINGS_SELLOSHOP_ORDER'|translate }}</a></li>
+                <li class="child-item"><a [routerLink]="['selloshop', integration.id, 'payment']">{{ 'SETTINGS_SELLOSHOP_PAYMENT'|translate }}</a></li>
+                <li class="child-item"><a [routerLink]="['selloshop', integration.id, 'cupons']">{{ 'SETTINGS_SELLOSHOP_CUPONS'|translate }}</a></li>
+                <li class="child-item"><a [routerLink]="['selloshop', integration.id, 'theme']">{{ 'SETTINGS_SELLOSHOP_THEME'|translate }}</a></li>
+                <li class="child-item"><a [routerLink]="['selloshop', integration.id, 'files']">{{ 'SETTINGS_SELLOSHOP_FILES'|translate }}</a></li>
+                <li class="child-item"><a [routerLink]="['selloshop', integration.id, 'modules']">{{ 'SETTINGS_SELLOSHOP_MODULES'|translate }}</a></li>
+                <li class="child-item"><a [routerLink]="['selloshop', integration.id, 'content']">{{ 'SETTINGS_SELLOSHOP_CONTENT'|translate }}</a></li>
+            </ul>
+        </div>
+        <div class="menu-item" *ngIf="integration.market_id == 11">
+            <a href="javascript:void(0)" class="main-item" (click)="toggle('prestashop' + integration.id)">
+                <img src="/assets/img/marketplace/{{ integration.market_id }}_w.svg" style="height: 20px; width: 50px;"> {{ integration.display_name }}
+                <a [href]="getLink(integration)" class="external-link" target="_blank"><i class="fa fa-external-link"></i></a>
+            </a>
+            <ul class="sub-menu" *ngIf="toggled['prestashop' + integration.id]">
+                <li class="child-item"><a [routerLink]="['prestashop', integration.id, 'sync']">{{ 'SETTINGS_PRESTASHOP_SYNC'|translate }}</a></li>
+                <li class="child-item"><a [routerLink]="['prestashop', integration.id, 'categories']">{{ 'SETTINGS_PRESTASHOP_CATEGORIES'|translate }}</a></li>
+                <li class="child-item"><a [routerLink]="['prestashop', integration.id, 'order']">{{ 'SETTINGS_PRESTASHOP_ORDER'|translate }}</a></li>
+            </ul>
+        </div>
+        <div class="menu-item" *ngIf="integration.market_id == 6">
+            <a href="javascript:void(0)" class="main-item">
+                <a [routerLink]="['fyndiq', integration.id]" style="padding: 0"><img src="/assets/img/marketplace/{{ integration.market_id }}_w.svg" style="height: 20px; width: 50px;"> {{ integration.display_name }}</a>
+            </a>
+        </div>
+        <div class="menu-item" *ngIf="integration.market_id == 10">
+            <a href="javascript:void(0)" class="main-item">
+                <a [routerLink]="['cdon', integration.id]" style="padding: 0"><img src="/assets/img/marketplace/{{ integration.market_id }}_w.svg" style="height: 20px; width: 50px;"> {{ integration.display_name }}</a>
+                <a [href]="getLink(integration)" class="external-link" target="_blank"><i class="fa fa-external-link"></i></a>
+            </a>
+        </div>
+        <div class="menu-item" *ngIf="integration.market_id == 12">
+            <a href="javascript:void(0)" class="main-item">
+                <a [routerLink]="['woocommerce', integration.id]" style="padding: 0"><img src="/assets/img/marketplace/{{ integration.market_id }}_w.svg" style="height: 20px; width: 50px;"> {{ integration.display_name }}</a>
+                <a [href]="getLink(integration)" class="external-link" target="_blank"><i class="fa fa-external-link"></i></a>
+            </a>
+        </div>
+        <div class="menu-item" *ngIf="integration.market_id == 13">
+            <a href="javascript:void(0)" class="main-item">
+                <a [routerLink]="['amazon', integration.id]" style="padding: 0"><img src="/assets/img/marketplace/{{ integration.market_id }}_w.svg" style="height: 20px; width: 50px;"> {{ integration.display_name }}</a>
+                <a [href]="getLink(integration)" class="external-link" target="_blank"><i class="fa fa-external-link"></i></a>
+            </a>
+        </div>
+    </li>
+</ul>

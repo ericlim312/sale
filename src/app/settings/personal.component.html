@@ -1,0 +1,171 @@
+<div *ngIf="settings">
+    <h1>{{ 'SETTINGS_PERSONAL' | translate }}</h1>
+    <setting-row
+        (onSave)="settings.company.name = $event; save('company.name');"
+        type="text"
+        [error]="errors['company.name']"
+        default="-"
+        [name]="'Company name'|translate"
+        [value]="settings.company.name"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.company.vat_number = $event; save('company.vat_number');"
+        type="text"
+        [error]="errors['company.vat_number']"
+        default="-"
+        [name]="'Company VAT number'|translate"
+        [value]="settings.company.vat_number"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.address.street = $event; save('address.street');"
+        type="text"
+        [error]="errors['address.street']"
+        default="-"
+        [name]="'Street'|translate"
+        [value]="settings.address.street"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.address.zip = $event; save('address.zip');"
+        type="text"
+        [error]="errors['address.zip']"
+        default="-"
+        [name]="'ZIP code'|translate"
+        [value]="settings.address.zip"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.address.city = $event; save('address.city');"
+        type="text"
+        [error]="errors['address.city']"
+        default="-"
+        [name]="'City'|translate"
+        [value]="settings.address.city"
+    ></setting-row>
+    <setting-row-select
+        (onSave)="settings.address.country = getCountry($event); save('address.country');"
+        [choices]="countries"
+        [error]="errors['address.country']"
+        [name]="'Country'|translate"
+        [value]="settings.address.country"
+    ></setting-row-select>
+    <setting-row
+        (onSave)="settings.contact.phone = $event; save('contact.phone');"
+        type="text"
+        [error]="errors['contact.phone']"
+        default="-"
+        [name]="'Phone'|translate"
+        [value]="settings.contact.phone"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.contact.email = $event; save('contact.email');"
+        type="text"
+        [error]="errors['contact.email']"
+        default="-"
+        [name]="'Email'|translate"
+        [value]="settings.contact.email"
+    ></setting-row>
+    <setting-row *ngIf="invoiceMailVisible"
+        (onSave)="settings.contact.invoice_email = $event; save('contact.invoice_email');"
+        type="text"
+        [error]="errors['contact.invoice_email']"
+        default="-"
+        [name]="'Invoice Email'|translate"
+        [value]="settings.contact.invoice_email"
+    ></setting-row>
+    <setting-row-select
+        (onSave)="setLanguage($event)"
+        [choices]="languages"
+        [error]="errors['language']"
+        [name]="'Sello Language'|translate"
+        [value]="getLanguage()"
+    ></setting-row-select>
+
+    <div class="setting-row row" *ngIf="!passwordChange.visible">
+        <div class="col-md-3 name">
+            <span class="pad">{{ 'Password'|translate }}:</span>
+        </div>
+        <div class="col-md-7 value">
+            <span class="pad"></span>
+        </div>
+        <div class="col-md-2 button">
+            <div class="pad">
+                <button class="btn btn-default" (click)="passwordChange.visible = true" type="button"><i class="fa fa-edit"></i> {{ 'BTN_EDIT'|translate }}</button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="passwordChange.visible" class="setting-row row">
+        <div class="col-md-12">
+            <div class="panel panel-sello panel-sello-fix">
+                <form #passwordChangeForm="ngForm" novalidate (submit)="savePassword(passwordChangeForm.value, passwordChangeForm.valid)">
+                    <div class="panel-heading">
+                        <h4><i class="icon-highlight fa fa-edit"></i> {{ 'Password' |translate }}</h4>
+                    </div>
+                    <div class="panel-body-sello" *ngIf="!passwordChange.success">
+                        <div class="row">
+                            <div class="form-horizontal">
+                                <h3 class="col-sm-offset-3">{{ 'Change password' |translate }}</h3>
+                                <div class="form-group">
+                                    <label for="current" class="col-sm-3 control-label">{{ 'Current password' |translate }}</label>
+                                    <div class="col-sm-6">
+                                        <input
+                                            type="password"
+                                            name="current"
+                                            #current="ngModel"
+                                            [ngModel]="passwordChange.settings?.current"
+                                            required
+                                            class="form-control pw">
+                                        <small [hidden]="current.valid || (current.pristine && !passwordChangeForm.submitted)" class="text-danger">{{ 'Current password is required' |translate }}</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new" class="col-sm-3 control-label">{{ 'New password' |translate }}:</label>
+                                    <div class="col-sm-6">
+                                        <input
+                                            type="password"
+                                            name="new"
+                                            #new="ngModel"
+                                            [ngModel]="passwordChange.settings?.new"
+                                            required validateEqual="new_2" reverse="true"
+                                            class="form-control pw">
+                                        <small [hidden]="new.valid || (new.pristine && !passwordChangeForm.submitted)" class="text-danger">{{ 'New password is required' |translate }}</small>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new_2" class="col-sm-3 control-label">{{ 'Repeat new password' |translate }}:</label>
+                                    <div class="col-sm-6">
+                                        <input
+                                            type="password"
+                                            name="new_2"
+                                            #new_2="ngModel"
+                                            [ngModel]="passwordChange.settings?.new_2"
+                                            required validateEqual="new"
+                                            class="form-control pw">
+                                        <small [hidden]="new_2.valid || (new_2.pristine && !passwordChangeForm.submitted)" class="text-danger">{{ 'Password mismatch' |translate }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="col-sm-12 text-center">
+                            <div class="btn-toolbar" *ngIf="!passwordChange.success">
+                                <button class="btn btn-primary btn-lg" type="submit"><i class="fa fa-save"></i> {{ 'BTN_SAVE' |translate }}</button>
+                                <button class="btn-default btn-lg btn" (click)="passwordChange.visible = false"> {{ 'BTN_CANCEL' |translate }}</button>
+                            </div>
+                            <div class="text-center" *ngIf="passwordChange.success">
+                                <div class="alert alert-success">
+                                    <strong>{{ 'You have now changed your password!' |translate }}</strong>
+                                </div>
+                                <button class="btn-default btn-lg btn" (click)="passwordChange.visible = false"> {{ 'BTN_CLOSE' |translate }}</button>
+                            </div>
+                            <div class="alert alert-danger text-center" *ngIf="passwordChange.error">
+                                <strong>{{ passwordChange.error }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="onboarding-box">
+        <img src="/assets/img/onboarding/order-icon1.png">
+        <h2>{{ 'ONBOARDING_INVENTORY_HEADING'| translate }}</h2>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="onboarding-features">
+                    <img src="/assets/img/onboarding/icon1.png" alt="" />
+                    <h3>{{ 'ONBOARDING_INVENTORY_CREATE_HEADING'|translate }}</h3>
+                    <p>{{ 'ONBOARDING_INVENTORY_CREATE_TEXT'|translate }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="onboarding-features">
+                    <img src="/assets/img/onboarding/icon2.png" />
+                    <h3>{{ 'ONBOARDING_INVENTORY_ACTIVATE_HEADING'|translate }}</h3>
+                    <p>{{ 'ONBOARDING_INVENTORY_ACTIVATE_TEXT'|translate }}</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="onboarding-features">
+                    <img src="/assets/img/onboarding/order-icon2.png" />
+                    <h3>{{ 'ONBOARDING_INVENTORY_ORDER_HEADING'|translate }}</h3>
+                    <p>{{ 'ONBOARDING_INVENTORY_ORDER_TEXT'|translate }}</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="onboarding-action-button" (click)="createFirstProduct()">
+            <i class="plus-circle"></i>
+            {{ 'ONBOARDING_INVENTORY_CREATE_BUTTON'|translate }}
+        </button>
+
+    </div><!-- end onboarding-box -->
+</div><!-- end container -->

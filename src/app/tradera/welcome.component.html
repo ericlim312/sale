@@ -1,0 +1,42 @@
+<div class="container-fluid onboarding-container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="onboarding-welcome">
+                <img src="/assets/img/onboarding/handshake-icon.png" class="img-responsive" />
+                <h2>{{ 'WELCOME'|translate }} {{ account?.name }}!</h2>
+                <p>{{ 'ONBOARDING_INDEX_WELCOME_TEXT'|translate }}</p>
+                <button class="onboarding-action-button" (click)="createFirstProduct()"><i class="plus-circle"></i> {{ 'ONBOARDING_INVENTORY_CREATE_BUTTON'|translate }}</button>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="onboarding-faq-box">
+                <h2>{{ 'FAQ'|translate }}</h2>
+
+                <ul class="list-unstyled faq-list">
+                    <li>
+                        <span>
+                            <img src="/assets/img/onboarding/comments-icon.png" class="img-responsive" />
+                            <p class="heading1">{{ 'ONBOARDING_FAQ_CREATE_HEADING'|translate }}</p>
+                            <p>{{ 'ONBOARDING_FAQ_CREATE_TEXT'|translate }}</p>
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <img src="/assets/img/onboarding/comments-icon.png" class="img-responsive" />
+                            <p class="heading1">{{ 'ONBOARDING_FAQ_CREATE_STORE_HEADING'|translate }}</p>
+                            <p>{{ 'ONBOARDING_FAQ_CREATE_STORE_TEXT'|translate }}</p>
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <img src="/assets/img/onboarding/comments-icon.png" class="img-responsive" />
+                            <p class="heading1">{{ 'ONBOARDING_FAQ_AUCTION_HEADING'|translate }}</p>
+                            <p>{{ 'ONBOARDING_FAQ_AUCTION_TEXT'|translate }}</p>
+                        </span>
+                    </li>
+                </ul>
+            </div><!-- end faq-box -->
+        </div>
+    </div><!-- end row -->
+</div><!-- end container -->

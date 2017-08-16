@@ -1,0 +1,73 @@
+.bulkedit {
+    .item-list {
+        margin: 0;
+        padding: 0;
+
+        li {
+            position: relative;
+            background-color: #fff;
+            -webkit-tap-highlight-color: #fafafa;
+            -moz-tap-highlight-color: #fafafa;
+            -o-tap-highlight-color: #fafafa;
+            tap-highlight-color: #fafafa;
+            cursor: pointer;
+            border-bottom: 1px solid #e8edf0;
+            padding: 1rem;
+            white-space: nowrap;
+            list-style: none;
+            font-weight: bold;
+            overflow: hidden;
+
+            &.selected {
+                background-color: #ebf9ff;
+            }
+
+            &:hover {
+                background-color: #e5e5e5;
+            }
+
+            small {
+                font-weight: normal;
+                color: #999;
+            }
+
+            .item-name {
+                width: 95%;
+                float:left;
+                line-height: 20px;
+            }
+
+            .item-arrow {
+                width: 5%;
+                float: right;
+                text-align: right;
+
+                i {
+                    line-height: 20px;
+                }
+            }
+        }
+    }
+
+    .todo-summary {
+        text-align: left;
+    }
+
+    .param-column {
+        margin-bottom: 15px;
+    }
+
+    .edit-title {
+        font-size: 10pt;
+        font-weight: bold;
+    }
+
+    .gray-body {
+        background-color: #f4f5f4;
+    }
+
+    .inactive-step {
+        font-weight: bold;
+        color: #999;
+    }
+}

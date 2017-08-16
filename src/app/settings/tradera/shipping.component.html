@@ -1,0 +1,136 @@
+<div *ngIf="settings" class="container setting-form tradera-shipping-settings">
+    <h1>{{ 'SHIPPING_COST_ON_MULTIPLE_ORDERS'|translate }}</h1>
+    <hint id="settings-tradera-shipping" [message]="'TRADERA_SHIPPING_HINT'|translate"></hint>
+
+    <div class="form-group">
+        <div class="col-sm-12">
+            <div class="radio option-row no-input-row">
+                <label>
+                    <input type="radio" [(ngModel)]="settings.tradera_order_preferences.shipping.action" value="only_one"> {{ 'ONLY_THE_HIGHEST_SHIPPING_COST'|translate }}
+                </label>
+            </div>
+            <div class="radio option-row no-input-row">
+                <label>
+                    <input type="radio" [(ngModel)]="settings.tradera_order_preferences.shipping.action" value="every_two"> {{ 'EVERY_OTHER_SHIPPING_COST'|translate }}
+                </label>
+            </div>
+            <div class="radio option-row no-input-row">
+                <label>
+                    <input type="radio" [(ngModel)]="settings.tradera_order_preferences.shipping.action" value="every_three"> {{ 'EVERY_THIRD_SHIPPING_COST'|translate }}
+                </label>
+            </div>
+            <div class="radio option-row no-input-row">
+                <label>
+                    <input type="radio" [(ngModel)]="settings.tradera_order_preferences.shipping.action" value="sum_of_all"> {{ 'SUM_OF_ALL_SHIPPING_COSTS'|translate }}
+                </label>
+            </div>
+            <div class="row option-row">
+                <div class="col-md-10 col-sm-12">
+                    <label>
+                        <input type="radio" [(ngModel)]="settings.tradera_order_preferences.shipping.action" value="sum_max"> {{ 'SUM_OF_ALL_SHIPPING_COSTS_MAX'|translate }}
+                    </label>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <div class="input-group">
+                        <input [disabled]="settings.tradera_order_preferences.shipping.action != 'sum_max'" class="form-control shipping-option-value" type="text" [(ngModel)]="settings.tradera_order_preferences.shipping.max">
+                        <span class="input-group-addon">kr</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row option-row">
+                <div class="col-md-10 col-sm-12">
+                    <label>
+                        <input type="radio" [(ngModel)]="settings.tradera_order_preferences.shipping.action" value="free_at_limit"> {{ 'SUM_OF_ALL_SHIPPING_COSTS_FREE'|translate }}
+                    </label>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <div class="input-group">
+                        <input [disabled]="settings.tradera_order_preferences.shipping.action != 'free_at_limit'" class="form-control shipping-option-value" type="text" [(ngModel)]="settings.tradera_order_preferences.shipping.limit">
+                        <span class="input-group-addon">kr</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row option-row">
+                <div class="col-md-4 col-sm-12">
+                    <label>
+                        <input type="radio" [(ngModel)]="settings.tradera_order_preferences.shipping.action" value="static_every_item"> {{ 'HIGHEST_SHIPPING_COST_PLUS'|translate }}
+                    </label>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <div class="input-group">
+                        <input [disabled]="settings.tradera_order_preferences.shipping.action != 'static_every_item'" class="form-control shipping-option-value" type="text" [(ngModel)]="settings.tradera_order_preferences.shipping.each">
+                        <span class="input-group-addon">kr</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label>{{ 'PER_PURCHASE'|translate }}.</label>
+                </div>
+            </div>
+            <div class="row option-row">
+                <div class="col-md-4 col-sm-12">
+                    <label>
+                        <input type="radio" [(ngModel)]="settings.tradera_order_preferences.shipping.action" value="static_every_item_max"> {{ 'HIGHEST_SHIPPING_COST_PLUS'|translate }}
+                    </label>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <div class="input-group">
+                        <input [disabled]="settings.tradera_order_preferences.shipping.action != 'static_every_item_max'" class="form-control shipping-option-value" type="text" name="shipping_policy_static_max_each" [(ngModel)]="settings.tradera_order_preferences.shipping.each">
+                        <span class="input-group-addon">kr</span>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <label>{{ 'PER_PURCHASE_MAX'|translate }}:</label>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <div class="input-group">
+                        <input [disabled]="settings.tradera_order_preferences.shipping.action != 'static_every_item_max'" class="form-control shipping-option-value" type="text" [(ngModel)]="settings.tradera_order_preferences.shipping.max">
+                        <span class="input-group-addon">kr</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row option-row">
+                <div class="col-md-4 col-sm-12">
+                    <label>
+                        <input type="radio" [(ngModel)]="settings.tradera_order_preferences.shipping.action" value="first_static_other_static"> {{ 'FIRST_PURCHASE'|translate }}:
+                    </label>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <div class="input-group">
+                        <input [disabled]="settings.tradera_order_preferences.shipping.action != 'first_static_other_static'" class="form-control shipping-option-value" type="text" [(ngModel)]="settings.tradera_order_preferences.shipping.first">
+                        <span class="input-group-addon">kr</span>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <label>{{ 'AFTER_THAT'|translate }}:</label>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <div class="input-group">
+                        <input [disabled]="settings.tradera_order_preferences.shipping.action != 'first_static_other_static'" class="form-control shipping-option-value" type="text" [(ngModel)]="settings.tradera_order_preferences.shipping.all">
+                        <span class="input-group-addon">kr</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row option-row">
+                <div class="col-md-4 col-sm-12">
+                    <label>
+                        <input type="radio" [(ngModel)]="settings.tradera_order_preferences.shipping.action" value="static"> {{ 'CUSTOMER_ALWAYS_PAY_SHIPPING'|translate }}
+                    </label>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                    <div class="input-group">
+                        <input [disabled]="settings.tradera_order_preferences.shipping.action != 'static'" class="form-control shipping-option-value" type="text" [(ngModel)]="settings.tradera_order_preferences.shipping.shipping_cost">
+                        <span class="input-group-addon">kr</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <label>{{ 'CUSTOMER_ALWAYS_PAY_SHIPPING_2'|translate }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="button-panel">
+        <button type="submit" (click)="save()" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+        <alert type="danger" *ngIf="error" style="margin-top:15px">Det gick inte att spara dina ändringar eftersom: {{ error }}</alert>
+        <alert type="success" *ngIf="saved" style="margin-top:15px">{{ 'YOUR_SETTINGS_HAVE_BEEN_SAVED' | translate }}!</alert>
+    </div>
+</div>

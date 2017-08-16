@@ -1,0 +1,235 @@
+<div class="status-box">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'SETTINGS_STATUS'|translate }}</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <button (click)="createNew.visible = true" *ngIf="!createNew.visible" class="action-button"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+        </div>
+    </div>
+
+    <hint id="settings-status" [message]="'STATUS_HINT'|translate"></hint>
+
+    <div class="setting-panel" *ngIf="createNew.visible">
+        <h3>{{ 'NEW_STATUS'|translate }}</h3>
+
+        <form #createNewForm="ngForm" class="setting-form" (submit)="onCreateNew(createNewForm.value, createNewForm.valid)">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'NAME'|translate }}</span><br>
+                        <input type="text"
+                            [ngModel]="createNew.title"
+                            #name="ngModel"
+                            name="title"
+                            required
+                            placeholder="{{ 'STATUS_NAME'|translate }}">
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'PROPERTIES'|translate }}</span><br>
+                        <select
+                            [ngModel]="createNew.type"
+                            #type="ngModel"
+                            name="type">
+                            <option value="active">{{ 'STATUS_PROPERTIES_ACTIVE'|translate }}</option>
+                            <option value="active-paid">{{ 'STATUS_PROPERTIES_ACTIVE_PAID'|translate }}</option>
+                            <option value="delivered">{{ 'STATUS_PROPERTIES_DELIVERED'|translate }}</option>
+                            <option value="delivered-paid">{{ 'STATUS_PROPERTIES_DELIVERED_PAID'|translate }}</option>
+                            <option value="deleted">{{ 'STATUS_PROPERTIES_DELETED'|translate }}</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p><span class="text">{{ 'COLOR_IN_ORDERLIST'|translate }}</span></p>
+                    <div class="form-colorpicker">
+                        <input class="color"
+                            [(colorPicker)]="createNew.color"
+                            [style.background]="createNew.color"
+                            readonly />
+                        <span class="color-name">{{ createNew.color }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <table class="detailed-table">
+                <tr class="table-header">
+                    <th></th>
+                    <th>{{ 'NUMBER'|translate }}</th>
+                    <th>{{ 'CUSTOMER'|translate }}</th>
+                    <th>{{ 'TOTAL'|translate }}</th>
+                    <th>{{ 'WEIGHT'|translate }}</th>
+                    <th>{{ 'CREATED'|translate }}</th>
+                    <th></th>
+                </tr>
+                <tr [ngStyle]="{ 'background-color': createNew.color }">
+                    <td style="vertical-align: middle"><img src="/assets/img/order/tr-logo.png" alt="" /></td>
+                    <td style="vertical-align: middle">196</td>
+                    <td style="vertical-align: middle">Camilla Henriksson</td>
+                    <td style="vertical-align: middle">215,20 kr</td>
+                    <td style="vertical-align: middle">200 g</td>
+                    <td style="vertical-align: middle">2016-08-15</td>
+                    <td style="vertical-align: middle">
+                        <p class="checkmark">
+                            <input type="checkbox" name="checkbox1" id="checkbox1" class="css-checkbox" checked />
+                            <label for="checkbox1" class="css-label"></label>
+                        </p>
+                    </td>
+                </tr>
+                <tr [ngStyle]="{ 'background-color': createNew.color }">
+                    <td style="vertical-align: middle"><img src="/assets/img/order/ps-logo.png" alt="" /></td>
+                    <td style="vertical-align: middle">197</td>
+                    <td style="vertical-align: middle">Petra Larsson</td>
+                    <td style="vertical-align: middle">164,20 kr</td>
+                    <td style="vertical-align: middle">450 g</td>
+                    <td style="vertical-align: middle">Yesterday</td>
+                    <td style="vertical-align: middle">
+                        <p class="checkmark disabled">
+                            <input type="checkbox" name="checkboxd1" id="checkboxd1" class="css-checkbox" checked disabled />
+                            <label for="checkboxd1" class="css-label"></label>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <p class="button-panel">
+                <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+            </p>
+        </form>
+    </div>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'NAME'|translate }}</th>
+            <th>{{ 'COLOR'|translate }}</th>
+            <th class="state-icon">{{ 'PAID'|translate }}</th>
+            <th class="state-icon">{{ 'DELIVERED'|translate }}</th>
+            <th class="state-icon">{{ 'PENDING'|translate }}</th>
+            <th class="state-icon">{{ 'DELETED'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+
+        <template ngFor let-status [ngForOf]="statuses">
+            <tr *ngIf="editing !== status">
+                <td>{{status.title}}</td>
+                <td><i class="square" [ngStyle]="{'background-color': status.color}"></i></td>
+                <td>
+                    <img src="/assets/icon/check.svg" *ngIf="status.is_paid">
+                    <img src="/assets/icon/cross.svg" *ngIf="!status.is_paid">
+                </td>
+                <td>
+                    <img src="/assets/icon/check.svg" *ngIf="status.is_delivered">
+                    <img src="/assets/icon/cross.svg" *ngIf="!status.is_delivered">
+                </td>
+                <td>
+                    <img src="/assets/icon/check.svg" *ngIf="status.is_active">
+                    <img src="/assets/icon/cross.svg" *ngIf="!status.is_active">
+                </td>
+                <td>
+                    <img src="/assets/icon/cross.svg" *ngIf="status.is_paid || status.is_delivered || status.is_active">
+                    <img src="/assets/icon/check.svg" *ngIf="!status.is_paid && !status.is_delivered && !status.is_active">
+                </td>
+                <td class="buttons">
+                    <a class="cursor-link" (click)="editing = status"><i class="fa fa-pencil"></i></a>
+                    <i class="cursor-link fa fa-trash" (click)="onDelete(status)"></i>
+                </td>
+            </tr>
+
+            <!-- edit status -->
+            <tr *ngIf="editing === status" class="edit">
+                <td colspan="7">
+                    <form #editingForm="ngForm" class="setting-form" (submit)="onEdit(editingForm.value, editingForm.valid)">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <p>
+                                    <span class="text">{{ 'NAME'|translate }}</span><br>
+                                    <input type="text"
+                                        [ngModel]="editing.title"
+                                        #name="ngModel"
+                                        name="title"
+                                        required
+                                        placeholder="{{ 'STATUS_NAME'|translate }}">
+                                </p>
+                            </div>
+                            <div class="col-sm-4">
+                                <p>
+                                    <span class="text">{{ 'PROPERTIES'|translate }}</span><br>
+                                    <select
+                                        [ngModel]="getType(editing)"
+                                        #type="ngModel"
+                                        name="type">
+                                        <option value="active">{{ 'STATUS_PROPERTIES_ACTIVE'|translate }}</option>
+                                        <option value="active-paid">{{ 'STATUS_PROPERTIES_ACTIVE_PAID'|translate }}</option>
+                                        <option value="delivered">{{ 'STATUS_PROPERTIES_DELIVERED'|translate }}</option>
+                                        <option value="delivered-paid">{{ 'STATUS_PROPERTIES_DELIVERED_PAID'|translate }}</option>
+                                        <option value="deleted">{{ 'STATUS_PROPERTIES_DELETED'|translate }}</option>
+                                    </select>
+                                </p>
+                            </div>
+                            <div class="col-sm-4">
+                                <p><span class="text">{{ 'COLOR_IN_ORDERLIST'|translate }}</span></p>
+                                <div class="form-colorpicker">
+                                    <input class="color"
+                                        [colorPicker]="editing.color"
+                                        (colorPickerChange)="setColor(editing, $event)"
+                                        [style.background]="editing.color"
+                                        readonly />
+                                    <span class="color-name">{{ editing.color }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="detailed-table">
+                            <tr class="table-header">
+                                <th></th>
+                                <th>{{ 'NUMBER'|translate }}</th>
+                                <th>{{ 'CUSTOMER'|translate }}</th>
+                                <th>{{ 'TOTAL'|translate }}</th>
+                                <th>{{ 'WEIGHT'|translate }}</th>
+                                <th>{{ 'CREATED'|translate }}</th>
+                                <th></th>
+                            </tr>
+                            <tr [ngStyle]="{ 'background-color': editing.color }">
+                                <td style="vertical-align: middle"><img src="/assets/img/order/tr-logo.png" alt="" /></td>
+                                <td style="vertical-align: middle">196</td>
+                                <td style="vertical-align: middle">Camilla Henriksson</td>
+                                <td style="vertical-align: middle">215,20 kr</td>
+                                <td style="vertical-align: middle">200 g</td>
+                                <td style="vertical-align: middle">2016-08-15</td>
+                                <td style="vertical-align: middle">
+                                    <p class="checkmark">
+                                        <input type="checkbox" name="checkbox1" id="checkbox1" class="css-checkbox" checked />
+                                        <label for="checkbox1" class="css-label"></label>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr [ngStyle]="{ 'background-color': editing.color }">
+                                <td style="vertical-align: middle"><img src="/assets/img/order/ps-logo.png" alt="" /></td>
+                                <td style="vertical-align: middle">197</td>
+                                <td style="vertical-align: middle">Petra Larsson</td>
+                                <td style="vertical-align: middle">164,20 kr</td>
+                                <td style="vertical-align: middle">450 g</td>
+                                <td style="vertical-align: middle">Yesterday</td>
+                                <td style="vertical-align: middle">
+                                    <p class="checkmark disabled">
+                                        <input type="checkbox" name="checkboxd1" id="checkboxd1" class="css-checkbox" checked disabled />
+                                        <label for="checkboxd1" class="css-label"></label>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p class="button-panel">
+                            <button type="button" (click)="editing = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                            <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                        </p>
+                    </form>
+                </td>
+            </tr>
+
+        </template>
+
+    </table>
+</div>

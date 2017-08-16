@@ -1,0 +1,43 @@
+<!-- create product -->
+<button class="btn btn-primary" type="button" (click)="onNewProduct()" [disabled]="isCreatingProduct" angulartics2On="click" angularticsCategory="inventoryListToolbar" angularticsEvent="createProduct">
+    <strong><i class="fa fa-plus-square-o" *ngIf="!isCreatingProduct"></i><i class="fa fa-spinner fa-pulse" *ngIf="isCreatingProduct"></i> {{ 'CREATE_NEW_PRODUCT_BTN'|translate }}</strong>
+</button>
+
+<!-- create auction, show multiple buttons if there are multiple Tradera integrations -->
+<span *ngIf="traderaIntegrations && traderaIntegrations.length > 1">
+    <button *ngFor="let integration of traderaIntegrations" class="btn btn-default" type="button" (click)="onCreateAuction(integration.id)" [ngClass]="{ disabled: getCheckedProducts().length == 0 }" [disabled]="getCheckedProducts().length == 0" angulartics2On="click" angularticsCategory="inventoryListToolbar" angularticsEvent="createAuction">
+        <i class="fa fa-magic" *ngIf="!isCreatingAuction"></i><i class="fa fa-spinner fa-pulse" *ngIf="isCreatingAuction"></i> {{ 'CREATE_AUCTION_BTN'|translate }} ({{ integration.display_name }})
+    </button>
+</span>
+<span *ngIf="traderaIntegrations && traderaIntegrations.length == 1">
+    <button class="btn btn-default" type="button" (click)="onCreateAuction(traderaIntegrations[0].id)" [ngClass]="{ disabled: getCheckedProducts().length == 0 }" [disabled]="getCheckedProducts().length == 0" angulartics2On="click" angularticsCategory="inventoryListToolbar" angularticsEvent="createAuction">
+        <i class="fa fa-magic" *ngIf="!isCreatingAuction"></i><i class="fa fa-spinner fa-pulse" *ngIf="isCreatingAuction"></i> {{ 'CREATE_AUCTION_BTN'|translate }}
+    </button>
+</span>
+
+<!-- bulkedit -->
+<button class="btn btn-default" type="button" (click)="onBulkedit()" [ngClass]="{ disabled: getCheckedProducts().length == 0 }" [disabled]="getCheckedProducts().length == 0" angulartics2On="click" angularticsCategory="inventoryListToolbar" angularticsEvent="bulkedit"><i class="fa fa-edit"></i> {{ 'EDIT_MULTIPLE_BTN'|translate }}</button>
+
+<!-- move -->
+<button class="btn btn-default" type="button" (click)="onMoveProduct()" [ngClass]="{ disabled: getCheckedProducts().length == 0 }" [disabled]="getCheckedProducts().length == 0" angulartics2On="click" angularticsCategory="inventoryListToolbar" angularticsEvent="moveProducts">
+    <i class="fa fa-arrows"></i> {{ 'MOVE_MULTIPLE_BTN'|translate }}
+</button>
+
+<!-- copy -->
+<button class="btn btn-default" type="button" (click)="onCopyProduct()" [ngClass]="{ disabled: getCheckedProducts().length == 0 }" [disabled]="isCopyingProduct || getCheckedProducts().length == 0" angulartics2On="click" angularticsCategory="inventoryListToolbar" angularticsEvent="copyProducts">
+    <i class="fa fa-copy" *ngIf="!isCopyingProduct"></i><i class="fa fa-spinner fa-pulse" *ngIf="isCopyingProduct"></i> {{ 'COPY_MULTIPLE_BTN'|translate }}
+</button>
+
+<!-- delete -->
+<button class="btn btn-default" type="button" (click)="onDeleteProduct()" [ngClass]="{ disabled: getCheckedProducts().length == 0 }" [disabled]="getCheckedProducts().length == 0" angulartics2On="click" angularticsCategory="inventoryListToolbar" angularticsEvent="deleteProducts">
+    <i class="fa fa-trash-o"></i> {{ 'DELETE_MULTIPLE_BTN'|translate }}
+</button>
+
+<!-- group -->
+<button *ngIf="account?.account_type != 'whitelabel'" class="btn btn-default" type="button" (click)="onGroupProducts()" [ngClass]="{ disabled: getCheckedProducts().length < 2 }" [disabled]="getCheckedProducts().length < 2" angulartics2On="click" angularticsCategory="inventoryListToolbar" angularticsEvent="groupProducts">
+    <i class="fa fa-group"></i> {{ 'GROUP_BTN'|translate }}
+</button>
+
+
+
+

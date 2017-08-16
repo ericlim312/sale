@@ -1,0 +1,18 @@
+<div class="container settings-page">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ 'SETTINGS'|translate }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-9 col-lg-push-3 main">
+            <div class="settings-wrapper">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+        <div class="col-lg-3 col-lg-pull-9 sidebar">
+            <settings-menu></settings-menu>
+        </div>
+    </div>
+</div>

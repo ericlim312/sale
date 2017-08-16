@@ -1,0 +1,44 @@
+<form class="setting-row row" (submit)="save()">
+    <div class="col-md-3 name">
+        <span class="pad">{{ category.name }}</span>
+    </div>
+    <div class="col-md-7 value">
+        <div *ngIf="!edit">
+            <div class="pad" *ngIf="!edit">
+                <div *ngFor="let integration of integrations">
+                    <div *ngIf="category.map[integration.id]" class="row">
+                        <div class="col-lg-4">{{ integration.display_name }}</div>
+                        <div class="col-lg-8">
+                            <i class="mapping-icon fa fa-long-arrow-right"></i>
+                            <span [innerHTML]="category.map[integration.id].name"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="edit">
+            <div class="pad" *ngFor="let integration of integrations">
+                <div *ngIf="marketWithCategories(integration)" class="row">
+                    <div class="col-lg-4">{{ integration.display_name }}</div>
+                    <div class="col-lg-8">
+                        <integration-category-select
+                            [integration]="integration.id" 
+                            [preselected]="category.map[integration.id]?.id" 
+                            (select)="setCategoryMapping(category, integration.id, $event)">
+                        </integration-category-select>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> {{ 'BTN_SAVE'|translate }}</button>
+            <button class="btn btn-default" (click)="cancel()"><i class="fa fa-cancel"></i> {{ 'BTN_CANCEL'|translate }}</button>
+        </div>
+    </div>
+    <div class="col-md-2 button" *ngIf="!edit">
+        <div class="pad">
+            <button class="btn btn-default" (click)="toggleEdit()" type="button"><i class="fa fa-edit"></i> {{ 'BTN_EDIT'|translate }}</button>
+        </div>
+    </div>
+</form>

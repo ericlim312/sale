@@ -1,0 +1,82 @@
+.inventory-toolbar {
+    line-height: 75px;
+    padding-left: 35px;
+
+    button {
+        margin-left: 15px;
+        font-weight: normal;
+        border: 1px solid transparent; // Needed for disabled below, otherwise the button will jump
+
+        strong {
+            color: white;
+        }
+
+        &.btn-default {
+            background: transparent;
+            color: $hardGray;
+            border: 1px solid $hardGray;
+        }
+
+        &.disabled {
+            color: $textGray;
+            border: 1px solid $textGray;
+            cursor: not-allowed;
+        }
+    }
+
+    &.active {
+        position: fixed;
+        width: 100%;
+        margin: -15px;
+        padding: 0 0 0 5px;
+        top: 50px;
+        box-shadow: 0 4px 4px -2px gray;
+        z-index: 1;
+        background: white;
+
+        .heading {
+            display: none;
+        }
+        .help {
+            display: none;
+        }
+        .toolbar {
+            width: 100%;
+            line-height: 50px;
+            padding-left: 20px;
+        }
+    }
+
+    h1 {
+        line-height: 25px;
+    }
+
+    .help {
+        a {
+            line-height: 67px;
+            margin-right: 25px;
+        }
+    }
+}
+
+.inventory-heading {
+    line-height: 75px;
+}
+
+@media (max-width: 800px) {
+    .inventory-heading {
+        line-height: 100%;
+        padding-right: 15px;
+    }
+
+    .inventory-toolbar {
+        padding-left: 0;
+        line-height: 48px;
+
+        button {
+            padding-bottom: 5px;
+            margin-left: 0;
+            margin-bottom: 2px;
+        }
+    }
+}

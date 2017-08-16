@@ -1,0 +1,45 @@
+<div *ngIf="settings">
+    <h1>{{ 'SETTINGS_LOGISTICS' |translate }}</h1>
+    <h4>{{ 'SETTINGS_LOGISTICS_PACSOFT' |translate }}</h4>
+    <setting-row
+        (onSave)="settings.advanced.pacsoft_userid = $event; save('advanced.pacsoft_userid');"
+        type="text"
+        [error]="errors['advanced.pacsoft_userid']"
+        default="-"
+        [description]="'SETTINGS_LOGISTICS_PACSOFT_SENDER_ID_HELP'|translate"
+        [name]="'SETTINGS_LOGISTICS_PACSOFT_SENDER_ID'|translate"
+        [value]="settings.advanced.pacsoft_userid"
+    ></setting-row>
+    <h4>{{ 'SETTINGS_LOGISTICS_DHL_MULTISHIPPING' |translate }}</h4>
+    <setting-row
+        (onSave)="settings.dhl.apport_domain = $event; save('dhl.apport_domain');"
+        type="text"
+        [error]="errors['dhl.apport_domain']"
+        default="-"
+        [name]="'SETTINGS_LOGISTICS_APPORT_DOMAIN'|translate"
+        [value]="settings.dhl.apport_domain"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.dhl.apport_username = $event; save('dhl.apport_username');"
+        type="text"
+        [error]="errors['dhl.apport_username']"
+        default="-"
+        [name]="'SETTINGS_LOGISTICS_APPORT_USERNAME'|translate"
+        [value]="settings.dhl.apport_username"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.dhl.apport_password = $event; save('dhl.apport_password');"
+        type="password"
+        [error]="errors['dhl.apport_password']"
+        default="-"
+        [name]="'SETTINGS_LOGISTICS_APPORT_PASSWORD'|translate"
+        [value]="settings.dhl.apport_password"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.dhl.apport_autobook = $event; save('dhl.apport_autobook');"
+        [error]="errors['dhl.apport_autobook']"
+        [name]="'SETTINGS_LOGISTICS_APPORT_AUTOBOOK'|translate"
+        [value]="settings.dhl.apport_autobook"
+    ></setting-row>
+</div>

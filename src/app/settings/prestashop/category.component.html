@@ -1,0 +1,69 @@
+<div class="x-panel" [ngClass]="{ 'no-children': !node.children.length }">
+    <h3>
+        <i (click)="expanded[node.id] = !expanded[node.id]"
+            class="panel-state-icon fa {{ expanded[node.id] ? 'fa-minus' : 'fa-plus' }}"></i>
+        {{ node.items_by_iso['en'].name }}
+        <span (click)="createNew.visible = true" *ngIf="!createNew.visible" class="add-subcategory"><i class="fa fa-plus"></i> {{ 'ADD_SUBCATEGORY'|translate }}</span>
+        <span class="buttons"><i class="fa fa-trash" (click)="onSelfDelete(node.id)"></i></span>
+    </h3>
+
+    <div class="x-body" *ngIf="createNew.visible">
+        <div class="setting-panel">
+            <h3>{{ 'ADD_SUBCATEGORY'|translate }}</h3>
+            <form #createNewForm="ngForm" (submit)="onCreateNew(createNewForm.value, createNewForm.valid)" class="setting-form">
+                <div class="row">
+                    <div *ngFor="let lang of languages" class="col-sm-4">
+                        <p>
+                            <span class="text"><img [src]="'/assets/img/flags/' + lang.code + '.png'"> {{ 'NAME'|translate }}</span><br>
+                            <input type="text"
+                                [ngModel]="createNew[lang.code + '_name']"
+                                #name="ngModel"
+                                name="{{ lang.code + '_name' }}"
+                                required>
+                            <small [hidden]="name.valid || (name.pristine && !createNewForm.submitted)" class="text-danger">{{ 'Name is required' |translate }}</small>
+                        </p>
+                    </div>
+                </div>
+
+                <p class="button-panel">
+                    <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                    <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div class="x-body" *ngIf="expanded[node.id] && node.children.length">
+        <template ngFor let-child [ngForOf]="node.children">
+            <prestashop-category
+                *ngIf="editing !== child"
+                [node]="child"
+                [expanded]="expanded"
+                (onSave)="onSave.emit($event)"
+                (onDelete)="onChildDeleted($event)"
+                (onEdit)="editing = child"></prestashop-category>
+            <div *ngIf="editing === child" class="setting-panel">
+                <form #editingForm="ngForm" (submit)="onChildEdit(editingForm.value, editingForm.valid)" class="setting-form">
+                    <div class="row">
+                        <div *ngFor="let lang of languages" class="col-sm-4">
+                            <p>
+                                <span class="text"><img [src]="'/assets/img/flags/' + lang.code + '.png'"> {{ 'NAME'|translate }}</span><br>
+                                <input type="text"
+                                    [ngModel]="editing.items_by_iso[lang.code].name"
+                                    #name="ngModel"
+                                    name="{{ lang.code + '_name' }}"
+                                    required>
+                                <small [hidden]="name.valid || (name.pristine && !editingForm.submitted)" class="text-danger">{{ 'Name is required' |translate }}</small>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="button-panel">
+                        <button type="button" (click)="editing = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                        <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                    </p>
+                </form>
+            </div>
+        </template>
+    </div>
+</div>

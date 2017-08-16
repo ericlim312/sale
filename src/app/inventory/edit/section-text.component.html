@@ -1,0 +1,75 @@
+<div class="edit-section-text section">
+    <h3 id="descriptionHeading">{{ 'HEADING_DESCRIPTION'|translate }}</h3>
+
+
+    <so-panel *ngFor="let lang of languages" [iconImg]="'/assets/img/flags/' + lang.code + '.png'" [show]="lang.enabled" [forceopen]="shouldBeForcedOpen(lang)" [header]="lang.name" [name]="'inventory.edit.text.' + lang.code" [collapsible]="true" [defaultopen]="lang.code == 'sv'">
+        <h5>{{ 'STANDARD_TEXT'|translate }}</h5>
+
+        <div *ngIf="product.texts[99].hasOwnProperty(lang.code)">
+            <div class="form-group" *ngIf="lang.code != 'sv'">
+                <div class="col-sm-5 col-sm-offset-3">
+                    <span *ngIf="product.texts[99][lang.code].type == 'entry'">
+                        <button (click)="product.texts[99][lang.code].type = 'link'" class="btn btn-transparent" type="button"><i class="fa fa-plus-circle"></i> {{ 'USE_SWEDISH_STANDARD_TEXT'|translate }}</button>
+                    </span>
+                    <span *ngIf="product.texts[99][lang.code].type == 'link'">
+                        <button (click)="product.texts[99][lang.code].type = 'entry'" class="btn btn-transparent" type="button"><i class="fa fa-plus-circle"></i> {{ 'ADD_A_TEXT_FOR_THIS_LANGUAGE'|translate }}</button>
+                    </span>
+                </div>
+                <div class="col-sm-4 help">
+                </div>
+            </div>
+            <div class="form-group" *ngIf="lang.code == 'sv' || product.texts['99'][lang.code].type == 'entry'">
+                <label for="title" class="col-sm-3 control-label">{{ 'PRODUCT_TITLE'|translate }}:</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" [(ngModel)]="product.texts['99'][lang.code].name" maxlength="80">
+                </div>
+                <div class="col-sm-4 help">
+                </div>
+            </div>
+            <div class="form-group" *ngIf="lang.code == 'sv' || product.texts['99'][lang.code].type == 'entry'">
+                <label for="description" class="col-sm-3 control-label">{{ 'PRODUCT_DESCRIPTION'|translate }}:</label>
+                <div class="col-sm-9">
+                    <wysiwyg [(ngModel)]="product.texts['99'][lang.code].description"></wysiwyg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Text for each integration that supports this language -->
+        <div *ngFor="let integration of integrations">
+            <div *ngIf="getTextInLang(integration, lang)">
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-5">
+                        <h5><img [src]="'/assets/img/marketplace/16x16-' + integration.market_id + '.png'"> {{ integration.display_name }}</h5>
+                        <button *ngIf="product.texts[integration.id][lang.code].type == 'entry'" type="button" class="btn btn-default" (click)="setTextType(integration, lang, 'link')"><i class="fa fa-remove"></i> {{ 'USE_STANDARD_TEXT'|translate }}</button>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="product.texts[integration.id][lang.code].type == 'link'">
+                    <label class="col-sm-3 control-label">{{ 'STANDARD_TEXT_IS_USED'|translate }}</label>
+                    <div class="col-sm-5">
+                        <button (click)="setTextType(integration, lang, 'entry')" class="btn btn-transparent" style="margin-top:5px;margin-right:5px;font-weight:normal" type="button"><i class="fa fa-plus-circle"></i> {{ addButtonText(integration) }}</button>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="product.texts[integration.id][lang.code].type == 'entry'">
+                    <label for="title" class="col-sm-3 control-label">{{ 'PRODUCT_TITLE'|translate }}:</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control" [(ngModel)]="product.texts[integration.id][lang.code].name" maxlength="80">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">{{ 'ITEM_TEMPLATE'|translate }}:</label>
+                    <div class="col-sm-5">
+                        <select class="form-control" [(ngModel)]="product.texts[integration.id][lang.code].template_id" [selected]="product.texts[integration.id][lang.code].template_id" template-select></select>
+                    </div>
+                    <div class="col-sm-4 help"></div>
+                </div>
+                <div class="form-group" *ngIf="product.texts[integration.id][lang.code].type == 'entry'">
+                    <label for="description" class="col-sm-3 control-label">{{ 'PRODUCT_DESCRIPTION'|translate }}:</label>
+                    <div class="col-sm-9">
+                        <wysiwyg [(ngModel)]="product.texts[integration.id][lang.code].description"></wysiwyg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </so-panel>
+</div>

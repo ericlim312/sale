@@ -1,0 +1,24 @@
+.product-stats {
+    .sidebar {
+        button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: #f1f1f1;
+            cursor: pointer;
+            padding-top: 0;
+            padding-bottom: 0;
+            line-height: 32px;
+
+            img {
+                height: 30px;
+                width: 60px;
+            }
+        }
+    }
+
+    .btn-container {
+        text-align: right;
+        line-height: 85px;
+    }
+}

@@ -1,0 +1,69 @@
+.expandable-panels {
+    .x-panel {
+        margin-bottom: 12px;
+
+        &.no-children {
+            .panel-state-icon {
+                color: $darkGray;
+            }
+        }
+
+        h3 {
+            background: $lightGray;
+            border: 1px solid $darkGray;
+            padding: 12px;
+            font-size: 14px;
+            margin: 0;
+
+            i {
+                padding-right: 12px;
+                color: $selloPink;
+            }
+
+            .buttons {
+                display: none;
+                float: right;
+                cursor: pointer;
+            }
+
+            .add-subcategory {
+                display: none;
+                padding-left: 15px;
+                color: $selloPink;
+                text-transform: uppercase;
+                font-size: 10px;
+                cursor: pointer;
+
+                i {
+                    padding-right: 5px;
+                }
+            }
+
+            &:hover {
+                .buttons, .add-subcategory {
+                    display: inline;
+                }
+            }
+        }
+
+        .count {
+            background: $darkGray;
+            color: $textGray;
+            display: inline-block;
+            padding: 4px 12px;
+            margin-left: 8px;
+        }
+    }
+
+    .x-body {
+        padding: 15px;
+        border-left: 1px solid $darkGray;
+        border-right: 1px solid $darkGray;
+        border-bottom: 1px solid $darkGray;
+
+        .empty-view {
+            padding: 50px 0;
+            text-align: center;
+        }
+    }
+}

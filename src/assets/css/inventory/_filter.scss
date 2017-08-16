@@ -1,0 +1,92 @@
+.inventory-filter {
+    background: white;
+    border-right: 1px solid $darkGray;
+    border-left: 1px solid $darkGray;
+
+    .filter-by {
+        overflow: hidden;
+        padding: 15px 15px 5px 15px;
+        border-bottom: 1px solid $darkGray;
+
+        .heading {
+            display: -webkit-flex; /* Safari */
+            display: flex;
+            float: left;
+            width: 100px;
+            color: $textGray;
+            line-height: 25px;
+        }
+
+        .buttons {
+            width: calc(100% - 100px);
+            float: right;
+
+            button {
+                background: transparent;
+                border: 1px solid $darkGray;
+                border-radius: 5px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+                padding: 5px 10px;
+                color: $textGray;
+
+                &.active {
+                    background: $hardGray;
+                    color: white;
+                    border: 1px solid $hardGray;
+                }
+            }
+        }
+    }
+
+    .filter-settings {
+        padding: 15px;
+        border-bottom: 1px solid $darkGray;
+        line-height: 1.5em;
+        color: $hardGray;
+        font-weight: bold;
+
+        .heading {
+
+        }
+
+        .delete {
+            background: $hardGray;
+            color: white;
+            cursor: pointer;
+            padding: 0 3px;
+        }
+
+        .multi {
+            overflow: hidden;
+
+            .x2 {
+                width: 50%;
+                float: left;
+            }
+        }
+    }
+
+    .filter-buttons {
+        padding: $spacing;
+        text-align: center;
+
+        button {
+            border-radius: 5px;
+            padding: 10px 15px;
+            width: 150px;
+        }
+
+        .clear {
+            background: transparent;
+            border: 1px solid $darkGray;
+        }
+
+        .submit {
+            background: $selloBlue;
+            border: 1px solid $selloBlue;
+            color: white;
+            font-weight: bold;
+        }
+    }
+}

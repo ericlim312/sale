@@ -1,0 +1,189 @@
+.onboarding-welcome {
+    background: #FFF;
+    border: 1px solid #dbdbdb;
+    padding: 15px;
+    text-align: center;
+    @media screen and (max-width: 1115px) {
+        min-height: 572px;
+    }
+
+    img {
+        display: block;
+        margin: auto;
+        padding-top: 45px;
+    }
+    h2 {
+        margin: 18px 0 5px 0;
+        font-size: 40px;
+    }
+    p {
+        width: 635px;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 10px;
+        font-size: 16px;
+        &.p1 {
+            color: #a5a6aa;
+            font-size: 15px;
+            margin-top: 20px;
+        }
+    }
+}
+
+.onboarding-action-button {
+    display: block;
+    margin: 30px auto 0 auto;
+    border-radius: 5px;
+    text-align: center;
+    color: #FFF;
+    text-decoration: none;
+    max-width: 100%;
+    padding: 15px 10px 10px 10px;
+    background: #008ee0;
+    position: relative;
+    min-height: 55px;
+    font-size: 17px;
+    border: none;
+
+    .plus-circle {
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        background: url(/assets/img/onboarding/plus-circle.png) no-repeat;
+        float: left;
+        margin: -5px 10px 0 0;
+        position: relative;
+    }
+}
+
+.onboarding-faq-box {
+    background: #FFF;
+    border: 1px solid #dbdbdb;
+
+    h2 {
+        background: #eeeff1;
+        text-transform: uppercase;
+        margin: 0;
+        font-size: 18px;
+        padding: 9px 5px 8px 22px;
+    }
+    .faq-list {
+
+        li {
+            display: block;
+            border-top: 1px solid #dbdbdb;
+            clear: both;
+            padding-bottom: 10px;
+            @media screen and (max-width: 520px) {
+                text-align: center;
+                padding-bottom: 25px;
+            }
+            span {
+                display: block;
+                padding: 22px 15px 0 20px;
+                text-decoration: none;
+                color: #62686e;
+
+                img {
+                    display: block;
+                    float: left;
+                    margin: 5px 20px 33px 0;
+                    @media screen and (max-width: 1115px) {
+                        margin-bottom: 50px;
+                    }
+                    @media screen and (max-width: 1010px) {
+                        margin-bottom: 70px;
+                    }
+                    @media screen and (max-width: 991px) {
+                        margin: 0 20px 50px 0;
+                    }
+                    @media screen and (max-width: 520px) {
+                        display: block;
+                        margin: 0 auto 14px auto;
+                        float: none;
+                    }
+                }
+                p {
+                    font-size: 15px;
+                    margin: 3px 0 3px 0;
+                    &.heading1 {
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.onboarding-container {
+    padding: 15px;
+}
+
+.onboarding-box {
+    border: 1px solid #dbdbdb;
+    background: #FFF;
+    padding: 28px 65px 50px 65px;
+    @media screen and (max-width: 768px) {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    img {
+        display: block;
+        margin: auto;
+    }
+    h2 {
+        text-align: center;
+        font-size: 30px;
+        margin: 10px 0 32px 0;
+        @media screen and (max-width: 380px) {
+            font-size: 24px;
+        }
+    }
+    .o-details {
+        clear: both;
+        @media screen and (max-width: 380px) {
+            text-align: center;
+        }
+        img {
+            float: left;
+            margin: 0 22px 50px 0;
+            @media screen and (max-width: 380px) {
+                float: none;
+                margin: 0 auto 10px auto;
+            }
+        }
+        h3 {
+            font-size: 18px;
+            margin: 0 0 4px 0;
+            padding-top: 11px;
+        }
+        p {
+            font-size: 16px;
+            color: #abafb4;
+        }
+    }
+}
+
+.onboarding-features {
+    text-align: center;
+    clear: both;
+
+    img {
+        display: block;
+        margin: auto;
+    }
+    h3 {
+        font-size: 20px;
+        margin: 15px 0 10px 0;
+    }
+    p {
+        font-size: 14px;
+        color: #bbbfc2;
+
+    }
+}
+
+
+

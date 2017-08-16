@@ -1,0 +1,71 @@
+<div class="container inventory-page" (scroll)="onScroll()" [ngClass]="{ 'hide-sidebar': hideSidebar }">
+    <div class="open-sidebar" (click)="toggleSidebar()"><i class="fa fa-arrow-right"></i> {{ 'SIDEBAR_SHOW'|translate }}</div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="pull-left inventory-heading">{{ 'INVENTORY'|translate }}</h1>
+            <div class="pull-left" inventory-toolbar></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-9 col-lg-push-3 main">
+            <div style="padding: 10px; border: 1px solid #ccc; margin-bottom: 15px;" [innerHTML]="'INVENTORY_WELCOME'|translate"></div>
+
+            <div *ngIf="!loading && empty">
+                <inventory-empty></inventory-empty>
+            </div>
+
+            <div *ngIf="loading">
+                <div class="text-center inventory-spinner">
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+
+            <div [style.display]="(loading || empty) ? 'none' : 'block'">
+                <div class="so-panel-header with-action">
+                    <div class="heading">
+                        {{ 'INVENTORY'|translate }}
+                    </div>
+                    <form class="actions" (submit)="onSubmitSearch()">
+                        <div class="search">
+                            <input type="text" name="search" placeholder="{{ 'SEARCH'|translate }}" [(ngModel)]="search" #q>
+                            <i class="fa fa-remove reseticon" (click)="resetSearch()" *ngIf="search != ''" angulartics2On="click" angularticsCategory="inventoryListSearch" angularticsEvent="reset"></i>
+                            <i class="fa fa-search searchicon" *ngIf="search == ''"></i>
+                        </div>
+                        <a (click)="showFilter = !showFilter" class="transparent-btn" angulartics2On="click" angularticsCategory="inventoryList" angularticsEvent="filter-toggle"><i class="fa fa-cogs"></i> {{ 'FILTER_BY'|translate }} <i class="fa fa-angle-up" *ngIf="showFilter"></i><i class="fa fa-angle-down" *ngIf="!showFilter"></i></a>
+                        <a href="https://bo.sello.io/#/import" class="transparent-btn import" angulartics2On="click" angularticsCategory="inventoryList" angularticsEvent="import"><i class="fa fa-cloud-upload"></i> {{ 'IMPORT'|translate }}</a>
+
+                        <!-- Quickedit -->
+                        <a *ngIf="!quickedit" (click)="toggleQuickedit()" class="transparent-btn" angulartics2On="click" angularticsCategory="inventoryList" angularticsEvent="quickedit-toggle"><i class="fa fa-edit"></i> {{ 'QUICK_EDIT'|translate }}</a>
+                        <a *ngIf="quickedit" (click)="saveQuickedit()" class="btn-primary" angulartics2On="click" angularticsCategory="inventoryList" angularticsEvent="quickedit-toggle"><i class="fa fa-save"></i> {{ 'QUICK_EDIT_SAVE'|translate }}</a>
+                    </form>
+                </div>
+                <filter *ngIf="showFilter"></filter>
+                <div class="so-panel-body" *ngIf="inventoryListMeta?.total > 100">
+                    <so-paginator [total]="inventoryListMeta?.total" [folder]="folder" [page]="page" [sort]="sort" [sortDir]="sortDir" [search]="search"></so-paginator>
+                </div>
+                <div style="overflow: auto">
+                    <router-outlet></router-outlet>
+                </div>
+                <div class="so-panel-body" *ngIf="inventoryListMeta?.total > 100">
+                    <so-paginator [total]="inventoryListMeta?.total" [folder]="folder" [page]="page" [sort]="sort" [sortDir]="sortDir" [search]="search"></so-paginator>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-lg-pull-9 sidebar">
+            <feedback [sectionName]="'INVENTORY_THE'|translate" section="inventory" version="5"></feedback>
+            <so-panel [header]="'FOLDERS'|translate" [subheader]="foldersCounterHeader" name="inventory.folders" [collapsible]="true" [defaultopen]="false">
+                <inventory-folder-tree [folderId]="folder" (numFolders)="onUpdateNumFolders($event)"></inventory-folder-tree>
+            </so-panel>
+            <so-panel [header]="'COLUMNS'|translate" name="inventory.columns" [collapsible]="true" [defaultopen]="true">
+                <so-column-selector></so-column-selector>
+            </so-panel>
+
+            <inventory-meta></inventory-meta>
+
+            <button class="btn btn-default" (click)="toggleSidebar()" style="margin-top: 5px"><i class="fa fa-arrow-left"></i> {{ 'SIDEBAR_HIDE'|translate }}</button>
+        </div>
+    </div>
+</div>

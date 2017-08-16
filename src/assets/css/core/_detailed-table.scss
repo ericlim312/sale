@@ -1,0 +1,112 @@
+.detailed-table {
+    border: 1px solid #dbdbdb;
+    margin-top: 5px;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    @media screen and (max-width: 600px) {
+        width: 525px;
+        overflow: scroll;
+    }
+
+    .edit {
+        &:hover {
+            background: inherit;
+        }
+    }
+
+    tr {
+        color: #696969;
+        border-bottom: 1px solid #dbdbdb;
+        &:hover {
+            background: #f7f8fa;
+            .buttons i {
+                display: inline-block;
+            }
+        }
+        &.table-header {
+            background: #f7f8fa;
+            th {
+                text-transform: uppercase;
+                color: $selloPink;
+                font-weight: 300;
+                font-size: 13px;
+                padding: 14px 5px 14px 15px;
+            }
+        }
+    }
+    td {
+        vertical-align: top;
+        font-size: 14px;
+        padding: 15px 5px 15px 15px;
+        text-align: left;
+        i {
+            font-size: 24px;
+            @media screen and (max-width: 875px) {
+                font-size: 18px;
+            }
+        }
+
+        wysiwyg {
+            i {
+                font-size: inherit;
+            }
+        }
+    }
+
+    .fa-trash {
+        cursor: pointer;
+    }
+
+    .positive {
+        color: $positiveColor;
+    }
+
+    .negative {
+        color: $selloPink;
+    }
+
+    .buttons {
+        text-align: right;
+        width: 100px;
+        padding-right: 15px;
+
+        i {
+            color: $selloPink;
+            text-decoration: none;
+            margin-left: 12px;
+            font-size: 16px;
+            display: none;
+
+            @media screen and (max-width: 875px) {
+                margin-right: 0;
+                font-size: 12px;
+            }
+            &:hover {
+                color: #fa6163;
+            }
+        }
+    }
+    @media screen and (max-width: 700px) {
+        .buttons {
+            padding-right: 12px;
+        }
+    }
+    .square {
+        display: block;
+        float: left;
+        width: 23px;
+        height: 23px;
+        margin: auto;
+        @media screen and (max-width: 875px) {
+            width: 17px;
+            height: 17px;
+        }
+    }
+    .fa-check {
+        color: $positiveColor;
+    }
+    .fa-remove {
+        color: $negativeColor;
+    }
+}

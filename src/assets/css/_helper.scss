@@ -1,0 +1,144 @@
+.margin-top {
+    margin-top: $spacing;
+}
+.margin-bottom {
+    margin-bottom: $spacing;
+}
+
+.greyout {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+.overlay-item {
+    position: relative;
+    overflow: hidden;
+}
+.overlay {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.75);
+    overflow: hidden;
+    opacity: 0;
+    -webkit-transition: opacity 0.2s ease-in;
+    -moz-transition: opacity 0.2s ease-in;
+    -o-transition: opacity 0.2s ease-in;
+    -ms-transition: opacity 0.2s ease-in;
+    transition: opacity 0.2s ease-in;
+    left: 10;
+    top: 0;
+    width: calc(100% - 20px);
+    height: 100%;
+}
+.overlay-settings {
+    border-radius: 10px;
+}
+.overlay i.fa {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -24px;
+    margin-top: -30px;
+}
+.overlay-item:hover .overlay {
+    opacity: 1;
+}
+.animate-show {
+    line-height: 20px;
+    opacity: 1;
+    padding: 10px;
+    border: 1px solid black;
+    background: white;
+}
+.animate-show.ng-hide-add.ng-hide-add-active,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+    -webkit-transition: all linear 0.5s;
+    transition: all linear 0.5s;
+}
+.animate-show.ng-hide {
+    line-height: 0;
+    opacity: 0;
+    padding: 0 10px;
+}
+.check-element {
+    padding: 10px;
+    border: 1px solid black;
+    background: white;
+}
+.sello-badge {
+    background: #e6e7e8 !important;
+    color: black !important;
+    margin-right: 5px !important;
+    border: 1px solid #e6e7e8 !important;
+}
+/* CSS for the shortcut menu */
+@media (min-width: 992px) {
+    .sello-shortcuts {
+        width: 68px;
+        position: fixed;
+        z-index: 10;
+        top:45%;
+        left:-49px;
+        transition: .6s ease; /* IE Transition */
+        -webkit-transition: .6s ease; /* Fade to color for Chrome and Safari */
+        -webkit-backface-visibility: hidden; /* Fix for transition flickering */
+    }
+    .sello-shortcuts-text {
+        position: absolute;
+        right: -55px;
+        width: 129px;
+        height: 19px;
+        top:55px;
+        border-style: none;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        padding-bottom: 1px;
+        padding-top: 1px;
+        border-radius: 0px 0px 30px 30px;
+        cursor: pointer;
+        background-color: #2d78d5;
+        -webkit-transform: rotate(270deg);
+        -moz-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        transform: rotate(270deg);
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    }
+    .sello-shortcuts:hover {
+        left: 0px;
+    }
+    .sello-shortcuts ul {
+        list-style-type: none;
+        padding: 0px;
+        margin: 0px;
+    }
+}
+@media (max-width: 992px) {
+    .sello-shortcuts {
+        display: none;
+    }
+}
+
+@media (min-width: 950px) {
+  .modal-lg {
+    width: 950px !important;
+    margin: 30px auto;
+  }
+}
+
+@media (min-width: 1250px) {
+  .modal-lg {
+    width: 1200px !important;
+    margin: 30px auto;
+  }
+}
+
+@media (min-width: 1450px) {
+  .modal-lg {
+    width: 1400px !important;
+    margin: 30px auto;
+  }
+}

@@ -1,0 +1,32 @@
+<so-panel [header]="'STATS'|translate" name="inventory.stats" [collapsible]="true" [defaultopen]="false">
+    <div class="inventory-meta-item" *ngFor="let integration of meta?.active">
+        <h5 (click)="toggle(integration.id)" class="toggle">
+            {{ integration.display_name }}
+
+            <i *ngIf="!openIntegrations[integration.id]" class="pull-right fa fa-plus-circle"></i>
+            <i *ngIf="openIntegrations[integration.id]" class="pull-right fa fa-minus-circle"></i>
+        </h5>
+        <div *ngIf="openIntegrations[integration.id]">
+          <table *ngIf="integration.market_id == 1">
+                <tr>
+                    <td class="rowlabel">{{ 'ACTIVE_PRODUCTS'|translate }}</td>
+                    <td class="rowvalue">{{ integration.num }} {{ 'PRODUCTS'|translate }}</td>
+                </tr>
+                <tr>
+                    <td class="rowlabel">{{ 'ACTIVE_AUCTIONS'|translate }}</td>
+                    <td class="rowvalue">{{ integration.auctions.active }} {{ 'PRODUCTS'|translate }}</td>
+                </tr>
+                <tr>
+                    <td class="rowlabel">{{ 'QUEUED_AUCTIONS'|translate }}</td>
+                    <td class="rowvalue">{{ integration.auctions.queue }} {{ 'PRODUCTS'|translate }}</td>
+                </tr>
+            </table>
+            <table *ngIf="integration.market_id != 1">
+                <tr>
+                    <td class="rowlabel">{{ 'ACTIVE_PRODUCTS'|translate }}</td>
+                    <td class="rowvalue">{{ integration.num }} {{ 'PRODUCTS'|translate }}</td>
+                </tr>
+            </table>
+        </div>
+    <div>
+</div>

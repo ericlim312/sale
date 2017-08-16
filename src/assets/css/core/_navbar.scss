@@ -1,0 +1,33 @@
+.navbar {
+    padding: 0;
+
+    .user-menu .dropdown-toggle,
+    .notifications .dropdown-toggle,
+    .account-switcher .dropdown-toggle {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        color: rgba(255,255,255,.5);
+
+        // When a menu item is hovered
+        a:hover, a:focus {
+            text-decoration: none;
+            background-color: #edeef0;
+        }
+    }
+
+    &.navbar-fixed-top {
+        .open > a {
+            background: inherit;
+        }
+
+        .dropdown-menu {
+            padding: 15px;
+        }
+
+        .link {
+            cursor: pointer;
+        }
+    }
+}
+

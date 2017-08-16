@@ -1,0 +1,163 @@
+<div class="status-box">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'SETTINGS_USERS_ACTIVE'|translate }}</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <button (click)="createNew.visible = true" *ngIf="!createNew.visible" class="action-button"><i class="fa fa-plus"></i> {{ 'BTN_INVITE'|translate }}</button>
+        </div>
+    </div>
+
+    <hint [message]="'HINT_USERS'|translate"></hint>
+
+    <div class="setting-panel" *ngIf="createNew.visible" (submit)="onInvite(createNewForm.value, createNewForm.valid)">
+        <h3>{{ 'BTN_INVITE'|translate }}</h3>
+
+        <form #createNewForm="ngForm" class="setting-form">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'EMAIL'|translate }}</span><br>
+                        <input
+                            type="text"
+                            [ngModel]="createNew.email"
+                            #email="ngModel"
+                            name="email"
+                            required>
+                        <small [hidden]="email.valid || (email.pristine && !createNewForm.submitted)" class="text-danger">{{ 'EMAIL_REQUIRED' |translate }}</small>
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'NAME'|translate }}</span><br>
+                        <input
+                            type="text"
+                            [ngModel]="createNew.name"
+                            #name="ngModel"
+                            name="name"
+                            required>
+                        <small [hidden]="name.valid || (name.pristine && !createNewForm.submitted)" class="text-danger">{{ 'NAME_REQUIRED' |translate }}</small>
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'ACCOUNT_TYPE'|translate }}</span><br>
+                        <select
+                            [ngModel]="createNew.role"
+                            #role="ngModel"
+                            name="role">
+                            <option value="readonly">{{ 'ACCOUNT_ROLE_READER'|translate }}</option>
+                            <option value="user">{{ 'ACCOUNT_ROLE_USER'|translate }}</option>
+                            <option value="leader">{{ 'ACCOUNT_ROLE_LEADER'|translate }}</option>
+                            <option value="admin">{{ 'ACCOUNT_ROLE_ADMIN'|translate }}</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+
+            <p class="button-panel">
+                <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                <button type="submit" class="action-button">{{ 'BTN_SEND_INVITE'|translate }}</button>
+            </p>
+        </form>
+    </div>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th></th>
+            <th>{{ 'USERNAME'|translate }}</th>
+            <th>{{ 'EMAIL'|translate }}</th>
+            <th>{{ 'ACCOUNT_TYPE'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+        <template ngFor let-user [ngForOf]="users">
+            <tr *ngIf="editing !== user">
+                <td><img class="avatar" src="{{ user.avatar || '/assets/img/no-avatar.png' }}"></td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td [ngSwitch]="user.role">
+                    <span *ngSwitchCase="'readonly'">Reader</span>
+                    <span *ngSwitchCase="'leader'">Leader</span>
+                    <span *ngSwitchCase="'user'">User</span>
+                    <span *ngSwitchCase="'admin'">Administrator</span>
+                    <span *ngSwitchDefault>{{user.role}}</span>
+                </td>
+                <td class="buttons">
+                    <a><i (click)="editing = user" class="fa fa-pencil"></i></a>
+                    <a><i (click)="onDelete(user)" class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+            <tr *ngIf="editing === user" class="edit">
+                <td colspan="5">
+                    <div class="setting-panel">
+                        <form #editingForm="ngForm" class="setting-form" (submit)="onEdit(editingForm.value, editingForm.valid)">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p>
+                                        <span class="text">{{ 'EMAIL'|translate }}</span><br>
+                                        {{ editing.email }}
+                                    </p>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p>
+                                        <span class="text">{{ 'NAME'|translate }}</span><br>
+                                        {{ editing.name }}
+                                    </p>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p>
+                                        <span class="text">{{ 'ACCOUNT_TYPE'|translate }}</span><br>
+                                        <select
+                                            [ngModel]="editing.role"
+                                            #role="ngModel"
+                                            name="role">
+                                            <option value="readonly">{{ 'ACCOUNT_ROLE_READER'|translate }}</option>
+                                            <option value="user">{{ 'ACCOUNT_ROLE_USER'|translate }}</option>
+                                            <option value="leader">{{ 'ACCOUNT_ROLE_LEADER'|translate }}</option>
+                                            <option value="admin">{{ 'ACCOUNT_ROLE_ADMIN'|translate }}</option>
+                                        </select>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <p class="button-panel">
+                                <button type="button" (click)="editing = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                                <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                            </p>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </template>
+    </table>
+</div>
+<hr>
+
+<div class="status-box">
+    <h2>{{ 'SETTINGS_USERS_INVITED'|translate }}</h2>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th></th>
+            <th>{{ 'USERNAME'|translate }}</th>
+            <th>{{ 'EMAIL'|translate }}</th>
+            <th>{{ 'ACCOUNT_TYPE'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+        <tr *ngFor="let invite of invites">
+            <td><img class="avatar" src="/assets/img/no-avatar.png"></td>
+            <td>{{ invite.name }}</td>
+            <td>{{ invite.email }}</td>
+            <td [ngSwitch]="invite.role">
+                <span *ngSwitchCase="'readonly'">Reader</span>
+                <span *ngSwitchCase="'leader'">Leader</span>
+                <span *ngSwitchCase="'user'">User</span>
+                <span *ngSwitchCase="'admin'">Administrator</span>
+                <span *ngSwitchDefault>{{ invite.role }}</span>
+            </td>
+            <td class="buttons">
+                <a><i (click)="onUninvite(invite)" class="fa fa-trash"></i></a>
+            </td>
+        </tr>
+    </table>
+</div>

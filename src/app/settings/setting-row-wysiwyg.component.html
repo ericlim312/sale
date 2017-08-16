@@ -1,0 +1,25 @@
+<div class="setting-row row" (click)="onEdit()">
+    <div class="col-md-3 name">
+        <span class="pad">{{ name }}:</span>
+    </div>
+    <div class="col-md-7 value">
+        <div *ngIf="!edit">
+            <span class="pad">{{ previewText }}</span>
+        </div>
+
+        <div *ngIf="edit">
+            <wysiwyg name="wysiwyg" [(ngModel)]="value"></wysiwyg>
+
+            <p class="text-danger" *ngIf="!isLengthValid">{{ 'Max length reached' |translate }} ({{value?.length}} of {{ maxLength }})</p>
+
+            <hr />
+            <button class="action-button" (click)="save();$event.stopPropagation()" [disabled]="!isLengthValid"><i class="fa fa-save"></i> {{ 'BTN_SAVE'|translate }}</button>
+            <button class="cancel-button" (click)="cancel();$event.stopPropagation()"><i class="fa fa-cancel"></i> {{ 'BTN_CANCEL'|translate }}</button>
+        </div>
+    </div>
+    <div class="col-md-2 button" *ngIf="!edit">
+        <div class="pad" *ngIf="editable">
+            <button class="cancel-button toggle" (click)="onEdit()" type="button"><i class="fa fa-edit"></i> {{ 'BTN_EDIT'|translate }}</button>
+        </div>
+    </div>
+</div>

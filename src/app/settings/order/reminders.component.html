@@ -1,0 +1,196 @@
+<div class="reminders-page">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'SETTINGS_REMINDERS'|translate }}</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <button (click)="createNew.visible = true" *ngIf="!createNew.visible" class="action-button"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+        </div>
+    </div>
+
+    <div class="setting-panel" *ngIf="createNew.visible">
+        <h3>{{ 'NEW_REMINDER'|translate }}</h3>
+
+        <form #createNewForm="ngForm" class="setting-form" (submit)="onCreateNew(createNewForm.value, createNewForm.valid)">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>
+                        <span class="text">{{ 'NAME'|translate }}</span><br>
+                        <input type="text"
+                            [ngModel]="createNew.name"
+                            #name="ngModel"
+                            name="name"
+                            required>
+                        <small [hidden]="name.valid || (name.pristine && !createNewForm.submitted)" class="text-danger">{{ 'Name is required' |translate }}</small>
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <p>
+                        <span class="text">{{ 'REMINDER_DAYS'|translate }}</span><br>
+                        <input type="number"
+                            [ngModel]="createNew.days"
+                            #days="ngModel"
+                            name="days"
+                            required>
+                        <small [hidden]="days.valid || (days.pristine && !createNewForm.submitted)" class="text-danger">{{ 'Number of days is required' |translate }}</small>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <span class="text">{{ 'REMINDER_HAS_STATUS'|translate }}</span><br>
+                    <div class="statusar">
+                       <div *ngFor="let status of statuses">
+                            <ui-switch size="small" [checked]="isStatusChecked(createNew, status.id)" (change)="setStatusChecked(createNew, status.id, $event)"></ui-switch>
+                            <span [innerHTML]="status.title"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" [ngSwitch]="settings_type.value">
+                    <p>
+                        <span class="text">{{ 'REMINDER_ACTION'|translate }}</span><br>
+                        <select [ngModel]="createNew.settings.type"
+                            #settings_type="ngModel"
+                            name="settings_type"
+                            required>
+                            <option value="orderlist">{{ 'REMINDER_ACTION_ICON'|translate }}</option>
+                            <option value="sendmail">{{ 'REMINDER_ACTION_SEND_MAIL'|translate }}</option>
+                            <option value="changestatus">{{ 'REMINDER_ACTION_CHANGE_STATUS'|translate }}</option>
+                        </select>
+                    </p>
+
+                    <p *ngSwitchCase="'sendmail'">
+                        <span class="text">{{ 'REMINDER_SELECT_MAIL'|translate }}</span><br>
+                        <select [ngModel]="createNew.settings.mail"
+                            #settings_mail="ngModel"
+                            name="settings_mail"
+                            required>
+                            <option *ngFor="let template of templates" [value]="template.id">{{ template.title }}</option>
+                        </select>
+                    </p>
+
+                    <p *ngSwitchCase="'changestatus'">
+                        <span class="text">{{ 'REMINDER_SELECT_STATUS'|translate }}</span><br>
+                        <select [ngModel]="createNew.settings.new_status"
+                            #settings_new_status="ngModel"
+                            name="settings_new_status"
+                            required>
+                            <option *ngFor="let status of statuses" [value]="status.id">{{ status.title }}</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+
+            <p class="button-panel">
+                <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+            </p>
+        </form>
+    </div>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'NAME'|translate }}</th>
+            <th>{{ 'REMINDER_DAYS'|translate }}</th>
+            <th>{{ 'TYPE'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+
+        <template ngFor let-item [ngForOf]="items">
+            <tr *ngIf="item !== editing">
+                <td>{{ item.name }}</td>
+                <td>{{ item.days }}</td>
+                <td [ngSwitch]="item.settings?.type">
+                    <span *ngSwitchCase="'orderlist'">{{ 'REMINDER_ACTION_ICON'|translate }}</span>
+                    <span *ngSwitchCase="'sendmail'">{{ 'REMINDER_ACTION_SEND_MAIL'|translate }}</span>
+                    <span *ngSwitchCase="'changestatus'">{{ 'REMINDER_ACTION_CHANGE_STATUS'|translate }}</span>
+                </td>
+                <td class="buttons">
+                    <i (click)="editing = item"  class="fa fa-pencil"></i>
+                    <i (click)="onDelete(item.id)" class="fa fa-trash"></i>
+                </td>
+            </tr>
+            <tr *ngIf="item === editing" class="edit">
+                <td colspan="4">
+                    <div class="setting-panel">
+                        <form #editingForm="ngForm" class="setting-form" (submit)="onEdit(editingForm.value, editingForm.valid)">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p>
+                                        <span class="text">{{ 'NAME'|translate }}</span><br>
+                                        <input type="text"
+                                            [ngModel]="editing.name"
+                                            #name="ngModel"
+                                            name="name"
+                                            required>
+                                        <small [hidden]="name.valid || (name.pristine && !editingForm.submitted)" class="text-danger">{{ 'Name is required' |translate }}</small>
+                                    </p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p>
+                                        <span class="text">{{ 'REMINDER_DAYS'|translate }}</span><br>
+                                        <input type="number"
+                                            [ngModel]="editing.days"
+                                            #days="ngModel"
+                                            name="days"
+                                            required>
+                                        <small [hidden]="days.valid || (days.pristine && !editingForm.submitted)" class="text-danger">{{ 'Number of days is required' |translate }}</small>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <span class="text">{{ 'REMINDER_HAS_STATUS'|translate }}</span><br>
+                                    <div class="statusar">
+                                        <div *ngFor="let status of statuses">
+                                            <ui-switch size="small" [checked]="isStatusChecked(editing, status.id)" (change)="setStatusChecked(editing, status.id, $event)"></ui-switch>
+                                            <span [innerHTML]="status.title"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6" [ngSwitch]="settings_type.value">
+                                    <p>
+                                        <span class="text">{{ 'REMINDER_ACTION'|translate }}</span><br>
+                                        <select [ngModel]="editing.settings.type"
+                                            #settings_type="ngModel"
+                                            name="settings_type"
+                                            required>
+                                            <option value="orderlist">{{ 'REMINDER_ACTION_ICON'|translate }}</option>
+                                            <option value="sendmail">{{ 'REMINDER_ACTION_SEND_MAIL'|translate }}</option>
+                                            <option value="changestatus">{{ 'REMINDER_ACTION_CHANGE_STATUS'|translate }}</option>
+                                        </select>
+                                    </p>
+
+                                    <p *ngSwitchCase="'sendmail'">
+                                        <span class="text">{{ 'REMINDER_SELECT_MAIL'|translate }}</span><br>
+                                        <select [ngModel]="editing.settings.mail"
+                                            #settings_mail="ngModel"
+                                            name="settings_mail"
+                                            required>
+                                            <option *ngFor="let template of templates" [value]="template.id">{{ template.title }}</option>
+                                        </select>
+                                    </p>
+
+                                    <p *ngSwitchCase="'changestatus'">
+                                        <span class="text">{{ 'REMINDER_SELECT_STATUS'|translate }}</span><br>
+                                        <select [ngModel]="editing.settings.new_status"
+                                            #settings_new_status="ngModel"
+                                            name="settings_new_status"
+                                            required>
+                                            <option *ngFor="let status of statuses" [value]="status.id">{{ status.title }}</option>
+                                        </select>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <p class="button-panel">
+                                <button type="button" (click)="editing = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                                <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                            </p>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </template>
+    </table>
+</div>

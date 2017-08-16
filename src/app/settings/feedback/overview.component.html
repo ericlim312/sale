@@ -1,0 +1,100 @@
+<div class="status-box">
+    <div class="row">
+        <div class="col-md-6"><h2>{{ 'SETTINGS_FEEDBACK'|translate }}</h2></div>
+        <div class="col-md-6 text-right">
+            <button (click)="createNew.visible = true" *ngIf="!createNew.visible" class="action-button"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+        </div>
+    </div>
+
+    <div class="setting-panel" *ngIf="createNew.visible">
+        <h3>{{ 'NEW_FEEDBACK'|translate }}</h3>
+
+        <form #createNewForm="ngForm" class="setting-form" (submit)="onCreateNew(createNewForm.value, createNewForm.valid)">
+            <div class="row">
+                <div class="col-sm-3">
+                    <p>
+                        <span class="text">{{ 'TYPE'|translate }}</span><br>
+                        <select
+                            [ngModel]="createNew.positive"
+                            #positive="ngModel"
+                            name="positive"
+                            required>
+                            <option value="1">{{ 'POSITIVE'|translate }}</option>
+                            <option value="0">{{ 'NEGATIVE'|translate }}</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col-sm-9">
+                    <p>
+                        <span class="text">{{ 'TEXT'|translate }}</span><br>
+                        <input type="text"
+                            [ngModel]="createNew.message"
+                            #message="ngModel"
+                            name="message"
+                            required>
+                        <small [hidden]="message.valid || (message.pristine && !createNewForm.submitted)" class="text-danger">{{ 'Message is required' |translate }}</small>
+                    </p>
+                </div>
+            </div>
+
+            <p class="button-panel">
+                <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+            </p>
+        </form>
+    </div>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'TYPE'|translate }}</th>
+            <th>{{ 'TEXT'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+        <template ngFor let-item [ngForOf]="items">
+            <tr *ngIf="editing !== item" [ngSwitch]="isPositive(item)">
+                <td *ngSwitchCase="true" class="positive">{{ 'POSITIVE'|translate }}</td>
+                <td *ngSwitchCase="false" class="negative">{{ 'NEGATIVE'|translate }}</td>
+                <td>{{ item.message }}</td>
+                <td class="buttons"><i (click)="editing = item" class="fa fa-pencil"></i> <i (click)="onDelete(item.id)" class="fa fa-trash"></i></td>
+            </tr>
+            <tr *ngIf="editing === item" class="edit">
+                <td colspan="3">
+                    <div class="setting-panel">
+                        <form #editingForm="ngForm" class="setting-form" (submit)="onEdit(editingForm.value, editingForm.valid)">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <p>
+                                        <span class="text">{{ 'TYPE'|translate }}</span><br>
+                                        <select
+                                            [ngModel]="editing.positive"
+                                            #positive="ngModel"
+                                            name="positive">
+                                            <option value="1">{{ 'POSITIVE'|translate }}</option>
+                                            <option value="0">{{ 'NEGATIVE'|translate }}</option>
+                                        </select>
+                                    </p>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>
+                                        <span class="text">{{ 'TEXT'|translate }}</span><br>
+                                        <input type="text"
+                                            [ngModel]="editing.message"
+                                            #message="ngModel"
+                                            name="message"
+                                            required>
+                                        <small [hidden]="message.valid || (message.pristine && !editingForm.submitted)" class="text-danger">{{ 'Message is required' |translate }}</small>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <p class="button-panel">
+                                <button type="button" (click)="editing = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                                <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                            </p>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </template>
+    </table>
+</div>

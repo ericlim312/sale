@@ -1,0 +1,332 @@
+<div class="status-box mail-settings">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'SETTINGS_MAIL'|translate }}</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <button (click)="createNew.visible = true" *ngIf="!createNew.visible" class="action-button"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+        </div>
+    </div>
+
+    <hint id="settings-mail-overview" [message]="'MAILTEMPLATES_HINT'|translate"></hint>
+
+    <div class="row" *ngIf="createNew.visible">
+        <div class="col-md-8">
+            <div class="setting-panel">
+                <h3>{{ 'NEW_MAIL_TEMPLATE'|translate }}</h3>
+
+                <form #createNewForm="ngForm" class="setting-form" (submit)="onCreateNew(createNewForm.value, createNewForm.valid)">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p>
+                                <span class="text">{{ 'NAME'|translate }}</span><br>
+                                <input type="text"
+                                        [ngModel]="createNew.title"
+                                        #name="ngModel"
+                                        name="title"
+                                        required>
+                                <small [hidden]="name.valid || (name.pristine && !createNewForm.submitted)" class="text-danger">{{ 'Title is required' |translate }}</small>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>
+                                <span class="text">{{ 'TEMPLATE_SUBJECT'|translate }}</span><br>
+                                <input type="text"
+                                    [ngModel]="createNew.subject"
+                                    #subject="ngModel"
+                                    name="subject">
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>
+                                <span class="text">{{ 'CHANGE_STATUS_TO'|translate }}</span><br>
+                                <select
+                                    [ngModel]="createNew.status_id"
+                                    #status_id="ngModel"
+                                    name="status_id"
+                                    (change)="createNew.status_id = (status_id.value)">
+                                    <option *ngFor="let status of statuses" [value]="status.id">{{ status.title }}</option>
+                                </select>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>
+                                <span class="text">{{ 'LEAVE_FEEDBACK'|translate }}</span><br>
+                                <select
+                                    [ngModel]="createNew.feedback_id"
+                                    #feedback_id="ngModel"
+                                    name="feedback_id"
+                                    (change)="createNew.feedback_id = (feedback_id.value)">
+                                    <option *ngFor="let feedback of feedbacks" [value]="feedback.id">{{ feedback.message }}</option>
+                                </select>
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>
+                                <span class="text">{{ 'ATTACH'|translate }}</span><br>
+                                <select
+                                    [ngModel]="createNew.attachment"
+                                    #attachment="ngModel"
+                                    name="attachment">
+                                    <option value="">{{ 'NOTHING'|translate }}</option>
+                                    <option value="receipt">{{ 'RECEIPT'|translate }}</option>
+                                </select>
+                            </p>
+                        </div>
+                    </div>
+
+                    <wysiwyg [ngModel]="createNew.template" name="template"></wysiwyg>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="checkbox top-margin">
+                                <label>
+                                    <input type="checkbox" checked> {{ 'SEND_TEST_MAIL'|translate }}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="button-panel">
+                                <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                                <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="setting-panel">
+                <h3>{{ 'MAIL_VARIABLES'|translate }}</h3>
+
+                <div class="setting-form">
+                    <small class="explain">{{ 'MAIL_VARIABLES_EXPLAIN'|translate }}</small>
+
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_ITEM_LIST'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_ITEM_LIST_TEXT'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_ITEM_LIST_NOPRICE'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_ITEM_LIST_NOPRICE_TEXT'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_TOTAL'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_TOTAL_TEXT'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_TOTAL_NOSHIPPING'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_TOTAL_NOSHIPPING_TEXT'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_SHIPPING'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_SHIPPING_TEXT'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_PHONE'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_PHONE_TEXT'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_NAME'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_NAME_TEXT'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_ADDRESS'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_ADDRESS_TEXT'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_SURNAME'|translate }}
+                        <small>!{{ 'MAIL_VARIABLE_SURNAME'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_ORDERNO'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_ORDERNO_TEXT'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_DATE'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_DATE_TEXT'|translate }}</small>
+                    </p>
+                    <p class="variable">
+                        !{{ 'MAIL_VARIABLE_TRACKING'|translate }}
+                        <small>{{ 'MAIL_VARIABLE_TRACKING_TEXT'|translate }}</small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="detailed-table" *ngIf="templates && statuses">
+        <tr class="table-header">
+            <th>{{ 'NAME'|translate }}</th>
+            <th>{{ 'CHANGE_STATUS_TO'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+        <template ngFor let-template [ngForOf]="templates">
+            <tr *ngIf="!isEditing(template)">
+                <td>{{ template.title }}</td>
+                <td>{{ statusesById[template.status_id] }}</td>
+                <td class="buttons"><i (click)="edit(template)" class="fa fa-pencil cursor-link"></i> <i (click)="onDelete(template)" class="fa fa-trash"></i></td>
+            </tr>
+            <tr *ngIf="isEditing(template)" class="edit">
+                <td colspan="3">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="setting-panel">
+                                <h3>{{ 'EDIT_MAIL_TEMPLATE'|translate }}</h3>
+
+                                <form #editingForm="ngForm" class="setting-form" (submit)="submitEdit(editingForm.value, editingForm.valid)">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <p>
+                                                <span class="text">{{ 'NAME'|translate }}</span><br>
+                                                <input type="text"
+                                                    [ngModel]="editing.title"
+                                                    #name="ngModel"
+                                                    name="title"
+                                                    required>
+                                                <small [hidden]="name.valid || (name.pristine && !editingForm.submitted)" class="text-danger">{{ 'Title is required' |translate }}</small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <span class="text">{{ 'TEMPLATE_SUBJECT'|translate }}</span><br>
+                                                <input type="text"
+                                                    [ngModel]="editing.subject"
+                                                    #subject="ngModel"
+                                                    name="subject">
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <span class="text">{{ 'CHANGE_STATUS_TO'|translate }}</span><br>
+                                                <select
+                                                    [ngModel]="editing.status_id"
+                                                    #status_id="ngModel"
+                                                    name="status_id"
+                                                    (change)="editing.status_id = (status_id.value)">
+                                                    <option *ngFor="let status of statuses" [value]="status.id">{{ status.title }}</option>
+                                                </select>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <span class="text">{{ 'LEAVE_FEEDBACK'|translate }}</span><br>
+                                                <select
+                                                    [ngModel]="editing.feedback_id"
+                                                    #feedback_id="ngModel"
+                                                    name="feedback_id"
+                                                    (change)="editing.feedback_id = (feedback_id.value)">
+                                                    <option *ngFor="let feedback of feedbacks" [value]="feedback.id">{{ feedback.message }}</option>
+                                                </select>
+                                            </p>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p>
+                                                <span class="text">{{ 'ATTACH'|translate }}</span><br>
+                                                <select
+                                                    [ngModel]="editing.attachment"
+                                                    #attachment="ngModel"
+                                                    name="attachment">
+                                                    <option value="">{{ 'NOTHING'|translate }}</option>
+                                                    <option value="receipt">{{ 'RECEIPT'|translate }}</option>
+                                                </select>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <wysiwyg [ngModel]="editing.template" name="template"></wysiwyg>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="checkbox top-margin">
+                                                <label>
+                                                    <input type="checkbox"
+                                                        [ngModel]="editing.sendTest"
+                                                        #sendTest="ngModel"
+                                                        name="sendTest"
+                                                        checked> {{ 'SEND_TEST_MAIL'|translate }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="button-panel">
+                                                <button type="button" (click)="editing = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                                                <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="setting-panel">
+                                <h3>{{ 'MAIL_VARIABLES'|translate }}</h3>
+
+                                <div class="setting-form">
+                                    <small class="explain">{{ 'MAIL_VARIABLES_EXPLAIN'|translate }}</small>
+
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_ITEM_LIST'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_ITEM_LIST_TEXT'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_ITEM_LIST_NOPRICE'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_ITEM_LIST_NOPRICE_TEXT'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_TOTAL'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_TOTAL_TEXT'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_TOTAL_NOSHIPPING'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_TOTAL_NOSHIPPING_TEXT'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_SHIPPING'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_SHIPPING_TEXT'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_PHONE'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_PHONE_TEXT'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_NAME'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_NAME_TEXT'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_ADDRESS'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_ADDRESS_TEXT'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_SURNAME'|translate }}
+                                        <small>!{{ 'MAIL_VARIABLE_SURNAME'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_ORDERNO'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_ORDERNO_TEXT'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_DATE'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_DATE_TEXT'|translate }}</small>
+                                    </p>
+                                    <p class="variable">
+                                        !{{ 'MAIL_VARIABLE_TRACKING'|translate }}
+                                        <small>{{ 'MAIL_VARIABLE_TRACKING_TEXT'|translate }}</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </template>
+    </table>
+</div>

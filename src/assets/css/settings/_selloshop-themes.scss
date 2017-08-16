@@ -1,0 +1,139 @@
+.selloshop-themes {
+    padding-bottom: 15px;
+
+    .col-md-4 {
+        margin-top: 30px;
+    }
+    h2 {
+        font-size: 26px;
+    }
+    .themes-box {
+        background: #f7f8fa;
+        border: 1px solid #eaeaea;
+        overflow: hidden;
+        padding-bottom: 30px;
+
+        .theme-img {
+            position: relative;
+            display: block;
+            &:hover {
+                .theme-overlay {
+                    display: block;
+                }
+            }
+            img {
+                width: 100%;
+            }
+            .theme-overlay {
+                display: none;
+                position: absolute;
+                width: 100%;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background: rgba(0,0,0,0.5);
+                i {
+                    margin: auto;
+                    display: block;
+                    position: absolute;
+                    left: 40%;
+                    top: 40%;
+                    @media screen and (max-width: 1199px) {
+                        top: 37%;
+                        left: 38%;
+                    }
+                    @media screen and (max-width: 991px) {
+                        top: 45%;
+                        left: 45%;
+                    }
+                    @media screen and (max-width: 440px) {
+                        top: 40%;
+                        left: 40%;
+                    }
+                }
+
+            }
+        }
+        h3 {
+            padding: 0 18px;
+            font-size: 18px;
+            margin: 20px 0 0 0;
+        }
+        p {
+            padding: 0 18px;
+            margin-top: 12px;
+        }
+        ul {
+            padding: 0 18px;
+            margin-top: 20px;
+
+            li {
+                float: left;
+                &:last-child {
+                    float: right;
+                    @media screen and (max-width: 335px) {
+                        clear: both;
+                        margin-top: 15px;
+                        float: left;
+                    }
+                }
+                a {
+                    i {
+                        padding-right: 9px;
+                    }
+                }
+
+                a {
+                    display: block;
+                    float: left;
+                    text-decoration: none;
+                    color: #FFF;
+                    text-transform: uppercase;
+                    border-radius: 4px;
+                    height: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                    &:hover {
+                        background: $selloPinkHover !important;
+                    }
+                    i {
+                        color: #FFF;
+                        font-size: 22px;
+                        position: relative;
+                        top: 2px;
+                    }
+                    &.btn-theme {
+                        background: $selloPink;
+                        width: 178px;
+                        &.selected {
+                            background: #FFF;
+                            color: $selloPink;
+                            border: 1px solid $selloPink;
+                            i {
+                                color: $selloPink;
+                            }
+                            &:hover {
+                                color: #FFF;
+                                i {
+                                    color: #FFF;
+                                }
+                            }
+                        }
+                        @media screen and (min-width: 1199px) {
+                            width: 210px;
+                        }
+                    }
+                    &.btn-eye {
+                        background: $lightPink;
+                        width: 62px;
+                        padding-left: 10px;
+                        @media screen and (min-width: 1199px) {
+                            width: 70px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

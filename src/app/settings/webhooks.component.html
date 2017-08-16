@@ -1,0 +1,123 @@
+<div class="setting-box">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>{{ 'SETTINGS_WEBHOOKS'|translate }}</h2>
+        </div>
+        <div class="col-md-6 text-right">
+            <button (click)="createNew.visible = true" class="action-button"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+        </div>
+    </div>
+
+    <hint id="settings-webhooks" [message]="'WEBHOOKS_HINT'|translate"></hint>
+
+    <div class="setting-panel" *ngIf="createNew.visible">
+        <h3>{{ 'NEW_WEBHOOK'|translate }}</h3>
+
+        <form #createNewForm="ngForm" class="setting-form" (submit)="onCreateNew(createNewForm.value, createNewForm.valid)">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'EVENT'|translate }}</span><br>
+                        <select
+                            [ngModel]="createNew.webhook"
+                            #webhook="ngModel"
+                            name="webhook">
+                            <option value="orderNew">{{ 'WEBHOOK_EVENT_ORDER_NEW'|translate }}</option>
+                            <option value="orderPaid">{{ 'WEBHOOK_EVENT_ORDER_PAID'|translate }}</option>
+                            <option value="orderUpdated">{{ 'WEBHOOK_EVENT_ORDER_UPDATED'|translate }}</option>
+                            <option value="productUpdate">{{ 'WEBHOOK_EVENT_PRODUCT_UPDATED'|translate }}</option>
+                            <option value="productQuantityUpdate">{{ 'WEBHOOK_EVENT_PRODUCT_QUANTITY'|translate }}</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'TYPE'|translate }}</span><br>
+                        <select
+                            [ngModel]="createNew.type"
+                            #type="ngModel"
+                            name="type">
+                            <option value="json">JSON</option>
+                        </select>
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'URL'|translate }}</span><br>
+                        <input type="url"
+                            [ngModel]="createNew.url"
+                            #url="ngModel"
+                            name="url"
+                            required>
+                        <small [hidden]="url.valid || (url.pristine && !createNewForm.submitted)" class="text-danger">{{ 'URL is required' |translate }}</small>
+                    </p>
+                </div>
+            </div>
+
+            <p class="button-panel">
+                <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+            </p>
+        </form>
+    </div>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'EVENT'|translate }}</th>
+            <th>{{ 'TYPE'|translate }}</th>
+            <th>{{ 'URL'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+        <tr *ngFor="let webhook of webhooks">
+            <td [ngSwitch]="webhook.webhook">
+                <span *ngSwitchCase="'orderNew'">{{ 'WEBHOOK_EVENT_ORDER_NEW'|translate }}</span>
+                <span *ngSwitchCase="'orderPaid'">{{ 'WEBHOOK_EVENT_ORDER_PAID'|translate }}</span>
+                <span *ngSwitchCase="'orderUpdated'">{{ 'WEBHOOK_EVENT_ORDER_UPDATED'|translate }}</span>
+                <span *ngSwitchCase="'productUpdate'">{{ 'WEBHOOK_EVENT_PRODUCT_UPDATED'|translate }}</span>
+                <span *ngSwitchCase="'productQuantityUpdate'">{{ 'WEBHOOK_EVENT_PRODUCT_QUANTITY'|translate }}</span>
+            </td>
+            <td>{{ webhook.type }}</td>
+            <td>{{ webhook.url }}</td>
+            <td class="buttons">
+                <i (click)="onDelete(webhook.id)" class="fa fa-trash"></i>
+            </td>
+        </tr>
+    </table>
+</div>
+<hr>
+<div class="setting-box sub-panel">
+    <h2>{{ 'EVENTS'|translate }}</h2>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'DATE'|translate }}</th>
+            <th>{{ 'EVENT'|translate }}</th>
+            <th>{{ 'URL'|translate }}</th>
+            <th>{{ 'PAYLOAD'|translate }}</th>
+            <th>{{ 'RESPONSE_CODE'|translate }}</th>
+            <th>{{ 'RESPONSE_TIME'|translate }}</th>
+        </tr>
+        <tr *ngFor="let event of events">
+            <td>{{ event.created_at |amDateFormat:'YYYY-MM-DD hh:mm' }}</td>
+            <td [ngSwitch]="event.webhook">
+                <span *ngSwitchCase="'orderNew'">{{ 'WEBHOOK_EVENT_ORDER_NEW'|translate }}</span>
+                <span *ngSwitchCase="'orderPaid'">{{ 'WEBHOOK_EVENT_ORDER_PAID'|translate }}</span>
+                <span *ngSwitchCase="'orderUpdated'">{{ 'WEBHOOK_EVENT_ORDER_UPDATED'|translate }}</span>
+                <span *ngSwitchCase="'productUpdate'">{{ 'WEBHOOK_EVENT_PRODUCT_UPDATED'|translate }}</span>
+                <span *ngSwitchCase="'productQuantityUpdate'">{{ 'WEBHOOK_EVENT_PRODUCT_QUANTITY'|translate }}</span>
+            </td>
+            <td>{{ event.url }}</td>
+            <td><code>{{ event.payload }}</code></td>
+            <td>{{ event.http_response }}</td>
+            <td>{{ event.http_response_time }} s</td>
+        </tr>
+        <tfoot *ngIf="!events">
+            <td colspan="6">
+                <div class="text-center">
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </td>
+        </tfoot>
+    </table>
+</div>

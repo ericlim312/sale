@@ -1,0 +1,53 @@
+@import "inventory/folders";
+@import "inventory/list";
+@import "inventory/edit";
+@import "inventory/filter";
+@import "inventory/bulk";
+@import "inventory/toolbar";
+@import "inventory/meta-item";
+@import "inventory/folder-tree";
+@import "inventory/activate";
+@import "inventory/column-selector";
+@import "inventory/wheretosell";
+@import "inventory/image";
+@import "inventory/category";
+@import "inventory/languages";
+@import "inventory/stats";
+@import "inventory/edit-menu";
+@import "inventory/edit/text";
+@import "inventory/edit/price";
+@import "inventory/edit/shipping";
+@import "inventory/edit/buttons";
+
+.inventory-page {
+    .open-sidebar {
+        display: none;
+        position: fixed;
+        cursor: pointer;
+        left: 0;
+        top: 180px;
+        z-index: 1;
+        padding: 10px;
+        background: $selloBlue;
+        color: white;
+    }
+
+    &.hide-sidebar {
+        .sidebar {
+            display: none;
+        }
+        .main {
+            width: 100%;
+            left: auto;
+        }
+        .open-sidebar {
+            display: block;
+        }
+    }
+
+    .so-panel-header {
+        .import {
+            border-right: 1px solid $darkGray;
+        }
+    }
+}

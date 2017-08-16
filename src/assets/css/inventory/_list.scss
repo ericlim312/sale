@@ -1,0 +1,110 @@
+inventory-list {
+    .mini-image {
+        max-width: 50px;
+        max-height: 40px;
+    }
+
+    .inventory-list {
+        border-top: none;
+        width: 100%;
+
+        td, th {
+            border: 1px solid $darkGray;
+            padding: 5px 10px;
+        }
+
+        th {
+            font-weight: normal;
+            text-overflow: ellipsis;
+        }
+
+        td {
+            color: $textGray;
+        }
+
+        thead {
+            background: $lightGray;
+        }
+
+        tbody {
+            background: white;
+        }
+
+        .group {
+            border: 3px solid $darkGray;
+        }
+
+        .saved {
+            background: #99FF99;
+        }
+
+        .sold-out {
+            background: $lightGray;
+        }
+
+        .main-product-in-group {
+            padding-left: 10px;
+        }
+    }
+
+    .inventory-list-scroll-container {
+        overflow-x: scroll;
+
+        &.hover {
+            padding-bottom: 100px;
+        }
+    }
+
+    .item-links {
+        display: none;
+        position: absolute;
+        white-space: nowrap;
+        background: white;
+        border: 1px solid #999;
+        padding: 10px 20px;
+        border-radius: 3px;
+        z-index: 99;
+
+        a {
+            display: block;
+            cursor: pointer;
+        }
+
+        hr {
+            margin: 5px 0;
+            padding: 0;
+        }
+
+        &:after, &:before {
+            bottom: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        &:after {
+            border-color: rgba(255, 255, 255, 0);
+            border-bottom-color: #ffffff;
+            border-width: 8px;
+            margin-left: -8px;
+        }
+        &:before {
+            border-color: rgba(153, 153, 153, 0);
+            border-bottom-color: #999;
+            border-width: 9px;
+            margin-left: -9px;
+        }
+    }
+
+    .column-name:hover, .column-auctions:hover {
+        position: relative;
+
+        .item-links {
+            display: block;
+        }
+    }
+}

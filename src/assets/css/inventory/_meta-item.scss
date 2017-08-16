@@ -1,0 +1,29 @@
+.inventory-meta-item {
+    h5 {
+        font-weight: bold;
+        border-bottom: 1px solid $lightGray;
+    }
+
+    .toggle {
+        cursor: pointer;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    td {
+        padding-left: 15px;
+        line-height: 150%;
+    }
+
+    .rowlabel {
+        width: 40%;
+        border-left: 1px solid #ccc;
+    }
+
+    .rowvalue {
+        width: 30%;
+        color: $textGray;
+    }
+}

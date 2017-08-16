@@ -1,0 +1,20 @@
+<div class="submitter-cont">
+    <div [hidden]="error.length < 1" class="alert" ngClass="{{ errorClass }}">
+        <p *ngFor="let err of error">{{ err|translate }}</p>
+    </div>
+    <div class="submitter-search-cont">
+        <input type="text" class="form-control submitter-search" (focus)="show()" (blur)="hide()" (submit)="search($event)" (keyup)="search($event)" [(ngModel)]="query" placeholder="example@sello.io" />
+        <a (click)="search($event)" class="submitter-search-icon"><i class="fa fa-lg" [ngClass]="{'fa-search': !searching, 'fa-circle-o-notch fa-spin': searching}"></i></a>
+    </div>
+    <div [hidden]="!notFound">
+        <h5>{{ 'SUBMITTER_NAME'|translate }}</h5>
+        <input type="text" class="form-control" [(ngModel)]="name" placeholder="Anders Andersson" />
+        <br />
+        <button type="button" class="btn btn-primary" (click)="create()"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;{{ 'CREATE_SUBMITTER'|translate }}</button>
+    </div>
+    <div class="submitter-list-cont">
+        <ul [ngClass]="{'no-show': !showList}" *ngIf="submitters?.length > 0" class="submitter-list">
+            <li *ngFor="let submitter of submitters" (click)="selectSubmitter(submitter)" class="submitter-item">{{ submitter.name }} &lt;{{ submitter.email }}&gt;</li>
+        </ul>
+    </div>
+</div>

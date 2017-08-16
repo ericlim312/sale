@@ -1,0 +1,9 @@
+ .activate-toggle {
+     cursor: pointer;
+
+     &.active {
+         .default {
+             color: green;
+         }
+     }
+ }

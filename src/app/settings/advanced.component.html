@@ -1,0 +1,38 @@
+<div *ngIf="settings">
+    <h1>{{ 'SETTINGS_ADVANCED' | translate }}</h1>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.advanced.beta = $event; save('advanced.beta');"
+        [error]="errors['advanced.beta']"
+        [name]="'SETTINGS_ADVANCED_BETA'|translate"
+        [value]="settings.advanced.beta"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.advanced.mail_send_copy = $event; save('advanced.mail_send_copy');"
+        [error]="errors['advanced.mail_send_copy']"
+        [name]="'SETTINGS_ADVANCED_MAIL_SEND_COPY'|translate"
+        [value]="settings.advanced.mail_send_copy"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.advanced.reciept_show_reference = $event; save('advanced.reciept_show_reference');"
+        [error]="errors['advanced.reciept_show_reference']"
+        [name]="'SETTINGS_ADVANCED_RECEIPT_SHOW_REFERENCE'|translate"
+        [value]="settings.advanced.reciept_show_reference"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.advanced.reciept_show_location = $event; save('advanced.reciept_show_location');"
+        [error]="errors['advanced.reciept_show_location']"
+        [name]="'SETTINGS_ADVANCED_RECEIPT_SHOW_LOCATION'|translate"
+        [value]="settings.advanced.reciept_show_location"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.advanced.address_show_country = $event; save('advanced.address_show_country');"
+        [error]="errors['advanced.address_show_country']"
+        [name]="'SETTINGS_ADVANCED_ADDRESS_SHOW_COUNTRY'|translate"
+        [value]="settings.advanced.address_show_country"
+    ></setting-row>
+</div>

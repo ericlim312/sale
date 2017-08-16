@@ -1,0 +1,103 @@
+<td>
+    <input type="checkbox" [checked]="product.checked" (click)="onCheckProduct(product, $event)">
+    <i class="fa fa-heart main-product-in-group" *ngIf="isMainInGroup(product)" [title]="'MAIN_PRODUCT_IN_GROUP'|translate"></i>
+</td>
+<td *ngFor="let column of columns" [hidden]="!column.show" [ngSwitch]="column.type" [class]="'column-' + column.type" (mouseover)="hover(column, true)" (mouseout)="hover(column, false)">
+    <span *ngSwitchCase="'image'">
+        <img *ngIf="product.image != null" [imageLoad]="product.image" class="mini-image">
+    </span>
+    <span *ngSwitchCase="'active'"><product-activate-button [product]="product" [key]="column.id"></product-activate-button></span>
+    <span *ngSwitchCase="'private_name'">
+        <text [product]="product" [key]="column.id"></text>
+    </span>
+    <span *ngSwitchCase="'name'">
+        <text [product]="product" [key]="column.id"></text>
+    </span>
+    <span *ngSwitchCase="'auctions'"><auctions [product]="product" [key]="column.id"></auctions></span>
+    <span *ngSwitchCase="'category'"><span *ngIf="product[column.id] != null">{{ product[column.id][0].name }}</span></span>
+    <span *ngSwitchCase="'store'">
+        <!-- Not quickedit, Fyndiq, Tradera, Prestashop, Selloshop, Adnic -->
+        <span *ngIf="!quickedit && (column.market_id == '1' || column.market_id == 5 || column.market_id == 6 || column.market_id == 8 || column.market_id == 11)">{{ product[column.id] }}</span>
+
+        <!-- Not quickedit, Woocommerce -->
+        <span *ngIf="!quickedit && column.market_id == '12'">{{ product[column.id].store }} / {{ product[column.id].campaign }}</span>
+
+        <!-- Not Quickedit, CDON -->
+        <span *ngIf="!quickedit && column.market_id == 10 && product[column.id] !== null">
+            <span *ngFor="let price of product[column.id]" style="display: block">
+                <img [src]="'/assets/img/flags/' + price.lang + '.png'"> <span *ngIf="price.store === undefined">{{ 'MISSING'|translate }}</span><span *ngIf="price.store !== undefined && column.market_id == 10">{{ price.store }} / {{ price.regular }}</span>
+            </span>
+        </span>
+
+        <!-- Not Quickedit, Amazon -->
+        <span *ngIf="!quickedit && column.market_id == 13 && product[column.id] !== null">
+            <span *ngFor="let price of product[column.id]" style="display: block">
+                <img [src]="'/assets/img/flags/' + price.lang + '.png'"> <span *ngIf="price.store === undefined">{{ 'MISSING'|translate }}</span><span *ngIf="price.store !== undefined && column.market_id == 13">{{ price.store }}</span>
+            </span>
+        </span>
+
+        <!-- Quickedit Tradera, Fyndiq, Prestashop, Selloshop, Adnic -->
+        <input *ngIf="quickedit && (column.market_id == '1' || column.market_id == 5 || column.market_id == 6 || column.market_id == 8 || column.market_id == 11)" [(ngModel)]="product[column.id]" (keyup)="setDirty(column.id)" class="form-control">
+
+        <!-- Quickedit, CDON -->
+        <span *ngIf="quickedit && column.market_id == 10 && product[column.id] !== null">
+            <span *ngFor="let price of product[column.id]" style="display: block; overflow: hidden">
+                <img [src]="'/assets/img/flags/' + price.lang + '.png'" style="float:left"> <input [(ngModel)]="price.store" (keyup)="setDirty(column.id)" class="form-control" style="float:left; width: 40%; margin-bottom: 5px;"><input [(ngModel)]="price.regular" (keyup)="setDirty(column.id)" class="form-control" style="float:left; width: 40%; margin-bottom: 5px;">
+            </span>
+        </span>
+
+        <!-- Quickedit, Amazon -->
+        <span *ngIf="quickedit && column.market_id == 13 && product[column.id] !== null">
+            <span *ngFor="let price of product[column.id]" style="display: block; overflow: hidden">
+                <img [src]="'/assets/img/flags/' + price.lang + '.png'" style="float:left"> <input [(ngModel)]="price.store" (keyup)="setDirty(column.id)" class="form-control" style="float:left; width: 80%; margin-bottom: 5px;">
+            </span>
+        </span>
+
+        <!-- Quickedit, Woocommerce -->
+        <span *ngIf="quickedit && column.market_id == 12 && product[column.id] !== null">
+            <span style="display: block; overflow: hidden">
+                <input [(ngModel)]="product[column.id].store" (keyup)="setDirty(column.id)" class="form-control" style="float:left; width: 40%; margin-bottom: 5px;"><input [(ngModel)]="product[column.id].campaign" (keyup)="setDirty(column.id)" class="form-control" style="float:left; width: 40%; margin-bottom: 5px;">
+            </span>
+        </span>
+    </span>
+    <span *ngSwitchCase="'campaign'">
+        <span *ngIf="!quickedit">{{ product[column.id] }}</span>
+        <input *ngIf="quickedit" [(ngModel)]="product[column.id]" (keyup)="setDirty(column.id)" class="form-control">
+    </span>
+    <span *ngSwitchCase="'regular'">
+        <!-- Fyndiq -->
+        <span *ngIf="column.market_id == 6">
+            <span *ngIf="!quickedit">{{ product[column.id] }}</span>
+            <input *ngIf="quickedit" [(ngModel)]="product[column.id]" (keyup)="setDirty(column.id)" class="form-control">
+        </span>
+
+        <!-- Amazon -->
+        <span *ngIf="column.market_id == 13">
+            <!-- Not quickedit -->
+            <span *ngIf="!quickedit && product[column.id] !== null">
+                <span *ngFor="let price of product[column.id]" style="display: block">
+                    <img [src]="'/assets/img/flags/' + price.lang + '.png'"> <span *ngIf="price.regular === undefined">{{ 'MISSING'|translate }}</span><span *ngIf="price.regular !== undefined">{{ price.regular }}</span>
+                </span>
+            </span>
+            <!-- Quickedit -->
+            <span *ngIf="quickedit && product[column.id] !== null">
+                <span *ngFor="let price of product[column.id]" style="display: block; overflow: hidden">
+                    <img [src]="'/assets/img/flags/' + price.lang + '.png'" style="float:left"> <input [(ngModel)]="price.regular" (keyup)="setDirty(column.id)" class="form-control" style="float:left; width: 80%; margin-bottom: 5px;">
+                </span>
+            </span>
+        </span>
+    </span>
+    <span *ngSwitchCase="'quantity'">
+        <span *ngIf="!quickedit" style="white-space:nowrap; min-width:130px; overflow: hidden; display: block"><product-quantity [product]="product"></product-quantity></span>
+        <input *ngIf="quickedit" [(ngModel)]="product[column.id]" (keyup)="setDirty(column.id)" class="form-control">
+    </span>
+    <span *ngSwitchCase="'weight'">
+        <span *ngIf="!quickedit">{{ product[column.id]|round }}</span>
+        <input *ngIf="quickedit" [(ngModel)]="product[column.id]" (keyup)="setDirty(column.id)" class="form-control">
+    </span>
+    <span *ngSwitchDefault>
+        <span *ngIf="!quickedit || column.id == 'id' || column.id == 'created' || column.id == 'sold' || column.id == 'unsold' || column.id == 'last_sold' || column.id == 'variation_name' || column.id == 'folder_name' || column.id == 'brand'">{{ product[column.id] }}</span>
+        <input *ngIf="quickedit && column.id != 'id' && column.id != 'created' && column.id != 'sold' && column.id != 'unsold' && column.id != 'last_sold' && column.id != 'variation_name' && column.id != 'folder_name' && column.id != 'brand'" [(ngModel)]="product[column.id]" (keyup)="setDirty(column.id)" class="form-control">
+    </span>
+</td>
+<td><product-edit-button [product]="product"></product-edit-button></td>

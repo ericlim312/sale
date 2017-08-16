@@ -1,0 +1,35 @@
+<div class="row folder-crumb" *ngIf="currentFolder.id != 0">
+    <a (click)="init(0)" [routerLink]="['/inventory', 'list']" [queryParams]="{ folder: 0 }" class="home"><i class="fa fa-home"></i> {{ 'MAIN_FOLDER'|translate }}<span *ngIf="parentToParent"> | </span></a>
+    <a [routerLink]="['/inventory', 'list']" [queryParams]="{ folder: parentToParent.id }">{{ parentToParent.title }}</a>
+</div>
+
+<div class="row current-folder">
+    <h3><i class="fa fa-folder-open"></i> {{ currentFolder.title }} ({{ getNumProducts(currentFolder) }})</h3>
+    <div class="button-column" (click)="onFolderDelete(currentFolder)" *ngIf="currentFolder.id !== 0">
+        <i class="fa fa-trash" style="font-size: 14pt"></i><br>{{ 'DELETE_FOLDER'|translate }}
+    </div>
+    <div class="button-column" (click)="onFolderEdit(currentFolder)" *ngIf="currentFolder.id !== 0">
+        <i class="fa fa-pencil" style="font-size: 14pt"></i><br>{{ 'EDIT_FOLDER'|translate }}
+    </div>
+    <div class="button-column" (click)="onFolderCreate(currentFolder)">
+        <i class="fa fa-plus-circle" style="font-size: 14pt"></i><br>{{ 'CREATE_A_NEW_FOLDER'|translate }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <ul class="folder-children">
+            <li *ngFor="let folder of folders" (mouseover)="folder.showIcons = true" (mouseout)="folder.showIcons = false">
+                <div class="pull-left">
+                    <a (click)="init(folder.id);goToRoute('/inventory/list?folder='+folder.id)" href="javascript:void(0)">
+                        <i class="fa fa-folder"></i>
+                        {{ folder.title }} ({{ getNumProducts(folder) }})
+                    </a>
+                </div>
+                <span *ngIf="folder.hover" class="pull-right" style="background: white"><i class="fa fa-trash" style="color:red; cursor: pointer" (click)="removeFolder(folder)"></i></span>
+                <div style="clear: both"></div>
+            </li>
+            <span *ngIf="folders?.length == 0">{{ 'FOLDER_NO_SUBFOLDERS'|translate }}</span>
+        </ul>
+    </div>
+</div>

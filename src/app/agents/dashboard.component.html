@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="pull-left inventory-heading">{{ 'INVENTORY'|translate }}</h1>
+            <div class="pull-left" inventory-toolbar></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-9 col-lg-push-3">
+            <div class="row" style="margin-bottom: 30px;">
+                <div class="col-xs-12">
+                    <div class="so-panel-header">
+                        <div class="heading">
+                            {{ 'SUBMITTERS'|translate }}
+                        </div>
+                    </div>
+                    <div class="so-panel-body">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="so-panel-header">
+                        <div class="heading">
+                            {{ 'SUBMITTED_PRODUCTS'|translate }}
+                        </div>
+                    </div>
+                    <div class="so-panel-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-lg-pull-9">
+            <div class="so-panel-header">
+                <div class="heading">
+                    {{ 'STATS'|translate }}
+                </div>
+            </div>
+            <div class="so-panel-body">
+                <div class="row">
+                    <div class="col-xs-6 text-right">{{ 'NUM_SUBMITTERS'|translate }}:</div>
+                    <div class="col-xs-6">{{ submitters.num }} {{ 'SUBMITTERS'|translate|lc }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 text-right">{{ 'NUM_PRODUCTS'|translate }}:</div>
+                    <div class="col-xs-6">{{ products.num }} {{ 'PRODUCTS'|translate }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 text-right">{{ 'NUM_ORDERS'|translate }}:</div>
+                    <div class="col-xs-6">{{ orders.num }} {{ 'ORDERS'|translate|lc }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 text-right">{{ 'MAX_BID'|translate }}:</div>
+                    <div class="col-xs-6">{{ products.bid.max }} kr</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

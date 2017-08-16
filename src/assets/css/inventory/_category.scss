@@ -1,0 +1,72 @@
+.category-selector {
+    a {
+        cursor: pointer;
+        display: block;
+        padding: 5px;
+        border-top: 1px solid $lightGray;
+        border-left: 1px solid $lightGray;
+        border-right: 1px solid $lightGray;
+
+        &:hover {
+            background: $lightGray;
+        }
+
+        &.selected {
+            background: $lightGray;
+        }
+
+        &:last-child {
+            border-bottom: 1px solid $lightGray;
+        }
+    }
+
+    .category-column {
+        height: 200px;
+        overflow-x: scroll;
+    }
+}
+
+.category-section {
+    h5 {
+        font-size: 14pt;
+    }
+
+    .sub {
+        color: $textGray;
+    }
+
+    .integration {
+        background: $lightGray;
+        border: 1px solid $darkGray;
+        margin-bottom: 4px;
+        cursor: pointer;
+        overflow: hidden;
+
+        .market-name {
+            width: 30%;
+            float: left;
+            padding: 5px;
+
+            img {
+                margin-right: 8px;
+            }
+        }
+
+        .crumb {
+            width: 60%;
+            float: left;
+            padding: 5px;
+
+            &.error {
+                color: red;
+            }
+        }
+
+        .toggle {
+            padding: 5px;
+            text-align: right;
+            width: 10%;
+            float: left;
+        }
+    }
+}

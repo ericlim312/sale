@@ -1,0 +1,233 @@
+<div class="setting-box" *ngIf="settings">
+    <h2>{{ 'SETTINGS_SELLOSHOP_PAYMENT' | translate }}</h2>
+
+    <!-- Klarna checkout -->
+    <div class="setting-panel bottom-margin">
+        <h3>
+            Klarna Checkout
+            <span class="pull-right">
+                <ui-switch [checked]="klarnaCheckout.enabled" (change)="setPaymentEnabled(klarnaCheckout, $event)"></ui-switch>
+            </span>
+        </h3>
+        <div class="setting-form" *ngIf="klarnaCheckout.enabled">
+            <setting-row
+                type="text"
+                [name]="'EID'|translate"
+                [value]="klarnaCheckout.eid"
+                (onSave)="klarnaCheckout.eid = $event; save('klarnaCheckout.eid');"
+                [error]="errors['klarnaCheckout.eid']"
+            ></setting-row>
+            <setting-row
+                type="text"
+                [name]="'SHARED_SECRET'|translate"
+                [value]="klarnaCheckout.secret"
+                (onSave)="klarnaCheckout.secret = $event; save('klarnaCheckout.secret');"
+                [error]="errors['klarnaCheckout.secret']"
+            ></setting-row>
+            <setting-row
+                type="select"
+                [name]="'PAGE_PURCHASE_TERMS'|translate"
+                [value]="klarnaCheckout.purchaseTerms"
+                (onSave)="klarnaCheckout.purchaseTerms = $event; save('klarnaCheckout.purchaseTerms');"
+                [error]="errors['klarnaCheckout.purchaseTerms']"
+            ></setting-row>
+            <setting-row
+                type="toggle"
+                [name]="'TEST_MODE'|translate"
+                [value]="klarnaCheckout.sandbox"
+                (onSave)="klarnaCheckout.sandbox = $event; save('klarnaCheckout.sandbox');"
+                [error]="errors['klarnaCheckout.sandbox']"
+            ></setting-row>
+        </div>
+    </div>
+
+    <!-- Klarna -->
+    <div class="setting-panel bottom-margin">
+        <h3>
+            Klarna
+            <span class="pull-right">
+                <ui-switch [checked]="klarna.enabled" (change)="setPaymentEnabled(klarna, $event)"></ui-switch>
+            </span>
+        </h3>
+        <div class="setting-form" *ngIf="klarna.enabled">
+            <setting-row
+                type="text"
+                [name]="'FEE'|translate"
+                [value]="klarna.fee"
+                (onSave)="klarna.fee = $event; save('klarna.fee');"
+                [error]="errors['klarna.fee']"
+            ></setting-row>
+            <setting-row
+                type="text"
+                [name]="'EID'|translate"
+                [value]="klarna.eid"
+                (onSave)="klarna.eid = $event; save('klarna.eid');"
+                [error]="errors['klarna.eid']"
+            ></setting-row>
+            <setting-row
+                type="text"
+                [name]="'SHARED_SECRET'|translate"
+                [value]="klarna.secret"
+                (onSave)="klarna.secret = $event; save('klarna.secret');"
+                [error]="errors['klarna.secret']"
+            ></setting-row>
+            <setting-row
+                type="toggle"
+                [name]="'TEST_MODE'|translate"
+                [value]="klarna.sandbox"
+                (onSave)="klarna.sandbox = $event; save('klarna.sandbox');"
+                [error]="errors['klarna.sandbox']"
+            ></setting-row>
+        </div>
+    </div>
+
+    <!-- Payson -->
+    <div class="setting-panel bottom-margin">
+        <h3>
+            Payson
+            <span class="pull-right">
+                <ui-switch [checked]="payson.enabled" (change)="setPaymentEnabled(payson, $event)"></ui-switch>
+            </span>
+        </h3>
+        <div class="setting-form" *ngIf="payson.enabled">
+            <setting-row
+                type="text"
+                [name]="'FEE'|translate"
+                [value]="payson.fee"
+                (onSave)="payson.fee = $event; save('payson.fee');"
+                [error]="errors['payson.fee']"
+            ></setting-row>
+            <setting-row
+                type="text"
+                [name]="'PAYSON_EMAIL'|translate"
+                [value]="payson.paysonEmail"
+                (onSave)="payson.paysonEmail = $event; save('payson.paysonEmail');"
+                [error]="errors['payson.paysonEmail']"
+            ></setting-row>
+        </div>
+    </div>
+
+    <!-- Payson invoice -->
+    <div class="setting-panel bottom-margin">
+        <h3>
+            Payson Invoice
+            <span class="pull-right">
+                <ui-switch [checked]="paysoninvoice.enabled" (change)="setPaymentEnabled(paysoninvoice, $event)"></ui-switch>
+            </span>
+        </h3>
+        <div class="setting-form" *ngIf="paysoninvoice.enabled">
+            <setting-row
+                type="text"
+                [name]="'AGENT_ID'|translate"
+                [value]="paysoninvoice.agentId"
+                (onSave)="paysoninvoice.agentId = $event; save('paysoninvoice.agentId');"
+                [error]="errors['paysoninvoice.agentId']"
+            ></setting-row>
+            <setting-row
+                type="text"
+                [name]="'KEY'|translate"
+                [value]="paysoninvoice.token"
+                (onSave)="paysoninvoice.token = $event; save('paysoninvoice.token');"
+                [error]="errors['paysoninvoice.token']"
+            ></setting-row>
+            <setting-row
+                type="select"
+                [name]="'PAYSON_EMAIL'|translate"
+                [value]="paysoninvoice.paysonEmail"
+                (onSave)="paysoninvoice.paysonEmail = $event; save('paysoninvoice.paysonEmail');"
+                [error]="errors['paysoninvoice.paysonEmail']"
+            ></setting-row>
+            <setting-row
+                type="toggle"
+                [name]="'TEST_MODE'|translate"
+                [value]="paysoninvoice.sandbox"
+                (onSave)="paysoninvoice.sandbox = $event; save('paysoninvoice.sandbox');"
+                [error]="errors['paysoninvoice.sandbox']"
+            ></setting-row>
+        </div>
+    </div>
+
+    <!-- Paypal -->
+    <div class="setting-panel bottom-margin">
+        <h3>
+            Paypal
+            <span class="pull-right">
+                <ui-switch [checked]="paypal.enabled" (change)="setPaymentEnabled(paypal, $event)"></ui-switch>
+            </span>
+        </h3>
+        <div class="setting-form" *ngIf="paypal.enabled">
+            <setting-row
+                type="text"
+                [name]="'FEE'|translate"
+                [value]="paypal.fee"
+                (onSave)="paypal.fee = $event; save('paypal.fee');"
+                [error]="errors['paypal.fee']"
+            ></setting-row>
+            <setting-row
+                type="text"
+                [name]="'CLIENT_ID'|translate"
+                [value]="paypal.clientId"
+                (onSave)="paypal.clientId = $event; save('paypal.clientId');"
+                [error]="errors['paypal.clientId']"
+            ></setting-row>
+            <setting-row
+                type="text"
+                [name]="'SECRET'|translate"
+                [value]="paypal.secret"
+                (onSave)="paypal.secret = $event; save('paypal.secret');"
+                [error]="errors['paypal.secret']"
+            ></setting-row>
+            <setting-row
+                type="toggle"
+                [name]="'TEST_MODE'|translate"
+                [value]="paypal.sandbox"
+                (onSave)="paypal.sandbox = $event; save('paypal.sandbox');"
+                [error]="errors['paypal.sandbox']"
+            ></setting-row>
+        </div>
+    </div>
+
+    <!-- Prepay -->
+    <div class="setting-panel bottom-margin">
+        <h3>
+            {{ 'PRE_PAY_METHOD'|translate }}
+            <span class="pull-right">
+                <ui-switch [checked]="prepay.enabled" (change)="setPaymentEnabled(prepay, $event)"></ui-switch>
+            </span>
+        </h3>
+        <div class="setting-form" *ngIf="prepay.enabled">
+            <setting-row
+                type="text"
+                [name]="'FEE'|translate"
+                [value]="prepay.fee"
+                (onSave)="prepay.fee = $event; save('prepay.fee');"
+                [error]="errors['prepay.fee']"
+            ></setting-row>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!--
+
+
+
+                <tr ng-repeat="row in payments track by row.type">
+                    <td><input class="form-control" type="checkbox" ng-model="row.enabled"></td>
+                    <td><input class="form-control" type="text" ng-model="row.name" required></td>
+                    <td><input class="form-control" type="number" step="any" min="0" ng-model="row.fee" required ng-if="row.type != 'kco'"><span ng-if="row.type=='kco'">Inte tillåtet</span></td>
+                    <td>
+
+
+
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+</div>
+-->

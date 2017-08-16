@@ -1,0 +1,144 @@
+.edit-image-widget {
+    margin-top: 15px;
+    width: 820px;
+    overflow: hidden;
+    border: 2px dashed $lightGray;
+    padding: 8px;
+
+    &.drop-active {
+        border-color: $selloBlue;
+    }
+
+    &.empty {
+        padding: 32px;
+        text-align: center;
+        position: relative;
+        color: $darkGray;
+
+        h3 {
+            border: none;
+            font-size: 32pt;
+
+            i {
+                font-size: 48pt;
+            }
+        }
+
+        input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            // Misc hacks
+            opacity: 0.0;
+            filter: alpha(opacity=0);
+            font-size: 300px;
+            height: 300px;
+        }
+    }
+
+    .box {
+        float: left;
+        position: relative;
+
+        .buttons {
+            display: none;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            text-align: right;
+            line-height: 16px;
+            z-index: 1;
+
+            button {
+                line-height: 16px;
+            }
+        }
+    }
+
+    .upload {
+        overflow: hidden;
+        background: #ccc;
+        color: #999;
+        text-align: center;
+
+        input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            // Misc hacks
+            opacity: 0.0;
+            filter: alpha(opacity=0);
+            font-size: 300px;
+            height: 240px;
+        }
+    }
+
+    .smallbox {
+        @extend .box;
+        width: 150px;
+        height: 120px;
+        margin: 0 0 15px 15px;
+    }
+
+    .main-image {
+        @extend .box;
+        float: left;
+        width: 300px;
+        height: 240px;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        &:hover {
+            .buttons {
+                display: block;
+            }
+        }
+    }
+
+    .main-image-upload {
+        @extend .box;
+        @extend .upload;
+        float: left;
+        width: 300px;
+        height: 240px;
+        text-align: center;
+
+        i {
+            font-size: 170px;
+            margin-top: 16px;
+        }
+    }
+
+    .extra-image {
+        @extend .smallbox;
+        text-align: center;
+        line-height: 120px;
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        &:hover {
+            .buttons {
+                display: block;
+            }
+        }
+    }
+
+    .extra-image-upload {
+        @extend .smallbox;
+        @extend .upload;
+
+        i {
+            font-size: 70px;
+            margin-top: 16px;
+        }
+    }
+}

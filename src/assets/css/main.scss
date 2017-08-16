@@ -1,0 +1,248 @@
+// Define our variables
+$selloBlue: #1791dd;
+$selloPink: #fc3768;
+$selloPinkHover: #e4325e;
+$spacing: 15px;
+$lightGray: #edeff2;
+$darkGray: #dbdbdb;
+$hardGray: #3f444c;
+$textGray: #999;
+$veryDarkGray: #1f2125;
+$lightPink: #fda1b8;
+
+$disabledColor: #fdaec2;
+$positiveColor: #87df7b;
+$negativeColor: $selloPink;
+
+// Import partial styles!
+@import "dashboard/general";
+@import "orderlist";
+@import "account/subscription";
+@import "account/pricing";
+@import "settings/tree";
+@import "settings/multiselect";
+@import "settings/status";
+@import "onboarding/onboarding";
+@import "settings/form";
+@import "settings/panel";
+@import "settings/mail";
+@import "settings/reminders";
+@import "settings/selloshop-themes";
+@import "settings/selloshop-modules";
+@import "settings/selloshop-files";
+@import "helper";
+@import "inventory";
+@import "font-awesome/font-awesome";
+@import "login";
+@import "outbox";
+@import "calendar";
+@import "settings";
+@import "hacks";
+@import "agents";
+@import "core/stepper";
+@import "core/navbar";
+@import "core/dropdown";
+@import "core/soPanel";
+@import "core/paginator";
+@import "core/button";
+@import "core/hint";
+@import "core/detailed-table";
+@import "core/expandable-panel";
+@import "core/modal";
+
+// Default text color
+body {
+    color: $hardGray;
+    font-family: 'Roboto', sans-serif;
+}
+
+input[type=file] {
+  border: none;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+
+.single-column-container {
+  margin-top: $spacing;
+  padding: $spacing;
+  background: white;
+  border: 1px solid $darkGray;
+}
+
+.cursor-link {
+  cursor: pointer;
+}
+
+.sello-addon-select {
+  overflow: hidden;
+
+  input {
+    width: 70%;
+    float: left;
+  }
+
+  select {
+    width: 30%;
+    float: left;
+  }
+}
+
+// Fix for menu navbar to appear under modals
+.navbar.navbar-default.head {
+    z-index: 1;
+}
+
+.btn-primary {
+    background: $selloBlue;
+}
+
+.btn-transparent {
+    background: transparent;
+}
+
+.small-icon {
+  font-size: 14px;
+}
+
+// Main navigation
+@media (min-width: 1024px) {
+    .right-settings {
+        float: right !important;
+    }
+}
+
+@media (min-width: 34em) {
+    .container {
+        max-width: 100%;
+    }
+}
+
+// Helper classes
+.top-margin {
+	margin-top: $spacing !important;
+}
+
+.bottom-margin {
+  margin-bottom: $spacing;
+}
+
+.no-margin {
+	margin: 0;
+}
+
+.table-compact {
+	width: auto;
+
+	td, th {
+		padding: 4px $spacing 4px 4px;
+	}
+}
+
+.btn-group {
+    text-align: left;
+}
+
+// Loading bar
+#loading-bar .bar {
+    background-color: $selloBlue;
+}
+
+#loading-bar-spinner {
+    position: fixed;
+    top: 10;
+    left: 50%;
+    width: 20px;
+}
+
+#loading-bar-spinner .spinner-icon {
+    border-width: 3px;
+    width: 20px;
+    height: 20px;
+}
+
+.integration-item {
+    margin-top: -2px;
+    margin-bottom: -2px;
+}
+
+.integration-item:hover {
+    padding: 10px 15px 8px 15px !important;
+    margin-top: -2px;
+    margin-bottom: 0px;
+}
+
+// Hide Angular stuff until the page is loaded
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+    display: none !important;
+}
+
+.bg-primary {
+  color: #ffffff !important;
+  background-color: #4f8edc !important;
+  &:hover {
+    color: #ffffff !important;
+    background-color: #2d78d5 !important;
+  }
+  i {
+    color: #ffffff !important;
+    background-color: #4f8edc !important;
+    &:hover {
+        color: #ffffff !important;
+        background-color: #2d78d5 !important;
+    }
+  }
+}
+
+.bg-success {
+  color: #ffffff !important;
+  background-color: #85c744 !important;
+  &:hover {
+    color: #ffffff !important;
+    background-color: #71ae34 !important;
+  }
+}
+
+.bg-danger {
+  color: #ffffff !important;
+  background-color: #e73c3c !important;
+  &:hover {
+    color: #ffffff !important;
+    background-color: #df1b1b !important;
+  }
+}
+
+.bg-warning {
+  color: #ffffff !important;
+  background-color: #f1c40f !important;
+  &:hover {
+    color: #ffffff !important;
+    background-color: #cba50c !important;
+  }
+}
+
+.bg-info {
+  color: #ffffff !important;
+  background-color: #2bbce0 !important;
+  &:hover {
+    color: #ffffff !important;
+    background-color: #1da4c5 !important;
+  }
+}
+// Fix for Panels
+.panel-sello-fix .panel-heading {
+  border-top: 1px solid #d2d3d6 !important;
+}
+.panel-sello-fix .panel-body-sello {
+  border-left: 1px solid #d2d3d6 !important;
+  border-right: 1px solid #d2d3d6 !important;
+}
+// Fix for panel groups
+.panel-sello-group-fix .panel-body-sello {
+  border-left: 1px solid #d2d3d6 !important;
+  border-right: 1px solid #d2d3d6 !important;
+}

@@ -1,0 +1,12 @@
+.inventory-edit {
+    .languages {
+        .disabled {
+            color: $darkGray;
+
+            img {
+                filter: grayscale(100%);
+                -webkit-filter: grayscale(100%);
+            }
+        }
+    }
+}

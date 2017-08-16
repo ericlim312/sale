@@ -1,0 +1,18 @@
+<div class="column-selector">
+    <div class="checkbox" *ngFor="let column of standardColumns">
+        <label><input type="checkbox" [checked]="column.show" #col (change)="onColumnChange(column, col.checked)" angulartics2On="click" angularticsCategory="inventoryListToggleColumn" angularticsEvent="{{ column.label }}"> {{ column.label[language] }}</label>
+    </div>
+    <div *ngFor="let integration of marketColumns">
+        <h5 (click)="toggle(integration.integration.id)" class="toggle">
+            {{ integration.integration.display_name }}
+
+            <i *ngIf="!openIntegrations[integration.integration.id]" class="pull-right fa fa-plus-circle"></i>
+            <i *ngIf="openIntegrations[integration.integration.id]" class="pull-right fa fa-minus-circle"></i>
+        </h5>
+        <div *ngIf="openIntegrations[integration.integration.id]">
+            <div class="checkbox" *ngFor="let column of integration.columns">
+                <label><input type="checkbox" [checked]="column.show" #col (change)="onColumnChange(column, col.checked)" angulartics2On="click" angularticsCategory="inventoryListToggleColumn" angularticsEvent="{{ column.type }}"> {{ column.label[language] }}</label>
+            </div>
+        </div>
+    </div>
+</div>

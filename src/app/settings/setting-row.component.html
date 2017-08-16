@@ -1,0 +1,66 @@
+<form class="setting-row row" (submit)="save()" (click)="onEdit()">
+    <div class="col-md-3 name">
+        <span class="pad">{{ name }}:</span>
+    </div>
+
+    <template [ngIf]="type === 'toggle'"> 
+
+        <div class="col-md-7 value">
+            <div class="pad">
+                <span *ngIf="value">{{ trueText || 'YES' |translate }}</span>
+                <span *ngIf="!value">{{ falseText || 'NO' |translate }}</span>
+            </div>
+        </div>
+        <div class="col-md-2 button">
+            <div class="pad" *ngIf="editable">
+                <ui-switch [checked]="!!value" (change)="value = $event;save()"></ui-switch>
+            </div>
+        </div>
+
+    </template>
+    
+    <template [ngIf]="type !== 'toggle'"> 
+
+        <div class="col-md-7 value">
+            <div *ngIf="!edit && !error" [ngSwitch]="type">
+                <div class="pad" *ngSwitchCase="'image'">
+                    <img *ngIf="value" [src]="value + '?' + lastupload" width="100px" />
+                </div>
+                <div class="pad" *ngSwitchCase="'color'">
+                    <div class="color" [style.background]="value"></div>
+                </div>
+                <span class="pad" *ngSwitchCase="'password'"></span>
+                <span class="pad" *ngSwitchCase="'timestamp'">{{ (valueText|amFromUnix)|amDateFormat:'YYYY-MM-DD hh:mm' }}</span>
+
+                <span class="pad" *ngSwitchDefault>{{ valueText }}</span>
+            </div>
+
+            <div *ngIf="edit || error" [ngSwitch]="type">
+                <span class="pad" *ngSwitchCase="'image'">
+                    <input type="file" ng2-file-select [uploader]="uploader" [accept]="'image/*'" />
+                </span>
+                <span class="pad" *ngSwitchCase="'color'">
+                    <input [(colorPicker)]="value" [style.background]="value" [value]="value"/>
+                </span>
+                <span class="pad" *ngSwitchCase="'password'"><input name="value" type="password" [(ngModel)]="value" class="form-control" required></span>
+                <span class="pad" *ngSwitchCase="'url'"><input name="value" type="text" [(ngModel)]="value" class="form-control" required></span>
+
+                <span class="pad" *ngSwitchDefault><input name="value" type="text" [(ngModel)]="value" class="form-control" required></span>
+
+                <p class="pad text-danger" *ngIf="error">{{ error }}</p>
+                <p class="pad" *ngIf="description">{{ description }}</p>
+
+                <hr />
+                <button class="action-button" type="submit" [disabled]="processing"><i class="fa fa-save"></i> {{ 'BTN_SAVE'|translate }}</button>
+                <button class="cancel-button" type="button" (click)="cancel();$event.stopPropagation()"><i class="fa fa-cancel"></i> {{ 'BTN_CANCEL'|translate }}</button>
+                <button *ngIf="deletable" class="btn btn-danger" type="button" (click)="delete();$event.stopPropagation()"><i class="fa fa-cancel"></i> {{ 'BTN_CONFIRM_DELETE'|translate }}</button>
+            </div>
+        </div>
+        <div class="col-md-2 button" *ngIf="!edit">
+            <div class="pad" *ngIf="editable">
+                <button class="cancel-button toggle" (click)="onEdit()" type="button"><i class="fa fa-edit"></i> {{ 'BTN_EDIT'|translate }}</button>
+            </div>
+        </div>
+
+    </template>
+</form>

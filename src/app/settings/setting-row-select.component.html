@@ -1,0 +1,49 @@
+<form class="setting-row row" (submit)="save()" (click)="onEdit()">
+    <div class="col-md-3 name">
+        <span class="pad">{{ name }}:</span>
+    </div>
+    <div class="col-md-7 value">
+        <div *ngIf="!edit">
+            <span *ngIf="mode === 'dropdown' || mode === 'radio'" class="pad">{{ getChoiceName(valueText) }}</span>
+
+            <div *ngIf="mode === 'multitoggle'" class="pad">
+                <div *ngFor="let choice of getEnabledChoices(choices)">
+                    <span [innerHTML]="choice.name"></span>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="edit" >
+            <select *ngIf="mode === 'dropdown'" #choice (change)="select(choice.value)" [value]="value">
+                <option *ngFor="let choice of choices" [value]="choice.value">{{ choice.name }}</option>
+            </select>
+
+            <div *ngIf="mode === 'radio'">
+                <div *ngFor="let choice of choices">
+                    <div class="rounded-radio">
+                        <input type="radio" name="choices" [checked]="choice.value === value">
+                        <label for="choices" (click)="select(choice.value)"></label>
+                    </div>
+                    <span class="rounded-radio-label">{{ choice.name }}</span>
+                </div>
+            </div>
+
+            <div *ngIf="mode === 'multitoggle'">
+                <div *ngFor="let choice of choices">
+                    <ui-switch [checked]="choice.enable" (change)="choice.enable = $event"></ui-switch>
+                    <span [innerHTML]="choice.name"></span>
+                </div>
+            </div>
+
+            <hr />
+            <p class="text-danger" *ngIf="!isValid">{{ 'Select at least one option' |translate }}</p>
+            <button class="action-button" type="submit" [disabled]="!isValid"><i class="fa fa-save"></i> {{ 'BTN_SAVE'|translate }}</button>
+            <button class="cancel-button" (click)="cancel();$event.stopPropagation()"><i class="fa fa-cancel"></i> {{ 'BTN_CANCEL'|translate }}</button>
+        </div>
+    </div>
+    <div class="col-md-2 button" *ngIf="!edit">
+        <div class="pad" *ngIf="editable">
+            <button class="cancel-button toggle" (click)="onEdit()" type="button"><i class="fa fa-edit"></i> {{ 'BTN_EDIT'|translate }}</button>
+        </div>
+    </div>
+</form>

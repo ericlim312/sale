@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <div class="row">
+        <div class="col-md-10">
+            <h3 class="pull-left">{{ 'FEEDBACK_WIDGET_BODY'|translate }} {{ featureName }}?</h3>
+        </div>
+        <div class="col-md-2 text-right">
+            <span class="pull-right cancel-icon" (click)="onCancel()">&times;</span>
+        </div>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="row" *ngIf="validationError" style="margin-bottom: 15px"><div class="col-md-12 text-center text-danger">{{ 'FEEDBACK_WIDGET_VALIDATION_ERROR'|translate }}</div></div>
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-3 text-center thumb-column" [ngClass]="{ active: rating == 'good' }" (click)="setRating('good')">
+            <span class="icon-thumb-container"><i class="fa fa-thumbs-o-up"></i></span>
+            <span style="font-size: 12pt; line-height: 50px;"></span>
+        </div>
+        <div class="col-md-3 text-center thumb-column" [ngClass]="{ active: rating == 'bad' }" (click)="setRating('bad')">
+            <span class="icon-thumb-container"><i class="fa fa-thumbs-o-down"></i></span>
+            <span style="font-size: 12pt; line-height: 50px;"></span>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <div class="row" style="margin-top: 15px">
+        <textarea rows="10" class="form-control" [(ngModel)]="message" placeholder="{{ 'FEEDBACK_WIDGET_TELL_US_WHY'|translate }}"></textarea>
+        <label style="margin-top: 8px"><input type="checkbox" [(ngModel)]="allowContact"> {{ 'FEEDBACK_WIDGET_CONTACT'|translate }}</label>
+    </div>
+</div>
+<div class="modal-footer" style="text-align: center !important;">
+    <button class="btn btn-primary" (click)="onSend()" style="font-size: 15pt">{{ 'FEEDBACK_WIDGET_SUBMIT'|translate }}</button>
+</div>

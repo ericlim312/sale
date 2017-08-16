@@ -1,0 +1,128 @@
+<div class="x-panel" [ngClass]="{ 'no-children': !node.subcategories.length }">
+    <h3>
+        <i (click)="expanded = !expanded && node.subcategories.length"
+            class="panel-state-icon cursor-link fa {{ expanded ? 'fa-minus' : 'fa-plus' }}"></i>
+        {{ node.name }}
+        <span (click)="createNew.visible = true" *ngIf="!createNew.visible" class="add-subcategory"><i class="fa fa-plus"></i> {{ 'ADD_SUBCATEGORY'|translate }}</span>
+        <span class="buttons"><i class="fa fa-pencil" (click)="onEdit.emit()"></i><i class="fa fa-trash" (click)="onSelfDelete(node.id)"></i></span>
+    </h3>
+
+    <div class="x-body" *ngIf="createNew.visible">
+        <div class="setting-panel">
+            <h3>{{ 'ADD_SUBCATEGORY'|translate }}</h3>
+            <form #createNewForm="ngForm" (submit)="onCreateNew(createNewForm.value, createNewForm.valid)" class="setting-form">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p>
+                            <span class="text">{{ 'NAME'|translate }}</span><br>
+                            <input type="text"
+                                [ngModel]="createNew.name"
+                                #name="ngModel"
+                                name="name"
+                                required>
+                            <small [hidden]="name.valid || (name.pristine && !createNewForm.submitted)" class="text-danger">{{ 'Name is required' |translate }}</small>
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p>
+                            <span class="text">{{ 'SEO_URL'|translate }}</span><br>
+                            <input type="text"
+                                [ngModel]="createNew.link"
+                                #link="ngModel"
+                                name="link">
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p>
+                            <span class="text">{{ 'IMAGE'|translate }}</span><br>
+                            <select
+                                [(ngModel)]="createNew.image"
+                                #image="ngModel"
+                                name="image">
+                                <option *ngFor="let file of files" [value]="file.url">{{ file.name }}</option>
+                            </select>
+                            <img src="{{ image.value }}" style="max-width: 200px; max-height: 50px">
+                        </p>
+                        <p><a routerLink="/settings/selloshop/{{integrationId}}/files">Add file that is not listed here</a></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p>
+                            <span class="text">{{ 'DESCRIPTION'|translate }}</span><br>
+                            <wysiwyg [ngModel]="createNew.description" name="description"></wysiwyg>
+                        </p>
+                    </div>
+                </div>
+
+                <p class="button-panel">
+                    <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                    <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <div class="x-body" *ngIf="expanded && node.subcategories.length">
+        <template ngFor let-child [ngForOf]="node.subcategories">
+            <selloshop-category
+                *ngIf="editing !== child"
+                [node]="child"
+                (onSave)="onSave.emit($event)"
+                (onDelete)="onChildDeleted($event)"
+                (onEdit)="editing = child"></selloshop-category>
+            <div *ngIf="editing === child" class="setting-panel">
+                <form #editingForm="ngForm" (submit)="onChildEdit(editingForm.value, editingForm.valid)" class="setting-form">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <p>
+                                <span class="text">{{ 'NAME'|translate }}</span><br>
+                                <input type="text"
+                                    [ngModel]="editing.name"
+                                    #name="ngModel"
+                                    name="name"
+                                    required>
+                                <small [hidden]="name.valid || (name.pristine && !editingForm.submitted)" class="text-danger">{{ 'Name is required' |translate }}</small>
+                            </p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p>
+                                <span class="text">{{ 'SEO_URL'|translate }}</span><br>
+                                <input type="text"
+                                    [ngModel]="editing.link"
+                                    #link="ngModel"
+                                    name="link">
+                            </p>
+                        </div>
+                        <div class="col-sm-4">
+                            <p>
+                                <span class="text">{{ 'IMAGE'|translate }}</span><br>
+                                <select
+                                    [(ngModel)]="editing.image"
+                                    #image="ngModel"
+                                    name="image">
+                                    <option *ngFor="let file of files" [value]="file.url">{{ file.name }}</option>
+                                </select>
+                                <img src="{{ image.value }}" style="max-width: 200px; max-height: 50px">
+                            </p>
+                            <p><a routerLink="/settings/selloshop/{{integrationId}}/files">Add file that is not listed here</a></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p>
+                                <span class="text">{{ 'DESCRIPTION'|translate }}</span><br>
+                                <wysiwyg [ngModel]="editing.description" name="description"></wysiwyg>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p class="button-panel">
+                        <button type="button" (click)="editing = null" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                        <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+                    </p>
+                </form>
+            </div>
+        </template>
+    </div>
+</div>

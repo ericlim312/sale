@@ -1,0 +1,33 @@
+.edit-section-price {
+    .integration {
+        background: $lightGray;
+        border: 1px solid $darkGray;
+        margin-bottom: 4px;
+        cursor: pointer;
+        overflow: hidden;
+
+        .market-name {
+            width: 90%;
+            float: left;
+            padding: 5px;
+
+            .img {
+                width: 50px;
+                display: inline-block;
+                margin-right: 8px;
+
+                img {
+                    height: 16px;
+                    width: 50px;
+                }
+            }
+        }
+
+        .toggle {
+            width: 10%;
+            padding: 5px;
+            text-align: right;
+            float: left;
+        }
+    }
+}

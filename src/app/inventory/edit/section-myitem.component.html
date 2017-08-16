@@ -1,0 +1,67 @@
+<div class="section-myitem section">
+    <!-- My item -->
+    <h3 id="itemHeading">{{ 'HEADING_MY_ITEM'|translate }}</h3>
+    <!--<div class="form-group" *ngIf="account?.is_agent">
+        <label for="submitter" class="col-sm-3 control-label is-optional"><span>{{ 'OPTIONAL'|translate }}</span>{{ 'SUBMITTER'|translate }}:</label>
+        <div class="col-sm-5">
+            <submitter-search id="submitter" [submitter]="product.submitter" (select)="onChangeSubmitter($event)"></submitter-search>
+        </div>
+        <div class="col-sm-4 help">
+        </div>
+    </div>-->
+    <div class="form-group" *ngIf="account?.account_type !== 'whitelabel'">
+        <label for="reference" class="col-sm-3 control-label is-optional"><span>{{ 'OPTIONAL'|translate }}</span>{{ 'PRIVATE_NAME'|translate }}:</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" [(ngModel)]="product.private_name" maxlength="40">
+        </div>
+        <div class="col-sm-4 help">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="reference" class="col-sm-3 control-label is-optional"><span>{{ 'OPTIONAL'|translate }}</span>{{ 'PRIVATE_REFERENCE'|translate }}:</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" [(ngModel)]="product.private_reference" maxlength="40">
+        </div>
+        <div class="col-sm-4 help">
+            <span class="tip"><i class="fa fa-info-circle"></i> {{ 'EDIT_REFERENCE_TIP'|translate }}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="condition" class="col-sm-3 control-label">{{ 'CONDITION'|translate }}:</label>
+        <div class="col-sm-5">
+            <select class="form-control" [(ngModel)]="product.condition" angulartics2On="change" angularticsEvent="{{ product.condition }}" angularticsCategory="inventoryEditCondition">
+                <option value="new">{{ 'CONDITION_NEW'|translate }}</option>
+                <option value="used">{{ 'CONDITION_USED'|translate }}</option>
+            </select>
+        </div>
+        <div class="col-sm-4 help">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="condition" class="col-sm-3 control-label">{{ 'VAT'|translate }}:</label>
+        <div class="col-sm-5">
+            <select class="form-control" [(ngModel)]="product.tax" angulartics2On="change" angularticsEvent="{{ product.tax }}" angularticsCategory="inventoryEditTax">
+                <option value="25">25%</option>
+                <option value="12">12%</option>
+                <option value="6">6%</option>
+                <option value="0">0%</option>
+            </select>
+        </div>
+        <div class="col-sm-4 help">
+        </div>
+    </div>
+
+    <!-- only show this if accountService is_agent == 1 -->
+    <div class="form-group">
+        <label for="condition" class="col-sm-3 control-label">{{ 'SUBMITTER'|translate }}:</label>
+        <div class="col-sm-5">
+            <select class="form-control">
+                <option value="0">{{ 'NONE'|translate }}</option>
+                <option value="1">John Doe (john@doe.com)</option>
+                <option value="2">Mary Jane (mary@jane.com)</option>
+            </select>
+        </div>
+        <div class="col-sm-4 help">
+        </div>
+    </div>
+</div>

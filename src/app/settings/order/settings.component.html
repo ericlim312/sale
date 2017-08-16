@@ -1,0 +1,53 @@
+<div *ngIf="settings">
+    <h1>{{ 'SETTINGS_ORDERS' | translate }}</h1>
+    <setting-row-select
+        (onSave)="settings.list.orderlist_default_sort = $event; save('list.orderlist_default_sort');"
+        [choices]="sortOptions"
+        [error]="errors['list.orderlist_default_sort']"
+        [name]="'SORT_STANDARD'|translate"
+        [value]="settings.list.orderlist_default_sort"
+    ></setting-row-select>
+    <setting-row-select
+        (onSave)="settings.list.label_order = $event; save('list.label_order');"
+        [choices]="labelOptions"
+        [error]="errors['list.label_order']"
+        [name]="'SORT_LABELS'|translate"
+        [value]="settings.list.label_order"
+    ></setting-row-select>
+    <setting-row-select
+        (onSave)="settings.list.plocklista_collected_sort = $event; save('list.plocklista_collected_sort');"
+        [choices]="plocklistaOptions"
+        [error]="errors['list.plocklista_collected_sort']"
+        [name]="'SORT_PACKSLIP'|translate"
+        [value]="settings.list.plocklista_collected_sort"
+    ></setting-row-select>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.list.plocklista_notes = $event; save('list.plocklista_notes');"
+        [error]="errors['list.plocklista_notes']"
+        [name]="'SHOW_NOTES_ON_PACKSLIP'|translate"
+        [value]="settings.list.plocklista_notes"
+    ></setting-row>
+    <setting-row-wysiwyg
+        (onSave)="settings.list.deliverynote_text = $event; save('list.deliverynote_text');"
+        [error]="errors['list.deliverynote_text']"
+        default="-"
+        [name]="'TEXT_ON_DELIVERY_NOTE'|translate"
+        [value]="settings.list.deliverynote_text"
+        [maxLength]="500"
+    ></setting-row-wysiwyg>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.list.deliverynote_show_reference = $event; save('list.deliverynote_show_reference');"
+        [error]="errors['list.deliverynote_show_reference']"
+        [name]="'SHOW_REFERENCE_ON_DELIVERYNOTE'|translate"
+        [value]="settings.list.deliverynote_show_reference"
+    ></setting-row>
+    <setting-row
+        type="toggle"
+        (onSave)="settings.list.deliverynote_show_id = $event; save('list.deliverynote_show_id');"
+        [error]="errors['list.deliverynote_show_id']"
+        [name]="'SHOW_SELLO_ID_ON_DELIVERYNOTE'|translate"
+        [value]="settings.list.deliverynote_show_id"
+    ></setting-row>
+</div>

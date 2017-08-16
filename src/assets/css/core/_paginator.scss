@@ -1,0 +1,18 @@
+.sello-paginator {
+    text-align: center;
+
+    a {
+        color: $textGray;
+        padding: 5px;
+        display: inline-block;
+
+        i {
+            color: $hardGray;
+        }
+
+        &.current {
+            background: $selloBlue;
+            color: white;
+        }
+    }
+}

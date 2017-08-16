@@ -1,0 +1,72 @@
+<div class="setting-box selloshop-files">
+    <h2>{{ 'SETTINGS_SELLOSHOP_FILES'|translate }}</h2>
+
+    <div ng2-file-drop [uploader]="uploader" (fileOver)="onDropActive($event)" 
+        class="upload-droparea {{dropActive ? 'drop-active' : ''}}">
+        <i class="fa fa-upload"></i>
+        <input type="file" ng2-file-select [uploader]="uploader">
+        <h4>{{ 'UPLOAD_FILE'|translate }}</h4>
+        <p>{{ 'SIMPLY_DRAG_AND_DROP'|translate }}</p>
+    </div>
+
+    <div class="files">
+        <template ngFor let-file [ngForOf]="files">
+
+            <!-- image file -->
+            <div *ngIf="hasExtension(file.name, ['jpg', 'jpeg'])" class="file">
+                <span class="delete" (click)="onDelete(file.id)"><i class="fa fa-trash"></i></span>
+                <div class="preview">
+                    <a href="{{ file.url }}" target="_blank"><img src="{{ file.url }}"></a>
+                </div>
+                <a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
+            </div>
+            <!-- pdf file -->
+            <div *ngIf="hasExtension(file.name, ['pdf'])" class="file">
+                <span class="delete" (click)="onDelete(file.id)"><i class="fa fa-trash"></i></span>
+                <div class="preview non-image">
+                    <i class="fa fa-file-pdf-o"></i>
+                </div>
+                <a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
+            </div>
+            <!-- unrecognized file type -->
+            <div *ngIf="!hasExtension(file.name, ['jpg', 'jpeg', 'pdf'])" class="file">
+                <span class="delete" (click)="onDelete(file.id)"><i class="fa fa-trash"></i></span>
+                <div class="preview non-image">
+                    <i class="fa fa-file-o"></i>
+                </div>
+                <a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
+            </div>
+ 
+        </template>
+<!--
+        <div class="file">
+            <span class="delete" (click)="onDelete({})"><i class="fa fa-trash"></i></span>
+            <div class="preview non-image">
+                <i class="fa fa-file-pdf-o"></i>
+            </div>
+            <a href="file_url" target="_blank">very_long_file_name_should_have_ellipsis.pdf</a>
+        </div>
+        <div class="file">
+            <span class="delete" (click)="onDelete({})"><i class="fa fa-trash"></i></span>
+            <div class="preview">
+                <a href="file_url" target="_blank"><img src="http://placekitten.com/250/150"></a>
+            </div>
+            <a href="file_url" target="_blank">file_name.jpg</a>
+        </div>
+        <div class="file">
+            <span class="delete" (click)="onDelete({})"><i class="fa fa-trash"></i></span>
+            <div class="preview">
+                <a href="file_url" target="_blank"><img src="http://placekitten.com/250/150"></a>
+            </div>
+            <a href="file_url" target="_blank">file_name.jpg</a>
+        </div>
+        <div class="file">
+            <span class="delete" (click)="onDelete({})"><i class="fa fa-trash"></i></span>
+            <div class="preview">
+                <a href="file_url" target="_blank"><img src="http://placekitten.com/250/150"></a>
+            </div>
+            <a href="file_url" target="_blank">file_name.jpg</a>
+        </div>-->
+        <div class="clearer"></div>
+    </div>
+</div>

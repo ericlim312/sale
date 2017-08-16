@@ -1,0 +1,10 @@
+<div *ngIf="categories && integrations">
+    <h1>{{ 'FEED_CATEGORIES'|translate }}</h1>
+    <div *ngFor="let category of categories">
+        <category-setting-row
+            [category]="category"
+            [integrations]="integrations"
+            (onSave)="saveCategory($event)"
+        ></category-setting-row>
+    </div>
+</div>

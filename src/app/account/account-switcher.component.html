@@ -1,0 +1,9 @@
+<div class="dropdown account-switcher" dropdown *ngIf="account && account.linked_accounts.length > 0">
+  <a href dropdownToggle [addToggleClass]="true">{{ account.company }}</a>
+  <ul class="dropdown-menu userinfo arrow">
+    <li *ngFor="let account of account.linked_accounts">
+        <a href *ngIf="account.id == accountId" style="color: #ccc">{{ account.company }}</a>
+        <a href (click)="switchAccount(account.id)" ng-if="account.id != accountId" angulartics2On="click" angularticsCategory="switchAccount" angularticsEvent="top">{{ account.company }}</a>
+    </li>
+  </ul>
+</div>

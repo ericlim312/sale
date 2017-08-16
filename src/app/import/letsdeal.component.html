@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="single-column-container">
+        <div class="setting-box">
+            <h2>{{ 'IMPORT_ORDERS_FROM_LETSDEAL'|translate }}</h2>
+            <p>{{ 'IMPORT_LETSDEAL_FILE_INFO'|translate }}</p>
+
+            <div class="setting-panel">
+                <form class="setting-form">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>
+                                <span class="text">{{ 'STATUS_FOR_ORDERS'|translate }}</span><br/>
+                                <select (change)="selectStatus(statusSelect.value)" #statusSelect [value]="value" class="form-control">
+                                    <option *ngFor="let status of statuses" [value]="status.id">{{ status.title }}</option>
+                                </select>
+                            </p>
+                        </div>
+                    </div>
+
+                    <p *ngIf="!uploading"><input type="file" ng2-file-select [uploader]="uploader" [payload]="payload" identifier="main" payload=""></p>
+                    <p class="text-center" *ngIf="uploading">
+                        <i class="fa fa-spinner fa-spin fa-3x fa-fw" style="margin: 100px 0"></i>
+                    </p>
+
+                    <div class="alert alert-danger" *ngIf="errors.length > 0">
+                        <p *ngFor="let error of errors">{{ error }}</p>
+                    </div>
+                    <div class="alert alert-success" *ngIf="logs.length > 0">
+                        <p *ngFor="let log of logs">{{ log }}</p>
+                    </div>
+                    <div class="alert alert-success" *ngIf="success">
+                        {{ 'ORDERS_HAS_BEEN_IMPORTED'|translate }}
+                    </div>
+
+                    <p class="button-panel">
+                        <button type="submit" class="action-button" (click)="upload()" *ngIf="!uploading">{{ 'BTN_CREATE'|translate }}</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

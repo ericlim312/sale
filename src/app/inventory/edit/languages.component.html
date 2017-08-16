@@ -1,0 +1,5 @@
+<div class="languages">
+    <div class="checkbox" *ngFor="let language of getLanguages()" [ngClass]="{ disabled: !language.available }">
+        <label><input type="checkbox" (change)="onChange()" [disabled]="!language.available" [(ngModel)]="language.enabled" angulartics2On="click" angularticsCategory="inventoryEditLanguage" angularticsEvent="click-{{ language.code }}"> <img [src]="'/assets/img/flags/' + language.code + '.png'"> {{ language.name }}</label>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+.submitter-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid #d2d3d6;
+    border-top: none;
+    opacity: 1;
+    transition: opacity .25s ease-out;
+    z-index: 99;
+    background: #fff;
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 300px;
+
+    &.no-show {
+        opacity: 0;
+    }
+}
+
+.submitter-list-cont {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.submitter-search-cont {
+    position: relative;
+    top: 0;
+    left: 0;
+    
+    .submitter-search {
+        padding-right: 30px
+    }
+
+    .submitter-search-icon {
+        color:black;
+        position: absolute;
+        top: 8px;
+        right: 20px;
+        background: none;
+        border: none;
+    }
+}
+
+.submitter-item {
+    padding: 10px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(0,0,0,0.05);
+    }
+}

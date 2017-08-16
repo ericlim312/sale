@@ -1,0 +1,32 @@
+<div *ngIf="logs">
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{ 'FEED_LOG'|translate }}</h1>
+        </div>
+        <div class="col-md-offset-9 col-md-3 text-right">
+            <div class="form-inline">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" type="text" [(ngModel)]="start">
+                        <span class="cursor-link input-group-addon" (click)="load()"><i class="fa fa-refresh"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <span *ngIf="logs.events.length === 0">{{'There are no events to show yet. Once the feed has been parsed, the results will show here'|translate }}.</span>
+    <table class="table table-bordered table-condensed">
+        <template ngFor let-event [ngForOf]="logs.events">
+            <tr *ngIf="event.message !== null" [class.error]="event.message.type == 'error'">
+                <td>{{ (event.timestamp|amFromUnix)|amDateFormat:'YYYY-MM-DD hh:mm' }}</td>
+                <td>{{ event.message.sku }}</td>
+                <td>{{ event.message.message }}</td>
+            </tr>
+        </template>
+    </table>
+
+    <div class="text-center" *ngIf="logs.events.length > 0 && logs.forward != ''">
+        <button class="btn btn-primary" (click)="next(logs.forward)">{{ 'Load more events'|translate }}</button>
+    </div>
+</div>

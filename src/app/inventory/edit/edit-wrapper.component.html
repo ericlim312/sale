@@ -1,0 +1,47 @@
+<div class="container inventory-edit" *ngIf="product">
+    <form class="form-horizontal" (submit)="onSubmit()">
+        <div class="row">
+            <div class="col-sm-8">
+                <h1 *ngIf="dialogType == 'create'">{{ 'CREATE_NEW_PRODUCT'|translate }}</h1>
+                <h1 *ngIf="dialogType == 'edit'">{{ 'EDIT_PRODUCT'|translate }}</h1>
+                <h1 *ngIf="dialogType == 'bulkedit'">{{ 'BULKEDIT'|translate }}</h1>
+            </div>
+            <div class="col-sm-4 text-right">
+                <edit-buttons (cancel)="onCancel()" (save)="onSubmit()" [product]="product"></edit-buttons>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 sidebar" id="edit-sidebar">
+                <div class="sello-affix" [ngClass]="{ active: affixActive }">
+                    <where-to-sell [integrations]="integrations" [productIntegrations]="product?.integrations"></where-to-sell>
+                    <so-panel [header]="'LANGUAGES'|translate" name="inventory.edit.languages" [collapsible]="true">
+                        <languages [integrations]="integrations" (change)="onLanguageChange($event)"></languages>
+                    </so-panel>
+                    <div class="edit-menu hidden-sm">
+                        <a [ngClass]="{ 'active': activeSection == 'text' }" angulartics2On="click" angularticsCategory="inventoryEdit" angularticsEvent="menu-description" (click)="setActiveSection('text');scrollTo('descriptionHeading')">{{ 'HEADING_DESCRIPTION'|translate }}</a>
+                        <a [ngClass]="{ 'active': activeSection == 'myitem' }" angulartics2On="click" angularticsCategory="inventoryEdit" angularticsEvent="menu-item" (click)="setActiveSection('myitem');scrollTo('itemHeading')">{{ 'HEADING_MY_ITEM'|translate }}</a>
+                        <a [ngClass]="{ 'active': activeSection == 'inventory' }" angulartics2On="click" angularticsCategory="inventoryEdit" angularticsEvent="menu-inventory" (click)="setActiveSection('inventory');scrollTo('inventoryHeading')">{{ 'HEADING_INVENTORY'|translate }}</a>
+                        <a [ngClass]="{ 'active': activeSection == 'category' }" angulartics2On="click" angularticsCategory="inventoryEdit" angularticsEvent="menu-category" (click)="setActiveSection('category');scrollTo('categoryHeading')">{{ 'HEADING_CATEGORY'|translate }}</a>
+                        <a [ngClass]="{ 'active': activeSection == 'price' }" angulartics2On="click" angularticsCategory="inventoryEdit" angularticsEvent="menu-price" (click)="setActiveSection('price');scrollTo('priceHeading')">{{ 'HEADING_PRICE'|translate }}</a>
+                        <a [ngClass]="{ 'active': activeSection == 'shipping' }" angulartics2On="click" angularticsCategory="inventoryEdit" angularticsEvent="menu-shipping" (click)="setActiveSection('shipping');scrollTo('shippingHeading')">{{ 'HEADING_SHIPPING'|translate }}</a>
+                        <a [ngClass]="{ 'active': activeSection == 'details' }" angulartics2On="click" angularticsCategory="inventoryEdit" angularticsEvent="menu-details" (click)="setActiveSection('details');scrollTo('detailsHeading')">{{ 'HEADING_DETAILS'|translate }}</a>
+                    </div>
+
+                    <p *ngIf="dialogType == 'bulkedit'" class="bulkedit-info-alert"><i class="fa fa-info-circle"></i> {{ 'CHANGES_WILL_AFFECT'|translate }} ({{ productId.length }})</p>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="main" [ngStyle]="{'height': dialogHeight}" (scroll)="onScrollMain($event)">
+                    <section-text *ngIf="languages" [mode]="dialogType" [languages]="languages" [product]="product" [integrations]="integrations"></section-text>
+                    <section-myitem [product]="product"></section-myitem>
+                    <image-widget *ngIf="dialogType != 'bulkedit'" [images]="product.images" [productId]="product.id"></image-widget>
+                    <section-inventory [product]="product" [integrations]="integrations"></section-inventory>
+                    <section-category [product]="product" [integrations]="integrations" (change)="onChangeCategory($event)"></section-category>
+                    <section-price [product]="product" [integrations]="integrations" [mode]="dialogType"></section-price>
+                    <section-shipping [product]="product" [integrations]="integrations"></section-shipping>
+                    <section-details [product]="product" [integrations]="integrations"></section-details>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

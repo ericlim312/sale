@@ -1,0 +1,45 @@
+.hint {
+    margin-bottom: $spacing;
+    clear: both;
+    border: 1px solid #dbdbdb;
+    background: #f7f8fa;
+    margin-top: 25px;
+    padding: 22px 25px 15px 25px;
+    overflow: hidden;
+    @media screen and (max-width: 530px) {
+        padding: 22px 15px 15px 15px;
+    }
+
+    i {
+        color: #f7f8fa;
+        background: #c7cace;
+        display: block;
+        width: 33px;
+        height: 33px;
+        border-radius: 17px;
+        text-align: center;
+        line-height: 33px;
+        float: left;
+        margin: 6px 27px 50px 0;
+        @media screen and (max-width: 530px) {
+            float: none;
+            margin: 0 auto 16px auto;
+        }
+    }
+    p {
+        margin: 0;
+        padding: 0;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .hide-button {
+        float: right;
+        text-decoration: none;
+        text-transform: uppercase;
+        padding-top: 20px;
+        color: $selloPink;
+        font-size: 15px;
+        cursor: pointer;
+    }
+}

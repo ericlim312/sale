@@ -1,0 +1,23 @@
+<div class="dropdown notifications" dropdown>
+  <a href dropdownToggle [addToggleClass]="true"><i class="fa fa-bell"></i><span class="badge" [hidden]="notifications?.numNewNotifications == 0">{{ notifications?.numNewNotifications }}</span></a>
+  <ul class="dropdown-menu notifications arrow">
+      <li class="dd-header">
+          <span>You have {{ notifications?.numNewNotifications }} new notification(s)</span>
+          <span><a href ng-click="readNotifications();">Mark all Seen</a></span>
+      </li>
+      <ul class="scrollthis" style="margin-left: -40px;">
+          <li style="list-style: none;" *ngFor="let notification of notifications?.notifications">
+              <a [href]="notification.link">
+                  <div class="row">
+                      <span class="pull-right" style="font-size: 10px;">{{ notification.created_at }}</span>
+                      <span class="col-xs-1" ng-if="notification.is_new">
+                          <i class="fa fa-exclamation fa-2x" style="color: red;"></i>
+                      </span>
+                      <span ng-class="{ 'col-xs-11' : notification.is_new, 'col-xs-12' : !notification.is_new }" [innerHTML]="notification.message"></span>
+                  </div>
+              </a>
+          </li>
+      </ul>
+      <li class="dd-footer"><a>Click on a notification to go to the relevant page.</a></li>
+  </ul>
+</div>

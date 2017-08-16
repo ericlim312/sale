@@ -1,0 +1,12 @@
+<div class="so-panel" *ngIf="show">
+    <div class="so-panel-header" (click)="onToggle()" ngClass="{ collapsible: collapsible }">
+        <img *ngIf="iconImg" [src]="iconImg">
+        {{ header }}
+        <small *ngIf="subheader">{{ subheader }}</small>
+        <i *ngIf="collapsible && !open" class="pull-right fa fa-plus-circle"></i>
+        <i *ngIf="collapsible && open" class="pull-right fa fa-minus-circle"></i>
+    </div>
+    <div class="so-panel-body" [hidden]="!open">
+        <ng-content></ng-content>
+    </div>
+</div>

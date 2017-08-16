@@ -1,0 +1,16 @@
+.selloshop-modules {
+    .modal-body {
+        overflow: hidden;
+    }
+
+    .box {
+        background: $lightGray;
+        padding: 15px;
+        border: 1px solid $darkGray;
+        margin: 15px;
+        float: left;
+        width: 20%;
+        height: 200px;
+        overflow: hidden;
+    }
+}

@@ -1,0 +1,37 @@
+// After all the bootstrap css
+.glyphicon {
+  @extend .fa;
+  &.glyphicon-chevron-right {
+    @extend .fa-chevron-right;
+  }
+  &.glyphicon-chevron-left {
+    @extend .fa-chevron-left;
+  }
+  &.glyphicon-chevron-up {
+    @extend .fa-chevron-up;
+  }
+  &.glyphicon-chevron-down {
+    @extend .fa-chevron-down;
+  }
+  &.glyphicon-triangle-bottom {
+    @extend .fa-chevron-down;
+  }
+  &.glyphicon-ok {
+    @extend .fa-check;
+  }
+  &.glyphicon-remove {
+    @extend .fa-times;
+  }
+}
+
+.datetimepicker-wrapper {
+  width: 400px;
+  .form-control {
+    max-width: 200px;
+  }
+}
+
+.outbox-image {
+  max-width: 120px;
+  max-height: 60px;
+}

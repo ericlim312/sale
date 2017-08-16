@@ -1,0 +1,27 @@
+<div *ngIf="settings">
+    <h1>{{ 'SETTINGS_PRODUCTS' | translate }}</h1>
+    <setting-row
+        (onSave)="settings.default_duplicate_images = $event; save('default_duplicate_images');"
+        type="toggle"
+        [error]="errors['default_duplicate_images']"
+        default="-"
+        [name]="'SETTINGS_PRODUCTS_DEFAULT_DUPLICATE_IMAGES' |translate"
+        [value]="settings.default_duplicate_images"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.enable_quantity_threshold = $event; save('enable_quantity_threshold');"
+        type="toggle"
+        [error]="errors['enable_quantity_threshold']"
+        default="-"
+        [name]="'SETTINGS_PRODUCTS_ENABLE_QUANTITY_THRESHOLD' |translate"
+        [value]="settings.enable_quantity_threshold"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.quantity_threshold = $event; save('quantity_threshold');"
+        type="text"
+        [editable]="settings.enable_quantity_threshold"
+        [error]="errors['quantity_threshold']"
+        [name]="'SETTINGS_PRODUCTS_QUANTITY_THRESHOLD' |translate"
+        [value]="settings.quantity_threshold"
+    ></setting-row>
+</div>

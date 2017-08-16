@@ -1,0 +1,18 @@
+.edit-menu {
+    a {
+        display: block;
+        cursor: pointer;
+        padding: 8px;
+        background: $lightGray;
+        color: $hardGray;
+		border: 1px solid #9C9C9C;
+        border-top: none;
+
+        &.active {
+            background: $hardGray;
+            color: white;
+            border: 1px solid $hardGray;
+            border-top: none;
+        }
+    }
+}

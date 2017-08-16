@@ -1,0 +1,16 @@
+<div class="selloshop-modules">
+    <div class="modal-header">
+        <h3 class="modal-title">{{ 'SELECT_MODULE'|translate }}</h3>
+    </div>
+    <div class="modal-body">
+        <div *ngFor="let module of availableModules" class="box cursor-link" (click)="selectModule(module)">
+            <img *ngIf="module.icon" src="{{ module.icon }}" class="img-responsive" />
+            <i *ngIf="!module.icon" class="fa fa-cogs fa-4x"></i>
+            <h4>{{ module.name }}</h4>
+            <p>{{ module.desc }}</p>
+        </div> 
+    </div>
+    <div class="modal-footer">
+        <button class="cancel-button" type="button" (click)="onCancel()">{{ 'BTN_CANCEL'|translate }}</button>
+    </div>
+</div>

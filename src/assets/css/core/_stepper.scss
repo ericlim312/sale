@@ -1,0 +1,54 @@
+.stepper {
+    position: relative;
+    min-height: 32px;
+
+    & > div:first-child {
+        position: static;
+        height: 0;
+    }
+
+    & > div:last-child {
+        margin-left: 32px;
+        padding-left: 16px;
+    }
+
+    .circle {
+        background: rgb(63,81,181);
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        border-radius: 16px;
+        position: relative;
+        color: white;
+        text-align: center;
+
+        i {
+            margin-top: 4px;
+        }
+    }
+
+    &.incomplete {
+        color: rgba(0,0,0,0.26);
+
+        .circle {
+            background: rgba(0,0,0,0.26);
+        }
+    }
+
+    .line {
+        position: absolute;
+        border-left: 1px solid gainsboro;
+        left: 16px;
+        bottom: 10px;
+        top: 42px;
+    }
+
+    &:last-child .line {
+        display: none;
+    }
+
+    .title {
+        line-height: 32px;
+        font-weight: bold;
+    }
+}

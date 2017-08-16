@@ -1,0 +1,87 @@
+<div class="setting-box">
+    <h2>{{ 'SETTINGS_SALESAGENT' | translate }}</h2>
+
+    <div class="setting-panel bottom-margin">
+        <h3>
+            {{ 'ENABLE'|translate }}
+            <span class="pull-right">
+                <ui-switch checked [(ngModel)]="enable" (change)="onChange()"></ui-switch>
+            </span>
+        </h3>
+
+        <div *ngIf="enable" style="padding: 15px">
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>{{ 'SALESAGENT_RATES'|translate }}</h4>
+                </div>
+                <div class="col-md-4 text-right">
+                    <button (click)="createNew.visible = true" *ngIf="!createNew.visible" class="action-button"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+                </div>
+            </div>
+
+            <form #createNewForm="ngForm" class="setting-form" (submit)="onCreateNew(createNewForm.value, createNewForm.valid)" *ngIf="createNew.visible">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p>
+                            <span class="text">{{ 'SALES_AMOUNT_GT'|translate }}</span><br>
+                            <input type="number"
+                                [ngModel]="createNew.value"
+                                #name="ngModel"
+                                name="value"
+                                required>
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p>
+                            <span class="text">{{ 'TYPE'|translate }}</span><br>
+                            <select name="type" class="form-control">
+                                <option value="fixed"> kr {{ 'FIXED_RATE' | translate }}</option>
+                                <option value="percentage"> %</option>
+                            </select>
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p>
+                            <span class="text">{{ 'COMMISSION'|translate }}</span><br>
+                            <input class="form-control" type="number">
+                        </p>
+                    </div>
+                </div>
+
+                <p class="button-panel">
+                    <button type="button" (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                    <button type="submit" class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+                </p>
+            </form>
+
+            <table class="detailed-table">
+                <tr class="table-header">
+                    <th>{{ 'SALES_AMOUNT_GT'|translate }}</th>
+                    <th>{{ 'COMMISSION'|translate }}</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td>25 kr</td><!-- type = fixed -->
+                    <td class="buttons">
+                        <i class="cursor-link fa fa-trash" (click)="onDelete()"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>100</td>
+                    <td>10%</td>
+                    <td class="buttons">
+                        <i class="cursor-link fa fa-trash" (click)="onDelete()"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>250</td>
+                    <td>6%</td>
+                    <td class="buttons">
+                        <i class="cursor-link fa fa-trash" (click)="onDelete()"></i>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

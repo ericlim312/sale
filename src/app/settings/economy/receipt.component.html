@@ -1,0 +1,130 @@
+<div class="setting-panel">
+    <h3>{{ 'RECEIPT_INFO'|translate }}</h3>
+
+    <form #form="ngForm" (submit)="save(form.value, form.valid)" *ngIf="settings">
+
+        <div class="setting-form">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p>
+                                <span class="text">{{ 'HEADING_ON_RECEIPT'|translate }}</span><br>
+                                <input type="text" class="form-control"
+                                    [(ngModel)]="settings.reciept.reciept_header"
+                                    name="reciept_header">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>
+                                <span class="text">{{ 'PHONE'|translate }}</span><br>
+                                <input type="text" class="form-control"
+                                    [(ngModel)]="settings.reciept.document_footer_1x3"
+                                    name="phone">
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>
+                                <span class="text">{{ 'EMAIL'|translate }}</span><br>
+                                <input type="text" class="form-control"
+                                    [(ngModel)]="settings.reciept.document_footer_2x3"
+                                    name="email">
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>
+                                <span class="text">{{ 'PAYMENT_INFO'|translate }}</span><br>
+                                <input type="text" class="form-control"
+                                    [(ngModel)]="settings.reciept.document_footer_2x5"
+                                    name="payment_info">
+                            </p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p>
+                                <span class="text">{{ 'WEBSHOP'|translate }}</span><br>
+                                <input type="text" class="form-control"
+                                    [(ngModel)]="settings.reciept.document_footer_3x3"
+                                    name="webshop">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'SHOW_ABOVE_FOOTER'|translate }}</span><br>
+                        <textarea class="form-control" rows="8"
+                                [(ngModel)]="settings.reciept.document_footer"
+                                name="document_footer"></textarea>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h3>{{ 'ADDRESS'|translate }}</h3>
+
+        <div class="setting-form">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'COMPANY'|translate }}</span><br>
+                        <input type="text" class="form-control"
+                            [(ngModel)]="settings.reciept.document_footer_1x1"
+                            name="company">
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'ADDRESS'|translate }}</span><br>
+                        <input type="text" class="form-control"
+                            [(ngModel)]="settings.reciept.document_footer_2x1"
+                            name="address">
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'ADDRESS2'|translate }}</span><br>
+                        <input type="text" class="form-control"
+                            [(ngModel)]="settings.reciept.document_footer_3x1"
+                            name="address2">
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'ZIP_CODE'|translate }}</span><br>
+                        <input type="text" class="form-control"
+                            [(ngModel)]="settings.reciept.document_footer_1x5"
+                            name="zip_code">
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'CITY'|translate }}</span><br>
+                        <input type="text" class="form-control"
+                            [(ngModel)]="settings.reciept.document_footer_4x1"
+                            name="city">
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <p>
+                        <span class="text">{{ 'COUNTRY'|translate }}</span><br>
+                        <input type="text" class="form-control"
+                            [(ngModel)]="settings.reciept.document_footer_5x1"
+                            name="country">
+                    </p>
+                </div>
+            </div>
+
+            <p class="button-panel">
+                <span class="saved" *ngIf="saved">{{ 'SETTINGS_HAVE_BEEN_SAVED'|translate }}</span>
+                <button type="submit" class="action-button">{{ 'BTN_SAVE'|translate }}</button>
+            </p>
+        </div>
+
+    </form>
+</div>

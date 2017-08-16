@@ -1,0 +1,90 @@
+.inventory-edit {
+	.section {
+		margin-bottom: 30px;
+	}
+
+	.main {
+		overflow: scroll;
+		background: white;
+		border: 1px solid $darkGray;
+		padding: $spacing;
+
+		.form-group {
+			margin: 15px 0 0 0;
+			padding-bottom: 15px;
+			border-bottom: 1px solid $lightGray;
+		}
+	}
+
+    .sidebar {
+        .so-panel-body {
+            background: $lightGray;
+			border: 1px solid #9C9C9C;
+			border-top: none;
+			border-bottom: none;
+        }
+        .so-panel-header {
+            background: $darkGray;
+			border: 1px solid #9C9C9C;
+        }
+
+		.sello-affix {
+			&.active {
+				width: calc(25% - 15px);
+		        position: fixed;
+		        top: 50px;
+		        z-index: 1;
+			}
+		}
+
+		.bulkedit-info-alert {
+			padding: 15px;
+			background: #e5e5e5;
+			margin-top: 10px;
+		}
+    }
+
+	.help {
+		line-height: 34px;
+
+		.tip {
+			i {
+				color: green;
+			}
+
+			color: $textGray;
+		}
+
+		.error {
+			color: red;
+		}
+	}
+
+	.ng-invalid.ng-touched {
+		border: 1px solid red;
+	}
+
+	.is-optional {
+		padding-top: 0;
+
+		span {
+			display: block;
+			color: $darkGray;
+			font-size: 0.8em;
+		}
+	}
+
+	h3 {
+		border-bottom: 1px solid $darkGray;
+		padding-bottom: 5px;
+		margin-top: 5px;
+	}
+}
+
+@media (max-width: 800px) {
+	.inventory-edit {
+		.main {
+			overflow: auto;
+		}
+	}
+}

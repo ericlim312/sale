@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="single-column-container">
+        <div class="setting-box">
+            <h2>{{ 'CREATE_FILES_FOR_BOOKKEEPING'|translate }}</h2>
+
+            <div class="setting-panel">
+                <form class="setting-form">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <span class="text">{{ 'CREATE_BOOKKEEPING_FOR'|translate }}:</span><br/>
+                            <div class="radio">
+                                <label><input type="radio" [(ngModel)]="payload.type" name="type" value="active" checked> {{ 'ACTIVE_ORDERS'|translate }}</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" [(ngModel)]="payload.type" name="type" value="delivered" checked> {{ 'DELIVERED_ORDERS'|translate }}</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" [(ngModel)]="payload.type" name="type" value="status" checked> {{ 'THAT_HAS_ORDER_STATUS'|translate }}</label>
+                            </div>
+
+                            <select *ngIf="payload.type === 'status'"
+                                [(ngModel)]="selectedStatus"
+                                name="status_id">
+                                <option *ngFor="let status of statuses" [value]="status.id">{{ status.title }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row margin-top">
+                        <div class="col-sm-6">
+                            <span class="text">{{ 'SELECT_DATE'|translate }}:</span><br/>
+                            <div class="row">
+                                <div class="col-md-5"><input type="date" class="form-control" [(ngModel)]="payload.start" name="start"></div>
+                                <div class="col-md-2 text-center">{{ 'TO'|translate }}</div>
+                                <div class="col-md-5"><input type="date" class="form-control" [(ngModel)]="payload.end" name="end"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row margin-top">
+                        <div class="col-md-12">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" [(ngModel)]="payload.deleted" name="deleted"> {{ 'INCLUDE_DELETED_ORDERS'|translate }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="button-panel">
+                        <button type="submit" class="action-button" (click)="upload()" [disabled]="uploading"><i class="fa fa-plus"></i> {{ 'BTN_CREATE'|translate }}</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

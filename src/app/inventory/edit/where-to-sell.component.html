@@ -1,0 +1,9 @@
+<so-panel [header]="'SELL_ON'|translate" name="inventory.edit.sellOn" [collapsible]="true" *ngIf="integrations && shouldShow()">
+    <div class="where-to-sell">
+        <template ngFor let-integration [ngForOf]="integrations">
+            <div class="checkbox" *ngIf="integration.type == 'marketplace' && (integration.market_id != 1 || hasStore(integration))">
+                <label><input type="checkbox" [(ngModel)]="productIntegrations[integration.id].active" value="1" angulartics2On="click" angularticsCategory="inventoryEditWheretosell" angularticsEvent="click"> {{ integration.display_name }}</label>
+            </div>
+        </template>
+    </div>
+</so-panel>

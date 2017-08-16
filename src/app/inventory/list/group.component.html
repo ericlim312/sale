@@ -1,0 +1,7 @@
+<tr *ngIf="group.products.length > 1">
+    <td colspan="99">
+        <button type="button" class="btn btn-default" (click)="onEditGroup(group)" angulartics2On="click" angularticsCategory="inventoryListGroup" angularticsEvent="edit-button"><i class="fa fa-pencil"></i> {{ 'EDIT_GROUP_BTN'|translate }}</button>
+        <button type="button" class="btn btn-default" (click)="addVariation(group)" angulartics2On="click" angularticsCategory="inventoryListGroup" angularticsEvent="add-variation"><i class="fa fa-plus"></i> {{ 'ADD_VARIATION_BTN'|translate }}</button>
+    </td>
+</tr>
+<tr *ngFor="let product of group.products" inventory-list-product [mainInGroup]="group.main_id" [numProductsInGroup]="group.products.length" [product]="product" [columns]="columns" [ngClass]="{'saved': product.__saved, 'sold-out': product.quantity < 1 }"></tr>

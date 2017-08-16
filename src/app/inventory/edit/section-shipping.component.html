@@ -1,0 +1,104 @@
+<div class="edit-section-shipping section">
+    <h3 id="shippingHeading">{{ 'HEADING_SHIPPING'|translate }}</h3>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div *ngFor="let integration of integrations">
+                <div class="integration" (click)="integration.shippingOpen = !integration.shippingOpen" *ngIf="[1,10,13].indexOf(integration.market_id) >= 0">
+                    <div class="market-name"><div class="img"><img [src]="'/assets/img/marketplace/' + integration.market_id + '_bw.svg'"></div> {{ marketName(integration.market_id) }} <small *ngIf="numIntegrations(integration.market_id) > 1">({{ integration.display_name }})</small></div>
+                    <div class="toggle">
+                        <i *ngIf="integration.shippingOpen" class="fa fa-minus-circle"></i>
+                        <i *ngIf="!integration.shippingOpen" class="fa fa-plus-circle"></i>
+                    </div>
+                </div>
+                <div *ngIf="integration.shippingOpen">
+                    <!-- Tradera -->
+                    <div *ngIf="integration.market_id === 1">
+                        <div class="form-group">
+                            <label for="title" class="col-sm-3 control-label">{{ 'SHIPPING_PRIMARY'|translate }}:</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" [(ngModel)]="product.shipping[integration.id].primary.type">
+                                    <option value="posten">Posten</option>
+                                    <option value="dhl">DHL</option>
+                                    <option value="schenker">Schenker</option>
+                                    <option value="bussgods">Bussgods</option>
+                                    <option value="other">Annat</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="product.shipping[integration.id].primary.cost">
+                                    <div class="input-group-addon">kr</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="title" class="col-sm-3 control-label is-optional"><span>{{ 'OPTIONAL'|translate }}</span>{{ 'SHIPPING_SECONDARY'|translate }}:</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" [(ngModel)]="product.shipping[integration.id].secondary.type">
+                                    <option value="">{{ 'SHIPPING_DONT_USE_THIS_OPTION'|translate}}</option>
+                                    <option value="posten">Posten</option>
+                                    <option value="dhl">DHL</option>
+                                    <option value="schenker">Schenker</option>
+                                    <option value="bussgods">Bussgods</option>
+                                    <option value="other">Annat</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="product.shipping[integration.id].secondary.cost" [disabled]="product.shipping[integration.id].secondary.type == ''">
+                                    <div class="input-group-addon">kr</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 15px;">
+                            <div class="checkbox">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-9">
+                                    <label style="margin-left: 10px;">
+                                        <input style="margin-left: -10px" [(ngModel)]="product.shipping[integration.id].pickup" type="checkbox"> {{ 'SHIPPING_OFFER_PICKUP'|translate }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CDON -->
+                    <div *ngIf="integration.market_id === 10">
+                        <div class="form-group" *ngFor="let country of cdonCountries">
+                            <label class="col-sm-6 control-label">{{ 'FREIGHT_CLASS'|translate }} {{ country.name }}:</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" [(ngModel)]="product.shipping[integration.id][country.id]">
+                                    <option *ngFor="let class of cdonShippingClasses" [value]="class.id">{{ class.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amazon -->
+                    <div *ngIf="integration.market_id === 13">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label>{{ 'AMAZON_SHIPPING_EUR'|translate }}:</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="number" [(ngModel)]="product.shipping[integration.id].EUR">
+                                    <span class="input-group-addon">€</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label>{{ 'AMAZON_SHIPPING_GBP'|translate }}:</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="number" [(ngModel)]="product.shipping[integration.id].GBP">
+                                    <span class="input-group-addon">£</span>
+                                </div>
+                            </div>
+                        </div>
+                        <em style="margin-top:15px">{{ 'AMAZON_SHIPPING_TIP'|translate }}</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

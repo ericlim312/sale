@@ -1,0 +1,33 @@
+<div class="status-box">
+    <h2>{{ 'SETTINGS_PRESTASHOP_SYNC'|translate }}</h2>
+
+    <table class="detailed-table">
+        <tr class="cursor-link" [ngSwitch]="!!loadingLanguages" (click)="updateLanguages()">
+            <td>Uppdatera kategorier</td>
+            <td *ngSwitchCase="true" class="progress-indicator">
+                <i class="fa fa-refresh fa-spin"></i>
+            </td>
+            <td *ngSwitchCase="false" class="buttons">
+                <i class="fa fa-refresh"></i>
+            </td>
+        </tr>
+        <tr class="cursor-link" [ngSwitch]="!!loadingTaxes" (click)="updateTaxes()">
+            <td>Uppdatera momsregler</td>
+            <td *ngSwitchCase="true" class="progress-indicator">
+                <i class="fa fa-refresh fa-spin"></i>
+            </td>
+            <td *ngSwitchCase="false" class="buttons">
+                <i class="fa fa-refresh"></i>
+            </td>
+        </tr>
+        <tr class="cursor-link" [ngSwitch]="!!loadingCountries" (click)="updateCountries()">
+            <td>Uppdatera länder</td>
+            <td *ngSwitchCase="true" class="progress-indicator">
+                <i class="fa fa-refresh fa-spin"></i>
+            </td>
+            <td *ngSwitchCase="false" class="buttons">
+                <i class="fa fa-refresh"></i>
+            </td>
+        </tr>
+    </table>
+</div>

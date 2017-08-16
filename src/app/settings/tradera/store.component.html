@@ -1,0 +1,45 @@
+<div *ngIf="settings">
+    <h1>{{ 'SETTINGS_TRADERA_STORE' | translate }}</h1>
+    <setting-row
+        (onSave)="settings.store.logo_url = $event; save('store.logo_url');"
+        type="image"
+        [uploadUrl]="uploadUrl"
+        [error]="errors['store.logo_url']"
+        [name]="'SETTINGS_TRADERA_STORE_LOGO'|translate"
+        [value]="settings.store.logo_url"
+        [description]="'SETTINGS_TRADERA_STORE_LOGO_HELP'|translate"
+    ></setting-row>
+    <setting-row
+        (onSave)="settings.store.banner_color = $event; save('store.banner_color');"
+        type="color"
+        [error]="errors['store.banner_color']"
+        default="#ffffff"
+        [name]="'SETTINGS_TRADERA_STORE_BANNER_COLOR'|translate"
+        [value]="settings.store.banner_color"
+        [description]="'SETTINGS_TRADERA_STORE_BANNER_COLOR_HELP'|translate"
+    ></setting-row>
+    <setting-row-wysiwyg
+        (onSave)="settings.store.company_information = $event; save('store.company_information');"
+        [error]="errors['store.company_information']"
+        default="-"
+        [name]="'SETTINGS_TRADERA_STORE_COMPANY_INFO'|translate"
+        [value]="settings.store.company_information"
+        [maxLength]="500"
+    ></setting-row-wysiwyg>
+    <setting-row-wysiwyg
+        (onSave)="settings.store.purchase_terms = $event; save('store.purchase_terms');"
+        [error]="errors['store.purchase_terms']"
+        default="-"
+        [name]="'SETTINGS_TRADERA_STORE_PURCHASE_TERMS'|translate"
+        [value]="settings.store.purchase_terms"
+        [maxLength]="500"
+    ></setting-row-wysiwyg>
+    <setting-row-wysiwyg
+        (onSave)="settings.store.contact_information = $event; save('store.contact_information');"
+        [error]="errors['store.contact_information']"
+        default="-"
+        [name]="'SETTINGS_TRADERA_STORE_CONTACT_INFO'|translate"
+        [value]="settings.store.contact_information"
+        [maxLength]="500"
+    ></setting-row-wysiwyg>
+</div>

@@ -1,0 +1,449 @@
+<div class="edit-section-price section" *ngIf="account">
+    <h3 id="priceHeading">{{ 'HEADING_PRICE'|translate }}</h3>
+
+    <!-- Dynamic price -->
+    <div *ngIf="account.account_type !== 'whitelabel'">
+        <div class="form-group">
+            <label for="targetprice" class="col-sm-3 control-label">{{ 'DYNPRICE_PRICE'|translate }}:</label>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                        <select [(ngModel)]="product.target_price_bulk_mode">
+                            <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                            <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                            <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                            <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                            <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                        </select>
+                    </div>
+                    <input id="targetprice" type="text" class="form-control" [(ngModel)]="product.target_price" (change)="updateAutomaticPricingFlag()">
+                    <div class="input-group-addon" *ngIf="product.target_price_bulk_mode == 'increasePercent' || product.target_price_bulk_mode == 'decreasePercent'">%</div>
+                    <div class="input-group-addon" *ngIf="product.target_price_bulk_mode != 'increasePercent' && product.target_price_bulk_mode != 'decreasePercent'">kr</div>
+                </div>
+            </div>
+            <div class="col-sm-4 help">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="recommended_price" class="col-sm-3 control-label">{{ 'DYNPRICE_RECOMMENDED_PRICE'|translate }}:</label>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                        <select [(ngModel)]="product.recommended_price_bulk_mode">
+                            <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                            <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                            <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                            <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                            <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                        </select>
+                    </div>
+                    <input id="recommended_price" type="text" class="form-control" [(ngModel)]="product.recommended_price" (change)="updateAutomaticPricingFlag()">
+                    <div class="input-group-addon" *ngIf="product.recommended_price_bulk_mode == 'increasePercent' || product.recommended_price_bulk_mode == 'decreasePercent'">%</div>
+                    <div class="input-group-addon" *ngIf="product.recommended_price_bulk_mode != 'increasePercent' && product.recommended_price_bulk_mode != 'decreasePercent'">kr</div>
+                </div>
+            </div>
+            <div class="col-sm-4 help">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-offset-3 col-sm-9">
+                <div class="checkbox">
+                    <div class="input-group">
+                        <label>
+                            <input type="checkbox" [(ngModel)]="product.automatic_price_adjust" value="1" (change)="updateAutomaticPricingFlag()"> {{ 'DYNPRICE_ENABLE_ADJUST'|translate }} <i class="fa fa-info-circle"></i> <a href="">{{ 'DYNPRICE_ADJUST_HELP_LINK'|translate }}</a>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" [hidden]="!product.automatic_price_adjust">
+            <label for="minprice" class="col-sm-3 control-label"> {{ 'DYNPRICE_MIN_PRICE'|translate }}:</label>
+            <div class="col-sm-5">
+                <div class="input-group">
+                    <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                        <select [(ngModel)]="product.minimum_price_bulk_mode">
+                            <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                            <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                            <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                            <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                            <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                        </select>
+                    </div>
+                    <input id="minprice" type="text" [(ngModel)]="product.minimum_price" class="form-control">
+                    <div class="input-group-addon" *ngIf="product.minimum_price_bulk_mode == 'increasePercent' || product.minimum_price_bulk_mode == 'decreasePercent'">%</div>
+                    <div class="input-group-addon" *ngIf="product.minimum_price_bulk_mode != 'increasePercent' && product.minimum_price_bulk_mode != 'decreasePercent'">kr</div>
+                </div>
+            </div>
+            <div class="col-sm-4 help">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div *ngFor="let integration of integrations">
+                <div class="integration" (click)="integration.priceOpen = !integration.priceOpen">
+                    <div class="market-name"><div class="img"><img [src]="'/assets/img/marketplace/' + integration.market_id + '_bw.svg'"></div> {{ marketName(integration.market_id) }}</div>
+                    <div class="toggle">
+                        <i *ngIf="integration.priceOpen" class="fa fa-minus-circle"></i>
+                        <i *ngIf="!integration.priceOpen" class="fa fa-plus-circle"></i>
+                    </div>
+                </div>
+                <div class="integration-category-select" *ngIf="integration.priceOpen">
+
+                    <!-- Tradera -->
+					<div class="row" *ngIf="integration.market_id == 1">
+						<div class="col-sm-8 col-sm-offset-2">
+							<!--<uib-alert type="info" ng-show="product.automatic_pricing == '1'">Du har valt att låta Sello sätta priserna åt dig och kan därför inte ändra priserna här. <button type="button" class="btn btn-default" ng-click="cancelAutomaticPricing(product)">Stäng av</button></uib-alert>-->
+
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>{{ 'TRADERA_AUCTION_PRICE' | translate }}:</label>
+										<div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [(ngModel)]="product.prices[integration.id].auction.start_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+											<input type="number" class="form-control" [(ngModel)]="product.prices[integration.id].auction.start">
+											<div class="input-group-addon" *ngIf="product.prices[integration.id].auction.start_bulk_mode == 'increasePercent' || product.prices[integration.id].auction.start_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].auction.start_bulk_mode != 'increasePercent' && product.prices[integration.id].auction.start_bulk_mode != 'decreasePercent'">kr</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>{{ 'TRADERA_BUYNOW_PRICE' | translate }}:</label>
+										<div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [(ngModel)]="product.prices[integration.id].auction.buynow_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+											<input type="number" class="form-control" [(ngModel)]="product.prices[integration.id].auction.buynow">
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].auction.buynow_bulk_mode == 'increasePercent' || product.prices[integration.id].auction.buynow_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].auction.buynow_bulk_mode != 'increasePercent' && product.prices[integration.id].auction.buynow_bulk_mode != 'decreasePercent'">kr</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label>{{ 'RESERVATION_PRICE' | translate }}:</label>
+										<div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [(ngModel)]="product.prices[integration.id].auction.reserve_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+											<input type="number" class="form-control" [(ngModel)]="product.prices[integration.id].auction.reserve">
+											<div class="input-group-addon" *ngIf="product.prices[integration.id].auction.reserve_bulk_mode == 'increasePercent' || product.prices[integration.id].auction.reserve_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].auction.reserve_bulk_mode != 'increasePercent' && product.prices[integration.id].auction.reserve_bulk_mode != 'decreasePercent'">kr</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6" *ngIf="hasStore(integration)">
+									<div class="form-group">
+										<label>{{ 'TRADERA_STORE_PRICE' | translate }}:</label>
+										<div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id].store_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+											<input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id].store">
+											<div class="input-group-addon" *ngIf="product.prices[integration.id].store_bulk_mode == 'increasePercent' || product.prices[integration.id].store_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].store_bulk_mode != 'increasePercent' && product.prices[integration.id].store_bulk_mode != 'decreasePercent'">kr</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <!-- SelloShop -->
+					<div class="row" *ngIf="integration.market_id == 5">
+						<div class="col-sm-8 col-sm-offset-2">
+							<!--<uib-alert type="info" ng-show="product.automatic_pricing == '1'">Du har valt att låta Sello sätta priserna åt dig och kan därför inte ändra priserna här. <button type="button" class="btn btn-default" ng-click="cancelAutomaticPricing(product)">Stäng av</button></uib-alert>-->
+
+							<div class="row">
+								<div class="form-group">
+									<div class="col-sm-6">
+										<label>{{ 'PRICE' | translate }}:</label>
+										<div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id].store_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+										    <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id].store">
+										    <div class="input-group-addon" *ngIf="product.prices[integration.id].store_bulk_mode == 'increasePercent' || product.prices[integration.id].store_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].store_bulk_mode != 'increasePercent' && product.prices[integration.id].store_bulk_mode != 'decreasePercent'">kr</div>
+									   </div>
+								   	</div>
+									<div class="col-sm-6">
+										<label>{{ 'SELLOSHOP_CAMPAIGN_PRICE'|translate }}</label>
+										<div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id].campaign_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+										    <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id].campaign">
+										    <div class="input-group-addon" *ngIf="product.prices[integration.id].campaign_bulk_mode == 'increasePercent' || product.prices[integration.id].campaign_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].campaign_bulk_mode != 'increasePercent' && product.prices[integration.id].campaign_bulk_mode != 'decreasePercent'">kr</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <!-- Fyndiq -->
+					<div class="row" *ngIf="integration.market_id == 6">
+						<div class="col-sm-8 col-sm-offset-2">
+							<!--<uib-alert type="info" ng-show="product.automatic_pricing == '1'">Du har valt att låta Sello sätta priserna åt dig och kan därför inte ändra priserna här. <button type="button" class="btn btn-default" ng-click="cancelAutomaticPricing(product)">Stäng av</button></uib-alert>-->
+
+							<div class="row">
+								<div class="form-group">
+									<div class="col-sm-6">
+										<label>{{ 'PRICE' | translate }}:</label>
+										<div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id].sv.store_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+										    <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id].sv.store">
+										    <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.store_bulk_mode == 'increasePercent' || product.prices[integration.id].sv.store_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.store_bulk_mode != 'increasePercent' && product.prices[integration.id].sv.store_bulk_mode != 'decreasePercent'">kr</div>
+									   </div>
+								   </div>
+									<div class="col-sm-6">
+										<label>{{ 'REGULAR_PRICE' | translate }}:</label>
+										<div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id].sv.regular_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+										    <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id].sv.regular">
+										    <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.regular_bulk_mode == 'increasePercent' || product.prices[integration.id].sv.regular_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.regular_bulk_mode != 'increasePercent' && product.prices[integration.id].sv.regular_bulk_mode != 'decreasePercent'">kr</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <!-- CDON -->
+                    <div class="row" *ngIf="integration.market_id == 10">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <!--<uib-alert type="info" ng-show="product.automatic_pricing == '1'">Du har valt att låta Sello sätta priserna åt dig och kan därför inte ändra priserna här. <button type="button" class="btn btn-default" ng-click="cancelAutomaticPricing(product)">Stäng av</button></uib-alert>-->
+
+                            <div class="row">
+                                <div class="form-group" *ngFor="let p of cdonCountries">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="col-xs-6">
+                                                <label>{{ 'PRICE'|translate }} {{ p.name }}:</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                        <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id][p.code].store_bulk_mode">
+                                                            <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                            <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                            <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                            <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                            <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                        </select>
+                                                    </div>
+                                                    <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id][p.code].store">
+                                                    <div class="input-group-addon" *ngIf="product.prices[integration.id][p.code].store_bulk_mode == 'increasePercent' || product.prices[integration.id][p.code].store_bulk_mode == 'decreasePercent'">%</div>
+                                                    <div class="input-group-addon" *ngIf="product.prices[integration.id][p.code].store_bulk_mode != 'increasePercent' && product.prices[integration.id][p.code].store_bulk_mode != 'decreasePercent'">{{ p.currency }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <label>{{ 'REGULAR_PRICE'|translate }} {{ p.name }}:</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                        <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id][p.code].regular_bulk_mode">
+                                                            <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                            <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                            <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                            <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                            <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                        </select>
+                                                    </div>
+                                                    <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id][p.code].regular">
+                                                    <div class="input-group-addon" *ngIf="product.prices[integration.id][p.code].regular_bulk_mode == 'increasePercent' || product.prices[integration.id][p.code].regular_bulk_mode == 'decreasePercent'">%</div>
+                                                    <div class="input-group-addon" *ngIf="product.prices[integration.id][p.code].regular_bulk_mode != 'increasePercent' && product.prices[integration.id][p.code].regular_bulk_mode != 'decreasePercent'">{{ p.currency }}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <span class="help-block text-center">{{ 'CDON_PRICE_HELP'|translate }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Prestashop -->
+                    <div class="row" *ngIf="integration.market_id == 11">
+                        <!--<uib-alert type="info" ng-show="product.automatic_pricing == '1'">Du har valt att låta Sello sätta priserna åt dig och kan därför inte ändra priserna här. <button type="button" class="btn btn-default" ng-click="cancelAutomaticPricing(product)">Stäng av</button></uib-alert>-->
+
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label>{{ 'PRICE'|translate}}:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id].sv.store_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+                                            <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id].sv.store">
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.store_bulk_mode == 'increasePercent' || product.prices[integration.id].sv.store_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.store_bulk_mode != 'increasePercent' && product.prices[integration.id].sv.store_bulk_mode != 'decreasePercent'">kr</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>{{ 'CAMPAIGN_PRICE'|translate }}:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id].sv.campaign_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+                                            <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id].sv.campaign">
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.campaign_bulk_mode == 'increasePercent' || product.prices[integration.id].sv.campaign_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.campaign_bulk_mode != 'increasePercent' && product.prices[integration.id].sv.campaign_bulk_mode != 'decreasePercent'">kr</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Woocommerce -->
+                    <div class="row" *ngIf="integration.market_id == 12">
+                        <!--<uib-alert type="info" ng-show="product.automatic_pricing == '1'">Du har valt att låta Sello sätta priserna åt dig och kan därför inte ändra priserna här. <button type="button" class="btn btn-default" ng-click="cancelAutomaticPricing(product)">Stäng av</button></uib-alert>-->
+
+                        <div class="col-md-8 col-sm-offset-2">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label>{{ 'PRICE'|translate }}:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id].sv.store_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+                                            <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id].sv.store">
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.store_bulk_mode == 'increasePercent' || product.prices[integration.id].sv.store_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.store_bulk_mode != 'increasePercent' && product.prices[integration.id].sv.store_bulk_mode != 'decreasePercent'">kr</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>{{ 'CAMPAIGN_PRICE'|translate }}:</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id].sv.campaign_bulk_mode">
+                                                    <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                    <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                    <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                    <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                </select>
+                                            </div>
+                                            <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id].sv.campaign">
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.campaign_bulk_mode == 'increasePercent' || product.prices[integration.id].sv.campaign_bulk_mode == 'decreasePercent'">%</div>
+                                            <div class="input-group-addon" *ngIf="product.prices[integration.id].sv.campaign_bulk_mode != 'increasePercent' && product.prices[integration.id].sv.campaign_bulk_mode != 'decreasePercent'">kr</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Amazon -->
+                    <div class="row" *ngIf="integration.market_id == 13">
+                        <!--<uib-alert type="info" ng-show="product.automatic_pricing == '1'">Du har valt att låta Sello sätta priserna åt dig och kan därför inte ändra priserna här. <button type="button" class="btn btn-default" ng-click="cancelAutomaticPricing(product)">Stäng av</button></uib-alert>-->
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="row">
+                                <div class="form-group" *ngFor="let c of amazonCountries">
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-3">
+                                            <label>{{ 'PRICE'|translate }} {{ c.name }}:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon" *ngIf="mode == 'bulkedit'">
+                                                    <select [disabled]="product.automatic_pricing == '1'" [(ngModel)]="product.prices[integration.id][c.code].store_bulk_mode">
+                                                        <option value="change">{{ 'CHANGE_TO'|translate }}</option>
+                                                        <option value="increasePercent">{{ 'INCREASE_BY_PERCENT'|translate }}</option>
+                                                        <option value="increaseStatic">{{ 'INCREASE_BY_STATIC'|translate }}</option>
+                                                        <option value="decreasePercent">{{ 'DECREASE_BY_PERCENT'|translate }}</option>
+                                                        <option value="decreaseStatic">{{ 'DECREASE_BY_STATIC'|translate }}</option>
+                                                    </select>
+                                                </div>
+                                                <input type="number" [readonly]="product.automatic_pricing == '1'" class="form-control" [(ngModel)]="product.prices[integration.id][c.code].store">
+                                                <div class="input-group-addon" *ngIf="product.prices[integration.id][c.code].store_bulk_mode == 'increasePercent' || product.prices[integration.id][c.code].store_bulk_mode == 'decreasePercent'">%</div>
+                                                <div class="input-group-addon" *ngIf="product.prices[integration.id][c.code].store_bulk_mode != 'increasePercent' && product.prices[integration.id][c.code].store_bulk_mode != 'decreasePercent'">{{ c.currency }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

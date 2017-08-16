@@ -1,0 +1,96 @@
+<div class="status-box">
+    <h2>{{ 'CUPONS'|translate }}</h2>
+    <button (click)="createNew.visible = true" *ngIf="!createNew.visible" class="action-button pull-right"><i class="fa fa-plus"></i> {{ 'CREATE_NEW'|translate }}</button>
+
+    <div class="setting-panel" *ngIf="createNew.visible">
+        <h3>{{ 'NEW_CUPON'|translate }}</h3>
+
+        <form #createNewForm="ngForm" class="setting-form" (submit)="addCoupon(createNewForm.value, createNewForm.valid)">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>
+                        <span class="text">{{ 'CODE'|translate }}</span><br>
+                        <input
+                            type="text"
+                            [ngModel]="createNew.code"
+                            #code="ngModel"
+                            name="code">
+                    </p>
+                </div>
+                <div class="col-sm-3">
+                    <p>
+                        <span class="text">{{ 'DISCOUNT'|translate }}</span><br>
+                        <input
+                            type="text"
+                            [ngModel]="createNew.value"
+                            #value="ngModel"
+                            name="value"
+                            required>
+                        <small [hidden]="value.valid || (value.pristine && !createNewForm.submitted)" class="text-danger">{{ 'Discount value is required' |translate }}</small>
+                    </p>
+                </div>
+                <div class="col-sm-3">
+                    <p>
+                        <span class="text">{{ 'TYPE'|translate }}</span><br>
+                        <select
+                            [ngModel]="createNew.type"
+                            #type="ngModel"
+                            name="type">
+                            <option value="static">kr</option>
+                            <option value="percent">%</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>
+                        <span class="text">{{ 'CUPON_VALID'|translate }}</span><br>
+                        <input
+                            type="text"
+                            [ngModel]="createNew.min_order"
+                            #min_order="ngModel"
+                            name="min_order">
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <p>
+                        <span class="text">{{ 'VALID'|translate }}</span><br>
+                        <select
+                            [ngModel]="createNew.max_uses"
+                            #max_uses="ngModel"
+                            name="max_uses">
+                            <option value="1">{{ 'ONCE'|translate }}</option>
+                            <option value="unlimited">{{ 'UNLIMITED'|translate }}</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+
+            <p class="button-panel">
+                <button (click)="createNew.visible = false" class="cancel-button">{{ 'BTN_CANCEL'|translate }}</button>
+                <button class="action-button">{{ 'BTN_CREATE'|translate }}</button>
+            </p>
+        </form>
+    </div>
+
+    <table class="detailed-table">
+        <tr class="table-header">
+            <th>{{ 'CODE'|translate }}</th>
+            <th>{{ 'DISCOUNT'|translate }}</th>
+            <th>{{ 'CUPON_VALID'|translate }}</th>
+            <th>{{ 'USED'|translate }}</th>
+            <th class="buttons">&nbsp;</th>
+        </tr>
+        <tr *ngFor="let coupon of coupons">
+            <td>{{ coupon.code }}</td>
+            <td>{{ coupon.value }}%</td>
+            <td>{{ coupon.min_order }} kr</td>
+            <td><span *ngIf="coupon.max_uses">{{ coupon.num_uses || 0 }} of {{ coupon.max_uses }}</span></td>
+            <td class="buttons">
+                <a class="btn-link" role="button" (click)="onDelete(coupon)">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
+    </table><!-- end detailed-table -->
+</div><!-- end status-box -->

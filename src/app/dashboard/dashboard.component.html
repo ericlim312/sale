@@ -1,0 +1,102 @@
+<div class="container" style="padding-top: 15px">
+    <div class="col-md-3">
+        <div class="panel panel-sello panel-sello-fix">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-6 text-right">{{ 'NUM_SUBMITTERS' | translate }}:</div>
+                    <div class="col-xs-6">{{ meta.submitters }} {{ 'SUBMITTERS' | translate }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 text-right">{{ 'NUM_PRODUCTS' | translate }}:</div>
+                    <div class="col-xs-6">{{ meta.products }} {{ 'PRODUCTS' | translate }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 text-right">{{ 'ACTIVE_AUCTIONS' | translate }}:</div>
+                    <div class="col-xs-6">{{ meta.auctions }} {{ 'AUCTIONS' | translate }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 text-right">{{ 'NUM_ORDERS' | translate }}:</div>
+                    <div class="col-xs-6">{{ meta.orders }} {{ 'ORDERS' | translate }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 text-right">{{ 'MAX_BID' | translate }}:</div>
+                    <div class="col-xs-6">{{ meta.bid }} kr</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-sello panel-sello-fix">
+                    <div class="panel-heading">{{ 'ORDERS' | translate }}<span class="pull-right"><small><small>1 - 100 {{ 'OF' | translate }} {{ meta.orders }} {{ 'ORDERS' | translate }}</small></small></span></div>
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>{{ 'SUBMITTER' | translate }}</th>
+                                <th>{{ 'OBJECT_NO' | translate }}</th>
+                                <th>{{ 'BUYER' | translate }}</th>
+                                <th>{{ 'REFERENCE' | translate }}</th>
+                                <th>{{ 'STOCK_LOCATION' | translate  }}</th>
+                                <th>{{ 'IS_PAID' | translate }}</th>
+                                <th>{{ 'SUM' | translate }}</th>
+                                <th>{{ 'PROFIT' | translate }}</th>
+                                <th>{{ 'PAYOUT' | translate }}</th>
+                            </thead>
+                            <tbody>
+                                <!--
+                                <tr>
+                                    <td>{{ row.submitter }}</td>
+                                    <td><a [href]="'http://www.tradera.com/auction/auction.aspx?aid=' + row.item" target="_blank">{{ row.item }}</a></td>
+                                    <td>{{ row.name }}</td>
+                                    <td>{{ row.sku }}</td>
+                                    <td>{{ row.stock }}</td>
+                                    <td ng-class="{'bg-danger': row.paid != 1, 'bg-success': row.paid == 1}">{{ paid(row.paid) | translate }}</td>
+                                    <td>{{ row.sum }} kr</td>
+                                    <td>{{ profit(row) }} kr</td>
+                                    <td>{{ row.sum - profit(row) }} kr</td>
+                                </tr>
+                                -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="panel panel-sello panel-sello-fix">
+                    <div class="panel-heading">{{ 'ACTIVE_AUCTIONS' | translate }}<span class="pull-right"><small><small>1 - 100 {{ 'OF' | translate }} {{ meta.auctions }} {{ 'AUCTIONS' | translate }}</small></small></span></div>
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <th>{{ 'SUBMITTER' | translate }}</th>
+                                <th>{{ 'OBJECT_NO' | translate }}</th>
+                                <th>{{ 'REFERENCE' | translate }}</th>
+                                <th>{{ 'STOCK_LOCATION' | translate }}</th>
+                                <th>{{ 'START_PRICE' | translate }}</th>
+                                <th>{{ 'CURRENT_BID' | translate }}</th>
+                                <th>{{ 'NUM_OF_BIDS' | translate }}</th>
+                                <th>{{ 'END_TIME' | translate }}</th>
+                            </thead>
+                            <tbody>
+                                <!--<tr>
+                                    <td>{{ row.submitter }}</td>
+                                    <td><a [href]="'http://www.tradera.com/auction/auction.aspx?aid=' + row.item" target="_blank">{{ row.item }}</a></td>
+                                    <td>{{ row.sku }}</td>
+                                    <td>{{ row.stock }}</td>
+                                    <td>{{ row.start }} kr</td>
+                                    <td>{{ row.bid }} kr</td>
+                                    <td>{{ row.num }} bud</td>
+                                    <td>{{ row.end }}</td>
+                                </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- container -->
